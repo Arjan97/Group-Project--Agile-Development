@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.GameObjects;
+using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
@@ -8,7 +10,9 @@ namespace BaseProject.GameStates
     {
         public PlayingState()
         {
-
+            Add(new TileList());          
         }
+
+      
     }
 }

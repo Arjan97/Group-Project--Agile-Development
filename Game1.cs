@@ -11,11 +11,22 @@ namespace BaseProject
         {
             base.LoadContent();
 
-            screen = new Point(800, 600);
+            screen = new Point(1280, 720);
             ApplyResolutionSettings();
-
+ 
             GameStateManager.AddGameState("playState", new PlayingState());
             GameStateManager.SwitchTo("playState");
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            System.Diagnostics.Debug.WriteLine(FullScreen);
+            if (inputHelper.KeyPressed(Keys.F11))
+            {
+                FullScreen = !FullScreen;
+
+            }
+            base.Draw(gameTime);
         }
 
     }
