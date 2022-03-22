@@ -20,7 +20,7 @@ namespace BaseProject
 
         protected override void Draw(GameTime gameTime)
         {
-            System.Diagnostics.Debug.WriteLine(FullScreen);
+
             if (inputHelper.KeyPressed(Keys.F11))
             {
                 FullScreen = !FullScreen;

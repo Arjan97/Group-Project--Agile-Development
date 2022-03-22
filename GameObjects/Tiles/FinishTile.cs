@@ -4,8 +4,8 @@ using System.Text;
 
 namespace BaseProject.GameObjects.Tiles
 {
-    internal class GroundTile : Tile
+    internal class FinishTile : Tile
     {
-        public GroundTile(int X, int Y) : base("img/tiles/spr_groundTile", X, Y) {}
+        public FinishTile(int x, int y) : base("img/tiles/spr_spikebottom", x, y) { }
     }
 }

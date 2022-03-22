@@ -10,12 +10,12 @@ namespace BaseProject.GameObjects
     {
         int tileSize = 60;
 
-        Vector2 location;
+        public Vector2 location;
         public Tile(string assetName, int X, int Y) : base(assetName)
         {
             location = new Vector2(X, Y);
             position.X = X * tileSize;
-            position.Y = Y * tileSize + 2*tileSize;
+            position.Y = Y * tileSize + tileSize;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
