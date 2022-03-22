@@ -22,5 +22,6 @@ namespace BaseProject.GameObjects
         {
             base.Draw(gameTime, spriteBatch);
         }
+
     }
 }

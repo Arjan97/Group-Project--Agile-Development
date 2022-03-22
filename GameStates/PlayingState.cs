@@ -8,11 +8,13 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
+        Player player;
         public PlayingState()
         {
-            Add(new TileList());          
-        }
+            player = new Player();
 
-      
-    }
+            this.Add(player);
+            Add(new TileList());
+        }
+    }     
 }

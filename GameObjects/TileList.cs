@@ -9,11 +9,23 @@ namespace BaseProject.GameObjects
 {
     public  class TileList : GameObjectList
     {
+        SpriteGameObject ground;
+
         string colorCode;
 
         public TileList()
         {
             LoadLevel(0);
+
+            ground = new SpriteGameObject("img/tiles/spr_groundTile");
+            this.Add(ground);
+
+            ground.Position = new Vector2(400, 500);
+        }
+
+        public bool OverlapsWith(SpriteGameObject Player)
+        {
+            return ground.CollidesWith(Player);
         }
 
         public void LoadLevel(int levelNr)
