@@ -24,7 +24,6 @@ namespace BaseProject
             if (inputHelper.KeyPressed(Keys.F11))
             {
                 FullScreen = !FullScreen;
-
             }
             base.Draw(gameTime);
         }
