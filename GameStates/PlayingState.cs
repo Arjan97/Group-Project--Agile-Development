@@ -10,7 +10,9 @@ namespace BaseProject.GameStates
     {
         public PlayingState()
         {
-            Add(new TileList());          
+
+            Add(new TileList());
+            Add(new Ghost());
         }
 
       
