@@ -15,12 +15,14 @@ namespace BaseProject.GameObjects
         public float speed;
         Vector2 startPosition;
         public float jumpSpeed;
-        GameObjectList tiles;
-        Player thePlayer;
+        public bool isFalling;
+        public Vector2 pVelocity;
       
 
         public Player() : base("player/spr_player")
         {
+            pVelocity = velocity;
+            isFalling = true;
             hasJumped = false;
             startPosition = GameEnvironment.Screen.ToVector2() / 2;
             jumpSpeed = 100f;
@@ -33,15 +35,20 @@ namespace BaseProject.GameObjects
         {
             base.Reset();
             position = startPosition;
-            velocity = Vector2.Zero;
+            Velocity = Vector2.Zero;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            
             float i = 1;
-            velocity.Y += 4 * i;
+            velocity.Y += 2 * i;
+
+            if (!isFalling)
+            {
+                velocity.Y = 0;
+            }
+           
             position += velocity;
             Velocity = Vector2.Zero;
         }
@@ -53,6 +60,7 @@ namespace BaseProject.GameObjects
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+
             if (inputHelper.IsKeyDown(Keys.Left)) 
                 velocity.X = -speed;
             else if (inputHelper.IsKeyDown(Keys.Right)) 
@@ -62,12 +70,22 @@ namespace BaseProject.GameObjects
                 position.Y -= jumpSpeed;
                 velocity.Y = -jumpSpeed/2;
                 hasJumped = true;
-            }
+                isFalling = true;
+            } 
                 
            // if (inputHelper.IsKeyDown(Keys.Down)) 
              //   velocity.Y = speed;
              //Position += Velocity;
            
+        }
+
+        public void Collide()
+        {
+            hasJumped = false;
+            isFalling = false;
+            //velocity.Y = 0;
+            System.Diagnostics.Debug.WriteLine("stopfalling");
+            System.Diagnostics.Debug.WriteLine(velocity);
         }
     }
 }

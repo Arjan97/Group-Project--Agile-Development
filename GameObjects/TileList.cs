@@ -21,6 +21,7 @@ namespace BaseProject.GameObjects
             this.Add(ground);
 
             ground.Position = new Vector2(400, 500);
+            this.id = "TileList";
         }
 
         public bool OverlapsWith(SpriteGameObject Player)
