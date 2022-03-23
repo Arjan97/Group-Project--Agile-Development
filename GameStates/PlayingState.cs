@@ -14,7 +14,5 @@ namespace BaseProject.GameStates
             Add(new TileList());
             Add(new Ghost());
         }
-
-      
     }
 }
