@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using BaseProject.GameObjects;
@@ -14,8 +14,10 @@ namespace BaseProject.GameStates
 
         public PlayingState()
         {
+<<<<<<< GameStates/PlayingState.cs
             Add(player);
             Add(tileList);
+            Add(new Ghost());
         }
 
         public override void Update(GameTime gameTime)
@@ -41,4 +43,11 @@ namespace BaseProject.GameStates
             }
         }
     }     
+=======
+
+            Add(new TileList());
+            Add(new Ghost());
+        }
+    }
+>>>>>>> GameStates/PlayingState.cs
 }

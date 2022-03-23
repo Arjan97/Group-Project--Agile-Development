@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:img/levels/spr_level0.png
 
+#begin img/players/spr_ghost.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_ghost.png
+
 #begin img/tiles/spr_bridge.png
 /importer:TextureImporter
 /processor:TextureProcessor

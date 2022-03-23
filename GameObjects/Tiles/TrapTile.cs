@@ -6,15 +6,8 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class TrapTile : Tile
     {
-        bool Activated = false;
-        public TrapTile(string asset, int x, int y) : base(asset, x, y)
-        {
+        public TrapTile(String assetName, int x, int y) : base(assetName, x, y) { }
 
-        }
-
-        public virtual void Activate()
-        {
-          Activated = true;
-        }
+        public void Activate() { }
     }
 }

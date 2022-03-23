@@ -62,19 +62,19 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "888888":
-                            Add(new BridgeTile(x, y));
+                            Add(new Bridge(x, y, 4));
                             break;
 
                         case "2362836":
-                            Add(new SpikeRoofTile(x, y));
+                            Add(new SpikeRoof(x, y, 3));
                             break;
 
                         case "127510":
-                            Add(new SpikeTile(x, y));
+                            Add(new Spike(x, y, 3));
                             break;
 
                         case "25512739":
-                            Add(new SwitchTile(x, y));
+                            Add(new Switch(x, y, 4, 33, 11, 10));
                             break;
 
                         case "25520224":
