@@ -7,7 +7,7 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Trap : GameObjectList
     {
-        bool Activated = false;
+       internal bool Activated = false;
         public Trap(int x, int y)
         {
 
