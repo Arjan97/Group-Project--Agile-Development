@@ -8,6 +8,6 @@ namespace BaseProject.GameObjects.Tiles
     {
         public TrapTile(String assetName, int x, int y) : base(assetName, x, y) { }
 
-        public void Activate() { }
+        public virtual void Activate() { }
     }
 }
