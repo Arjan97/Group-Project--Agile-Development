@@ -79,13 +79,6 @@ namespace BaseProject.GameObjects
            
         }
 
-        public void Collide()
-        {
-            hasJumped = false;
-            isFalling = false;
-            //velocity.Y = 0;
-            System.Diagnostics.Debug.WriteLine("stopfalling");
-            System.Diagnostics.Debug.WriteLine(velocity);
-        }
+        
     }
 }

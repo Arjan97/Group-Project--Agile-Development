@@ -14,7 +14,6 @@ namespace BaseProject.GameStates
 
         public PlayingState()
         {
-<<<<<<< GameStates/PlayingState.cs
             Add(player);
             Add(tileList);
             Add(new Ghost());
@@ -24,30 +23,49 @@ namespace BaseProject.GameStates
         {
             base.Update(gameTime);
 
-            //foreach
+            /*foreach
             foreach (GameObject tile in tileList.Children)
             {
-                if(player.CollidesWith((SpriteGameObject)tile) && player.isFalling)
+                if(tile is GameObjectList)
                 {
-                    //colission code
-                    //velocity.Y = 0;
-                    // player.speed = 0;
-                    //player.position = 0;
-                    //player.touchGrass = true;
-                    
-                    player.isFalling = false;
-                    player.hasJumped = false;
-                        //player.Collide();
-                        System.Diagnostics.Debug.WriteLine("collision");
+                    GameObjectList tileList = (GameObjectList)tile;
+                    foreach(SpriteGameObject subTile in tileList.Children)
+                    {
+                        if (subTile.CollidesWith(player))
+                        {
+                            System.Diagnostics.Debug.WriteLine("collision");
+                        }
+                        //collison code
+                    }
+                } else
+                {
+                    SpriteGameObject subTile = (SpriteGameObject) tile;
+                    if(subTile.CollidesWith(player)){ System.Diagnostics.Debug.WriteLine("collision"); }
+
+                }
+            }*/
+            ColissionCheck(tileList, player);
+        }
+    
+    public void ColissionCheck(GameObject one, SpriteGameObject other)
+        {
+            if(one is GameObjectList)
+            {
+                GameObjectList list = (GameObjectList)one;
+                foreach (GameObject sub in list.Children)
+                {
+                    ColissionCheck(sub, other);
+                }
+            }
+            else
+            {
+                SpriteGameObject oneSprite = (SpriteGameObject)one;
+                if (oneSprite.CollidesWith(other)){
+                    System.Diagnostics.Debug.WriteLine("test");           
                 }
             }
         }
+    
+    
     }     
-=======
-
-            Add(new TileList());
-            Add(new Ghost());
-        }
-    }
->>>>>>> GameStates/PlayingState.cs
 }
