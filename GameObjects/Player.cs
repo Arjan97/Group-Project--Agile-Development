@@ -17,6 +17,7 @@ namespace BaseProject.GameObjects
         public float jumpSpeed;
         public bool isFalling;
         public Vector2 pVelocity;
+
       
 
         public Player() : base("player/spr_player")
@@ -42,7 +43,7 @@ namespace BaseProject.GameObjects
         {
             base.Update(gameTime);
             float i = 1;
-            velocity.Y += 2 * i;
+           velocity.Y = 0;
 
             if (!isFalling)
             {
@@ -53,8 +54,10 @@ namespace BaseProject.GameObjects
             Velocity = Vector2.Zero;
         }
 
-        public void Draw()
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch) 
         {
+            base.Draw(gameTime, spriteBatch);
+
 
         }
         public override void HandleInput(InputHelper inputHelper)
@@ -67,10 +70,10 @@ namespace BaseProject.GameObjects
                 velocity.X = speed;
             if (inputHelper.IsKeyDown(Keys.Up) && hasJumped == false)
             {
-                position.Y -= jumpSpeed;
+               // position.Y -= jumpSpeed;
                 velocity.Y = -jumpSpeed/2;
-                hasJumped = true;
-                isFalling = true;
+               // hasJumped = true;
+                //isFalling = true;
             } 
                 
            // if (inputHelper.IsKeyDown(Keys.Down)) 
@@ -79,6 +82,34 @@ namespace BaseProject.GameObjects
            
         }
 
-        
+        public void HandleColission(Tile tile)
+        {
+            Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox,  tile.BoundingBox);
+            System.Diagnostics.Debug.WriteLine(intersection.X + " " + intersection.Y);
+
+
+            if(Math.Abs(intersection.X)> Math.Abs(intersection.Y))
+            {
+                if(intersection.Y < 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("up");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("down");
+                }
+            }
+            else
+            {
+                if(intersection.X < 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("left");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("right");
+                }
+            }
+        }
     }
 }

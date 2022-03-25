@@ -27,7 +27,6 @@ namespace BaseProject.GameObjects
             }
             if (inputHelper.IsKeyDown(Keys.L) && position.X < GameEnvironment.Screen.X - Sprite.Width)
             {
-
                 velocity.X = speed;
                 sprite.Mirror = true;
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using BaseProject.GameObjects;
 
 public abstract class GameObject : IGameLoopObject
 {
@@ -35,6 +36,47 @@ public abstract class GameObject : IGameLoopObject
     {
         visible = true;
     }
+
+    public virtual void HandleColission(SpriteGameObject obj) {  }
+
+    public virtual void CheckColission(SpriteGameObject obj)
+    {
+        if (this is GameObjectList)
+        {
+            GameObjectList list = (GameObjectList)this;
+            foreach (GameObject sub in list.Children)
+            {
+                sub.CheckColission(obj);
+            }
+        }
+        else
+        {
+
+            SpriteGameObject oneSprite = (SpriteGameObject)this;
+            if (oneSprite.CollidesWith(obj))
+            {
+                SortColission(oneSprite, obj);
+            }
+        }
+    }
+    //function who changes objects back to their types
+        void SortColission(GameObject one, GameObject other)
+        {
+
+            //player vs tile colission
+            if (one is Tile && other is Player)
+            {
+                Player player = (Player)other;
+                Tile tile = (Tile)one;
+                player.HandleColission(tile);
+                tile.HandleColission(player);
+                return;
+            }
+
+            //rest colission
+            other.HandleColission((SpriteGameObject)one);
+            one.HandleColission((SpriteGameObject)other);
+        }
 
     public virtual Vector2 Position
     {

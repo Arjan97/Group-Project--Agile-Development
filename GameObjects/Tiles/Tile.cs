@@ -6,13 +6,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameObjects
 {
-    internal class Tile : SpriteGameObject
+    public class Tile : SpriteGameObject
     {
         int tileSize = 60;
 
         public Vector2 location;
         public Tile(string assetName, int X, int Y) : base(assetName)
         {
+            //origin = Center;
             location = new Vector2(X, Y);
             position.X = X * tileSize;
             position.Y = Y * tileSize + tileSize;
@@ -21,6 +22,8 @@ namespace BaseProject.GameObjects
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
+            DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
+
         }
 
     }

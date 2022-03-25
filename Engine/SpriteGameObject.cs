@@ -14,7 +14,9 @@ public class SpriteGameObject : GameObject
     {
         if (assetName != "")
         {
+
             sprite = new SpriteSheet(assetName, sheetIndex);
+            Origin = Center;
         }
         else
         {
@@ -30,6 +32,7 @@ public class SpriteGameObject : GameObject
         }
         sprite.Draw(spriteBatch, GlobalPosition, origin, scale);
         spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, shade, 0, Origin, scale, SpriteEffects.None, 0);
+        DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
     }
 
     public SpriteSheet Sprite
@@ -123,6 +126,22 @@ public class SpriteGameObject : GameObject
                 {
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    public bool CollidesWithFloor(SpriteGameObject obj)
+    {
+        if (this.Position.X - this.Width / 2 < obj.Position.X + obj.Width / 2 &&
+            this.Position.X + this.Width / 2 > obj.Position.X - obj.Width / 2 &&
+            this.Position.Y - this.Height / 2 < obj.Position.Y + obj.Height / 2 &&
+            this.Position.Y + this.Height / 2 > obj.Position.Y - obj.Height / 2)
+        {
+            if (this.Position.Y > obj.Position.Y)
+            {
+                System.Diagnostics.Debug.WriteLine("boven collision");
+                return true;
             }
         }
         return false;
