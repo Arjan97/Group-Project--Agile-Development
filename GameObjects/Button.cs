@@ -11,28 +11,39 @@ namespace BaseProject.GameObjects
     {
         Trap target;
         private Keys assignedKey = Keys.None;
+
+        public Button(Vector2 position, Trap trap) : base("img/buttons@2x2")
+        {
+            target = trap;
+            Initialize(position.X, position.Y);
+        }
         public Button(float x, float y) : base("img/buttons@2x2") 
         {
             Initialize(x, y);
         }
 
-        public Button(float x, float y, Trap trap) : base("img/buttons@2x2")
+
+
+       /* public Button(float x, float y, Trap trap) : base("img/buttons@2x2")
         {
 
             target = trap;
             Initialize(x,y);
-        }
+
+        }*/
 
         private void Initialize(float x, float y)
         {
             position.X = x;
             position.Y = y;
             scale = 0.5f;
+            id = "button";
         }
 
         //function to give the button a different key
         public void AssignKey(Keys newKey)
         {
+            visible = true;
             assignedKey = newKey;
             //switch to update the texture
             switch (assignedKey)
@@ -58,6 +69,12 @@ namespace BaseProject.GameObjects
                     break;
 
             }
+        }
+
+        //returns the assigned key
+        public Keys Key
+        {
+            get { return assignedKey; }
         }
 
         public override void HandleInput(InputHelper inputHelper)

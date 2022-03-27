@@ -4,6 +4,7 @@ using System.Text;
 using BaseProject.GameObjects;
 using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
@@ -12,23 +13,38 @@ namespace BaseProject.GameStates
     {
         Player player = new Player();
         TileList tileList = new TileList();
+        Ghost ghost = new Ghost();
 
         public PlayingState()
         {
             Add(player);
             Add(tileList);
-            Add(new Ghost());
+            Add(ghost);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-           
             tileList.CheckColission(player);
+            ghost.SetGhostDistance(tileList);
+
+
         }
-    
-    
-    
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            if (inputHelper.KeyPressed(Keys.NumPad0))
+            {
+
+            }
+            base.HandleInput(inputHelper);
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+        }
+
     }     
 }

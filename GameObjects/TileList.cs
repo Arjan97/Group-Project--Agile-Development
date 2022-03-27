@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
+using System.Linq;
 
 namespace BaseProject.GameObjects
 {
-    public  class TileList : GameObjectList
+    public class TileList : GameObjectList
     {
-        SpriteGameObject ground;
 
         string colorCode;
 
         public TileList()
         {
             LoadLevel(0);
-
-            ground = new SpriteGameObject("img/tiles/spr_groundTile");
-            this.Add(ground);
-
-            ground.Position = new Vector2(400, 500);
             this.id = "TileList";
         }
 
-        public bool OverlapsWith(SpriteGameObject Player)
-        {
-            return ground.CollidesWith(Player);
-        }
+
 
         public void LoadLevel(int levelNr)
         {
@@ -41,19 +34,19 @@ namespace BaseProject.GameObjects
             Level.GetData<Color>(colors);
 
             //assings a tile for each pixel
-            for (int x = 0; x< Level.Width; x++)
+            for (int x = 0; x < Level.Width; x++)
             {
-                for (int y = 0; y< Level.Height; y++)
+                for (int y = 0; y < Level.Height; y++)
                 {
                     //convert color code to string
                     string color = colors[x + (y * Level.Width)].ToString();
-                    string[] fuckzooi = color.Split(new Char[] { ' ', ':'}, StringSplitOptions.RemoveEmptyEntries);
+                    string[] fuckzooi = color.Split(new Char[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
                     colorCode = fuckzooi[1];
                     colorCode += fuckzooi[3];
                     colorCode += fuckzooi[5];
-                    if(x == 75 && y == 5) { System.Diagnostics.Debug.WriteLine(colorCode); }
+                    if (x == 75 && y == 5) { System.Diagnostics.Debug.WriteLine(colorCode); }
 
-                    
+
                     switch (colorCode)
                     {
                         case "195195195":
@@ -87,16 +80,17 @@ namespace BaseProject.GameObjects
             }
         }
 
-    private Tile FindTile(int x, int y) {
-          foreach (Tile obj in children)
-                {
+        private Tile FindTile(int x, int y)
+        {
+            foreach (Tile obj in children)
+            {
                 if (obj.location.X == x && obj.location.Y == y)
-                 {
+                {
                     return obj;
-                 }       
-          }
-    return null;
-    }
-    
+                }
+            }
+            return null;
+        }
+
     }
 }
