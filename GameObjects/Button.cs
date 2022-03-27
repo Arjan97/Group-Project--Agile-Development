@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using BaseProject.GameObjects.Tiles;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameObjects
@@ -9,41 +10,51 @@ namespace BaseProject.GameObjects
     internal class Button : SpriteGameObject
     {
         Trap target;
-        public Keys assignedKey;
-        public Button(float x, float y) : base("") 
-        { 
-            position.X = x;
-            position.Y = y;
+        private Keys assignedKey = Keys.None;
+        public Button(float x, float y) : base("img/buttons@2x2") 
+        {
+            Initialize(x, y);
         }
 
-        public Button(float x, float y, Trap trap) : base("")
+        public Button(float x, float y, Trap trap) : base("img/buttons@2x2")
+        {
+
+            target = trap;
+            Initialize(x,y);
+        }
+
+        private void Initialize(float x, float y)
         {
             position.X = x;
-            position.Y= y;
-            target = trap;
+            position.Y = y;
+            scale = 0.5f;
         }
 
+        //function to give the button a different key
         public void AssignKey(Keys newKey)
         {
             assignedKey = newKey;
-
+            //switch to update the texture
             switch (assignedKey)
             {
-
                 case Keys.NumPad4:
-                    //green Y
+                    sprite.SheetIndex = 0;
                     break;
 
                 case Keys.NumPad5:
-                    //yellow B
+                    sprite.SheetIndex = 1;
                     break;
 
                 case Keys.NumPad6:
-                    //red A
+                    sprite.SheetIndex = 2;
                     break;
 
                 case Keys.NumPad8:
-                    //blue X
+                    sprite.SheetIndex = 3;
+                    break;
+
+                case Keys.None:
+                    visible = false;
                     break;
 
             }
@@ -58,8 +69,10 @@ namespace BaseProject.GameObjects
                     //activates the object the button is assigned to
                     target.Activate();
                     visible = false;
+                    assignedKey = Keys.None;
                 }
-            base.HandleInput(inputHelper);
+                base.HandleInput(inputHelper);
+            }
         }
     }
 }
