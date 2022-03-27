@@ -9,13 +9,13 @@ namespace BaseProject.GameObjects.Tiles
     internal class Trap : GameObjectList
     {
         public float ghostDistance;
-        public string assignedButton;
         public Vector2 buttonPosition;
+        private Button button;
 
        internal bool Activated = false;
         public Trap(int x, int y, int length)
         {
-            buttonPosition = new Vector2(x * (new Tile("img/tiles/spr_groundTile",0,0)).tileSize, y);
+            button = new Button(x * (new Tile("img/tiles/spr_groundTile", 0, 0)).tileSize, y, this);
         }
 
         public virtual void Activate()
