@@ -130,21 +130,5 @@ public class SpriteGameObject : GameObject
         }
         return false;
     }
-
-    public bool CollidesWithFloor(SpriteGameObject obj)
-    {
-        if (this.Position.X - this.Width / 2 < obj.Position.X + obj.Width / 2 &&
-            this.Position.X + this.Width / 2 > obj.Position.X - obj.Width / 2 &&
-            this.Position.Y - this.Height / 2 < obj.Position.Y + obj.Height / 2 &&
-            this.Position.Y + this.Height / 2 > obj.Position.Y - obj.Height / 2)
-        {
-            if (this.Position.Y > obj.Position.Y)
-            {
-                System.Diagnostics.Debug.WriteLine("boven collision");
-                return true;
-            }
-        }
-        return false;
-    }
 }
 

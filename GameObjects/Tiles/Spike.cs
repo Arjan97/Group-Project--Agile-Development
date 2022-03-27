@@ -6,7 +6,7 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Spike : Trap
     {
-        public Spike(int x, int y, int length) : base(x, y)
+        public Spike(int x, int y, int length) : base(x, y, length)
         {
             for (int i = 0; i < length; i++)
             {

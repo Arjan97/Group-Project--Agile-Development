@@ -6,7 +6,7 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Switch : Trap
     {
-        public Switch(int x, int y, int length, int x2, int y2, int length2) : base(x, y)
+        public Switch(int x, int y, int length, int x2, int y2, int length2) : base(x, y, length)
         {
             Add(new SwitchObject(x, y, length, 1));
             Add(new SwitchObject(x2, y2, length2, 2));
