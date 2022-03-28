@@ -24,11 +24,11 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
 
+            player.isGrounded = false;
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
-
+            base.Update(gameTime);
 
         }
 
