@@ -22,7 +22,6 @@ namespace BaseProject.GameObjects
 
         public void SetGhostDistance(TileList tiles)
         {
-            System.Diagnostics.Debug.WriteLine("start");
             //dictionary is used to store all the traps together with their distance
             SortedDictionary<float, Trap> trapsList = new SortedDictionary<float, Trap>();
             //searches all the traps from current level
