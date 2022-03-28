@@ -16,6 +16,7 @@ public class GameEnvironment : Game
     protected static Random random;
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
+    public static Vector3 cameraPos;
 
     public GameEnvironment()
     {
@@ -59,6 +60,12 @@ public class GameEnvironment : Game
     public static GameSettingsManager GameSettingsManager
     {
         get { return gameSettingsManager; }
+    }
+
+    public static Vector3 CameraPos
+    {
+        get { return cameraPos; }
+        set { cameraPos = value; }
     }
 
     public bool FullScreen
@@ -138,7 +145,8 @@ public class GameEnvironment : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
-        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
+        //spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));
         gameStateManager.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }

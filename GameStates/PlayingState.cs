@@ -24,7 +24,6 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
-
             player.isGrounded = false;
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
