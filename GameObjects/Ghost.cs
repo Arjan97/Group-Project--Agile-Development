@@ -82,10 +82,23 @@ namespace BaseProject.GameObjects
                     {
                         keys.Remove(trap.Value.AssignedKey);
                     }
+                    if(trap.Value is Switch)
+                    {
+                        Switch switchTrap = (Switch)trap.Value;
+                        if (switchTrap.AssignedSecondKey != Keys.None)
+                        {
+                            keys.Remove(switchTrap.AssignedSecondKey);
+                        }
+                    }
                 }
                 else //clears all traps that are out of reach
                 {
                     trap.Value.AssignedKey = Keys.None;
+                    if(trap.Value is Switch)
+                    {
+                        Switch switchTrap = (Switch)trap.Value;
+                        switchTrap.AssignedSecondKey = Keys.None;
+                    }
                 }
             }
              return keys;
@@ -93,14 +106,40 @@ namespace BaseProject.GameObjects
         //function that gives the keys to the traps
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
-            foreach (Keys key in keys)
+            int keysLeft = keys.Count;
+            while(keysLeft > 0)
             {
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
                 foreach (KeyValuePair<float, Trap> trap in traplist)
                 {
+                    if(trap.Value is Switch)
+                    {
+                        Switch switchTrap = (Switch)trap.Value;
+
+                        //check if both traps dont have keys
+                        if(switchTrap.AssignedKey == Keys.None && switchTrap.AssignedSecondKey == Keys.None)
+                        {
+                            //if there are enough keys left the keys will be assigned
+                            if(keysLeft >= 2)
+                            {
+                                switchTrap.AssignedKey = keys[keysLeft - 1];
+                                switchTrap.AssignedSecondKey = keys[keysLeft - 2];
+                            }
+                            keysLeft -= 2;
+                            break;
+                        }
+                        if(switchTrap.AssignedSecondKey == Keys.None)
+                        {
+                            switchTrap.AssignedSecondKey = keys[keysLeft - 1];
+                            keysLeft--;
+                            break;
+                        }
+                    }
+                    //default function to assign keys 
                     if(trap.Value.AssignedKey == Keys.None)
                     {
-                        trap.Value.AssignedKey = key;
+                        trap.Value.AssignedKey = keys[keysLeft-1];
+                        keysLeft--;
                         break;
                     }
                 }

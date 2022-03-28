@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,6 +20,33 @@ namespace BaseProject.GameObjects.Tiles
             //searches chosen trap and activates it
             SwitchObject target = (SwitchObject)Find(choise);
             target.Activate();
+        }
+
+
+        public override Keys AssignedKey { 
+            get {
+                SwitchObject switchobject = (SwitchObject)Find("1");
+                return switchobject.AssignedKey;
+                }
+            set
+            {
+                SwitchObject switchobject = (SwitchObject)Find("1");
+                switchobject.AssignedKey = value;
+            }
+        }
+
+        public Keys AssignedSecondKey
+        {
+            get
+            {
+                SwitchObject switchobject = (SwitchObject)Find("2");
+                return switchobject.AssignedKey;
+            }
+            set
+            {
+                SwitchObject switchobject = (SwitchObject)Find("2");
+                switchobject.AssignedKey = value;
+            }
         }
     }
 }

@@ -42,7 +42,7 @@ namespace BaseProject.GameObjects.Tiles
         }
 
         //function to get or change the key for the button
-        public Keys AssignedKey
+        public virtual Keys AssignedKey
         {
             get { return button.Key; }
             set { button.AssignKey(value); }
