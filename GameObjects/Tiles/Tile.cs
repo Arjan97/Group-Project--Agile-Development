@@ -8,7 +8,7 @@ namespace BaseProject.GameObjects
 {
     public class Tile : SpriteGameObject
     {
-        int tileSize = 60;
+       public int tileSize = 60;
 
         public Vector2 location;
         public Tile(string assetName, int X, int Y) : base(assetName)
