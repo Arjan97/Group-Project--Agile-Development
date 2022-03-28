@@ -9,7 +9,7 @@ namespace BaseProject.GameObjects
 {
     public  class TileList : GameObjectList
     {
-        SpriteGameObject ground;
+        //SpriteGameObject ground;
 
         string colorCode;
 
@@ -17,17 +17,17 @@ namespace BaseProject.GameObjects
         {
             LoadLevel(0);
 
-            ground = new SpriteGameObject("img/tiles/spr_groundTile");
+           /* ground = new SpriteGameObject("img/tiles/spr_groundTile");
             this.Add(ground);
 
-            ground.Position = new Vector2(400, 500);
+            ground.Position = new Vector2(400, 500);*/
             this.id = "TileList";
         }
 
-        public bool OverlapsWith(SpriteGameObject Player)
+       /* public bool OverlapsWith(SpriteGameObject Player)
         {
             return ground.CollidesWith(Player);
-        }
+        }*/
 
         public void LoadLevel(int levelNr)
         {

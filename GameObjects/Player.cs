@@ -17,13 +17,17 @@ namespace BaseProject.GameObjects
         public float jumpSpeed;
         public bool isFalling;
         public Vector2 pVelocity;
+        public bool isColliding;
+        public bool keyPressed;
 
       
 
         public Player() : base("player/spr_player")
         {
+            keyPressed = false;
             pVelocity = velocity;
             isFalling = true;
+            isColliding = false;
             hasJumped = false;
             startPosition = GameEnvironment.Screen.ToVector2() / 2;
             jumpSpeed = 100f;
@@ -43,11 +47,15 @@ namespace BaseProject.GameObjects
         {
             base.Update(gameTime);
             float i = 1;
-           velocity.Y = 0;
+            velocity.Y += 2 * i;
 
-            if (!isFalling)
+            if (isColliding)
             {
+                keyPressed = false;
+                //hasJumped = false;
                 velocity.Y = 0;
+
+                isColliding = false;
             }
            
             position += velocity;
@@ -68,18 +76,20 @@ namespace BaseProject.GameObjects
                 velocity.X = -speed;
             else if (inputHelper.IsKeyDown(Keys.Right)) 
                 velocity.X = speed;
-            if (inputHelper.IsKeyDown(Keys.Up) && hasJumped == false)
+            if (inputHelper.IsKeyDown(Keys.Up) && isColliding)
             {
-               // position.Y -= jumpSpeed;
-                velocity.Y = -jumpSpeed/2;
+                isColliding = false;
+                keyPressed = true;
+                //position.Y -= jumpSpeed;
+                velocity.Y = -jumpSpeed;
                // hasJumped = true;
                 //isFalling = true;
-            } 
-                
-           // if (inputHelper.IsKeyDown(Keys.Down)) 
-             //   velocity.Y = speed;
-             //Position += Velocity;
-           
+            }
+
+            // if (inputHelper.IsKeyDown(Keys.Down)) 
+            //   velocity.Y = speed;
+            //Position += Velocity;
+
         }
 
         public void HandleColission(Tile tile)
@@ -92,10 +102,12 @@ namespace BaseProject.GameObjects
             {
                 if(intersection.Y < 0)
                 {
+                    isColliding = true;
                     System.Diagnostics.Debug.WriteLine("up");
                 }
                 else
                 {
+                    isColliding = true;
                     System.Diagnostics.Debug.WriteLine("down");
                 }
             }
@@ -103,10 +115,12 @@ namespace BaseProject.GameObjects
             {
                 if(intersection.X < 0)
                 {
+                    isColliding = true;
                     System.Diagnostics.Debug.WriteLine("left");
                 }
                 else
                 {
+                    isColliding = true;
                     System.Diagnostics.Debug.WriteLine("right");
                 }
             }
