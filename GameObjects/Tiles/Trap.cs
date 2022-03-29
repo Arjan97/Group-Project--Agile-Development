@@ -22,6 +22,7 @@ namespace BaseProject.GameObjects.Tiles
             button = new Button(buttonPosition, this);
         }
 
+        //
         public virtual void Activate()
         {
             foreach (TrapTile tile in Children)
@@ -31,7 +32,7 @@ namespace BaseProject.GameObjects.Tiles
             Activated = true;
         }
 
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
             base.Draw(gameTime, spriteBatch);
@@ -46,6 +47,18 @@ namespace BaseProject.GameObjects.Tiles
         {
             get { return button.Key; }
             set { button.AssignKey(value); }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            button.Update(gameTime);
+            base.Update(gameTime);
+        }
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            button.HandleInput(inputHelper);
+            base.HandleInput(inputHelper);
         }
     }
 }

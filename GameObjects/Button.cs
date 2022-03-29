@@ -87,9 +87,16 @@ namespace BaseProject.GameObjects
                     target.Activate();
                     visible = false;
                     assignedKey = Keys.None;
+                    System.Diagnostics.Debug.WriteLine("activate");
                 }
                 base.HandleInput(inputHelper);
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            System.Diagnostics.Debug.WriteLine(assignedKey);
+            base.Update(gameTime);
         }
     }
 }

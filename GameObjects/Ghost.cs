@@ -12,6 +12,7 @@ namespace BaseProject.GameObjects
         int speed = 240;
         static int maxButtons = 4;
         Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
+
        public Ghost(): base ("img/players/spr_ghost")
         {
             id = "Ghost";
@@ -20,6 +21,7 @@ namespace BaseProject.GameObjects
             scale = 1.5f;
         }
 
+        //function to calculate trap distance and assign keys
         public void SetGhostDistance(TileList tiles)
         {
             //dictionary is used to store all the traps together with their distance
@@ -102,6 +104,7 @@ namespace BaseProject.GameObjects
             }
              return keys;
         }
+
         //function that gives the keys to the traps
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
@@ -121,15 +124,18 @@ namespace BaseProject.GameObjects
                             //if there are enough keys left the keys will be assigned
                             if(keysLeft >= 2)
                             {
-                                switchTrap.AssignedKey = keys[keysLeft - 1];
-                                switchTrap.AssignedSecondKey = keys[keysLeft - 2];
+                                switchTrap.AssignedKey = keys[0];
+                                keys.Remove(0);
+                                switchTrap.AssignedSecondKey = keys[0];
+                                keys.Remove(0);
                             }
                             keysLeft -= 2;
                             break;
                         }
                         if(switchTrap.AssignedSecondKey == Keys.None)
                         {
-                            switchTrap.AssignedSecondKey = keys[keysLeft - 1];
+                            switchTrap.AssignedSecondKey = keys[0];
+                            keys.Remove(0);
                             keysLeft--;
                             break;
                         }
@@ -137,11 +143,14 @@ namespace BaseProject.GameObjects
                     //default function to assign keys 
                     if(trap.Value.AssignedKey == Keys.None)
                     {
-                        trap.Value.AssignedKey = keys[keysLeft-1];
+                        trap.Value.AssignedKey = keys[0];
+                        keys.Remove(0);
                         keysLeft--;
                         break;
                     }
                 }
+                //breaks the while loop if there are no more traps who need keys
+                break;
             }
         }
 
@@ -153,7 +162,7 @@ namespace BaseProject.GameObjects
                 velocity.X = -speed;
                 sprite.Mirror = false;
             }
-            if (inputHelper.IsKeyDown(Keys.L)  && position.X < GameEnvironment.Screen.X - Sprite.Width)
+            if (inputHelper.IsKeyDown(Keys.L)  && GlobalPosition.X < GameEnvironment.Screen.X - Sprite.Width)
             {
                 velocity.X = speed;
                 sprite.Mirror = true;
