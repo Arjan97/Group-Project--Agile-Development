@@ -156,7 +156,17 @@ namespace BaseProject.GameObjects
                 break;
             }
         }
-
+        public void StayOnScreen(Vector2 camPos)
+        {
+            if(GlobalPosition.X < 0)
+            {
+                position.X+=5;
+            }
+            if(GlobalPosition.X > GameEnvironment.Screen.X)
+            {
+                position.X -=5;
+            }
+        }
         public override void HandleInput(InputHelper inputHelper)
         {
             velocity = Vector2.Zero;

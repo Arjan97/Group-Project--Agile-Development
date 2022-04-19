@@ -34,14 +34,6 @@ namespace BaseProject.GameStates
             HandleCamera();
         }
 
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            if (inputHelper.KeyPressed(Keys.NumPad0))
-            {
-
-            }
-            base.HandleInput(inputHelper);
-        }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -62,8 +54,7 @@ namespace BaseProject.GameStates
             {
                 position.X += 5f;
             }
-
-            System.Diagnostics.Debug.WriteLine(headingRight);
+            ghost.StayOnScreen(position);
         }
 
     }     
