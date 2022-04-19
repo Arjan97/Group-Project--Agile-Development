@@ -15,6 +15,8 @@ namespace BaseProject.GameStates
         TileList tileList = new TileList();
         Ghost ghost = new Ghost();
 
+        bool headingRight = true;
+
         public PlayingState()
         {
             Add(player);
@@ -24,11 +26,12 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
+            System.Diagnostics.Debug.WriteLine("start");
             player.isGrounded = false;
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
             base.Update(gameTime);
-
+            HandleCamera();
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -43,6 +46,24 @@ namespace BaseProject.GameStates
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
+        }
+
+        public void HandleCamera()
+        {
+            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
+            {
+                headingRight = !headingRight;
+            }
+            if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X < tileList.LevelSize.X)
+            {
+                position.X -= 5f;
+            }
+            else if (!headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 5 / 8 && position.X <= 0)
+            {
+                position.X += 5f;
+            }
+
+            System.Diagnostics.Debug.WriteLine(headingRight);
         }
 
     }     

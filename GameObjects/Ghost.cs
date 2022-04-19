@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
+using System.Linq;
 
 namespace BaseProject.GameObjects
 {
@@ -37,10 +38,10 @@ namespace BaseProject.GameObjects
                         //calculates the distance between ghost and object System.ArgumentException
                         trap.ghostDistance = Math.Abs(this.Position.X - trap.buttonPosition.X) + Math.Abs(this.Position.Y - trap.buttonPosition.Y);
                         try { 
-                            trapsList.Add(trap.ghostDistance, trap); 
-                        }catch (System.ArgumentException)
+                            trapsList.Add(trap.ghostDistance + (float)GameEnvironment.Random.NextDouble(), trap); 
+                        }catch (ArgumentException)
                         {
-                            trap.ghostDistance += 10.789f;
+                            trap.ghostDistance += (float)GameEnvironment.Random.NextDouble();
                             trapsList.Add(trap.ghostDistance, trap);
                         }
                     }
@@ -53,7 +54,7 @@ namespace BaseProject.GameObjects
             {
                 AssignKeys(trapsList, freeKeys);
             }
-            
+            System.Diagnostics.Debug.WriteLine(trapsList.Count());
             
         }
 
@@ -114,7 +115,8 @@ namespace BaseProject.GameObjects
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
                 foreach (KeyValuePair<float, Trap> trap in traplist)
                 {
-                    if(trap.Value is Switch)
+                    int pos = GameEnvironment.Random.Next(0, keysLeft - 1);
+                    if (trap.Value is Switch)
                     {
                         Switch switchTrap = (Switch)trap.Value;
 
@@ -124,8 +126,9 @@ namespace BaseProject.GameObjects
                             //if there are enough keys left the keys will be assigned
                             if(keysLeft >= 2)
                             {
-                                switchTrap.AssignedKey = keys[0];
-                                keys.Remove(0);
+
+                                switchTrap.AssignedKey = keys[pos];
+                                keys.Remove(keys[pos]);
                                 switchTrap.AssignedSecondKey = keys[0];
                                 keys.Remove(0);
                             }
@@ -134,8 +137,8 @@ namespace BaseProject.GameObjects
                         }
                         if(switchTrap.AssignedSecondKey == Keys.None)
                         {
-                            switchTrap.AssignedSecondKey = keys[0];
-                            keys.Remove(0);
+                            switchTrap.AssignedSecondKey = keys[pos];
+                            keys.Remove(keys[pos]);
                             keysLeft--;
                             break;
                         }
@@ -143,8 +146,8 @@ namespace BaseProject.GameObjects
                     //default function to assign keys 
                     if(trap.Value.AssignedKey == Keys.None)
                     {
-                        trap.Value.AssignedKey = keys[0];
-                        keys.Remove(0);
+                        trap.Value.AssignedKey = keys[pos];
+                        keys.Remove(keys[pos]);
                         keysLeft--;
                         break;
                     }

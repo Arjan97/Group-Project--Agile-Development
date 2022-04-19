@@ -95,7 +95,10 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            System.Diagnostics.Debug.WriteLine(assignedKey);
+            if (assignedKey != Keys.None)
+            {
+                System.Diagnostics.Debug.WriteLine(assignedKey);
+            }
             base.Update(gameTime);
         }
     }

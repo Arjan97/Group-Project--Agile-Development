@@ -116,7 +116,7 @@ namespace BaseProject.GameObjects
             position += velocity;
             Velocity = Vector2.Zero;
 
-            GameEnvironment.cameraPos = new Vector3((position.X - 640) * -1, 0, 0f);
+          //  GameEnvironment.cameraPos = new Vector3((position.X - 640) * -1, 0, 0f);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

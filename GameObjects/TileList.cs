@@ -11,7 +11,7 @@ namespace BaseProject.GameObjects
 {
     public class TileList : GameObjectList
     {
-
+        Vector2 levelSize;
         string colorCode;
 
         public TileList()
@@ -78,6 +78,8 @@ namespace BaseProject.GameObjects
 
                 }
             }
+            int tileSize = new Tile("img/tiles/spr_bridge",0,0).tileSize;
+            levelSize = new Vector2(level.Width*tileSize, level.Height*tileSize);
         }
 
         private Tile FindTile(int x, int y)
@@ -91,6 +93,8 @@ namespace BaseProject.GameObjects
             }
             return null;
         }
+
+        public Vector2 LevelSize { get { return levelSize; } }
 
     }
 }
