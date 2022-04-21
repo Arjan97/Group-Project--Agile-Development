@@ -44,7 +44,6 @@ namespace BaseProject.GameObjects
                     colorCode = fuckzooi[1];
                     colorCode += fuckzooi[3];
                     colorCode += fuckzooi[5];
-                    if (x == 75 && y == 5) { System.Diagnostics.Debug.WriteLine(colorCode); }
 
 
                     switch (colorCode)

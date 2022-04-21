@@ -15,6 +15,7 @@ namespace BaseProject.GameObjects.Tiles
             {
                 Add(new BridgeTile(x + i, y));
             }
+            
         }
 
             public override void Activate()

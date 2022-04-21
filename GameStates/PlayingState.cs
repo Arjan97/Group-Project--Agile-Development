@@ -40,16 +40,21 @@ namespace BaseProject.GameStates
             base.Draw(gameTime, spriteBatch);
         }
 
+        //function that moves the camera
         public void HandleCamera()
         {
+            //check if player turns around
             if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
                 headingRight = !headingRight;
             }
+
+            //if player moves to the right and passes 3/8 of screen, move camera, unless player is at the edge of the screen
             if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X < tileList.LevelSize.X)
             {
                 position.X -= 5f;
             }
+            //if player moves to the left and passes 5/8 of screen, move camera, unless player is at the beginning of the screen
             else if (!headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 5 / 8 && position.X <= 0)
             {
                 position.X += 5f;

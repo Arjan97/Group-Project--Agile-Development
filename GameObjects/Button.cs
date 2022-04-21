@@ -9,12 +9,11 @@ namespace BaseProject.GameObjects
 {
     internal class Button : SpriteGameObject
     {
-        Trap target;
         private Keys assignedKey = Keys.None;
 
         public Button(Vector2 position, Trap trap) : base("img/buttons@2x2")
         {
-            target = trap;
+            parent = trap;
             Initialize(position.X, position.Y);
         }
         public Button(float x, float y) : base("img/buttons@2x2") 
@@ -81,10 +80,11 @@ namespace BaseProject.GameObjects
         {
             if (inputHelper.KeyPressed(assignedKey))
             {
-                if (target != null)
+                if (parent != null)
                 {
+                    Trap parentTrap = (Trap)parent;
                     //activates the object the button is assigned to
-                    target.Activate();
+                    parentTrap.Activate();
                     visible = false;
                     assignedKey = Keys.None;
                     System.Diagnostics.Debug.WriteLine("activate");
@@ -97,8 +97,10 @@ namespace BaseProject.GameObjects
         {
             if (assignedKey != Keys.None)
             {
-                System.Diagnostics.Debug.WriteLine(assignedKey);
+               System.Diagnostics.Debug.WriteLine(assignedKey);
+                System.Diagnostics.Debug.WriteLine(GlobalPosition.X);
             }
+
             base.Update(gameTime);
         }
     }

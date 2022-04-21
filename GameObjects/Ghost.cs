@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
 using System.Linq;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameObjects
 {
@@ -13,6 +14,7 @@ namespace BaseProject.GameObjects
         int speed = 240;
         static int maxButtons = 4;
         Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
+        Button button;
 
        public Ghost(): base ("img/players/spr_ghost")
         {
@@ -20,6 +22,16 @@ namespace BaseProject.GameObjects
             position.X = GameEnvironment.Screen.X / 2;
             position.Y = GameEnvironment.Screen.Y / 2;
             scale = 1.5f;
+            button = new Button(position.X, position.Y);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            float bounce = (float)Math.Sin(gameTime.TotalGameTime.Ticks /  10000);
+            position.Y += bounce;
+            System.Diagnostics.Debug.WriteLine(bounce);
+            button.Update(gameTime);
+            base.Update(gameTime);
         }
 
         //function to calculate trap distance and assign keys
@@ -54,7 +66,6 @@ namespace BaseProject.GameObjects
             {
                 AssignKeys(trapsList, freeKeys);
             }
-            System.Diagnostics.Debug.WriteLine(trapsList.Count());
             
         }
 
@@ -115,47 +126,52 @@ namespace BaseProject.GameObjects
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
                 foreach (KeyValuePair<float, Trap> trap in traplist)
                 {
-                    int pos = GameEnvironment.Random.Next(0, keysLeft - 1);
-                    if (trap.Value is Switch)
+                    if (trap.Value.GlobalPosition.X >= 0)
                     {
-                        Switch switchTrap = (Switch)trap.Value;
-
-                        //check if both traps dont have keys
-                        if(switchTrap.AssignedKey == Keys.None && switchTrap.AssignedSecondKey == Keys.None)
+                        int pos = GameEnvironment.Random.Next(0, keysLeft - 1);
+                        if (trap.Value is Switch)
                         {
-                            //if there are enough keys left the keys will be assigned
-                            if(keysLeft >= 2)
+                            Switch switchTrap = (Switch)trap.Value;
+
+                            //check if both traps dont have keys
+                            if (switchTrap.AssignedKey == Keys.None && switchTrap.AssignedSecondKey == Keys.None)
                             {
+                                //if there are enough keys left the keys will be assigned
+                                if (keysLeft >= 2)
+                                {
 
-                                switchTrap.AssignedKey = keys[pos];
-                                keys.Remove(keys[pos]);
-                                switchTrap.AssignedSecondKey = keys[0];
-                                keys.Remove(0);
+                                    switchTrap.AssignedKey = keys[pos];
+                                    keys.Remove(keys[pos]);
+                                    switchTrap.AssignedSecondKey = keys[0];
+                                    keys.Remove(0);
+                                }
+                                keysLeft -= 2;
+                                break;
                             }
-                            keysLeft -= 2;
-                            break;
+                            if (switchTrap.AssignedSecondKey == Keys.None)
+                            {
+                                switchTrap.AssignedSecondKey = keys[pos];
+                                keys.Remove(keys[pos]);
+                                keysLeft--;
+                                break;
+                            }
                         }
-                        if(switchTrap.AssignedSecondKey == Keys.None)
+                        //default function to assign keys 
+                        if (trap.Value.AssignedKey == Keys.None)
                         {
-                            switchTrap.AssignedSecondKey = keys[pos];
+                            trap.Value.AssignedKey = keys[pos];
                             keys.Remove(keys[pos]);
                             keysLeft--;
                             break;
                         }
-                    }
-                    //default function to assign keys 
-                    if(trap.Value.AssignedKey == Keys.None)
-                    {
-                        trap.Value.AssignedKey = keys[pos];
-                        keys.Remove(keys[pos]);
-                        keysLeft--;
-                        break;
                     }
                 }
                 //breaks the while loop if there are no more traps who need keys
                 break;
             }
         }
+
+        //function so ghost won't leave screen
         public void StayOnScreen(Vector2 camPos)
         {
             if(GlobalPosition.X < 0)
@@ -167,6 +183,7 @@ namespace BaseProject.GameObjects
                 position.X -=5;
             }
         }
+
         public override void HandleInput(InputHelper inputHelper)
         {
             velocity = Vector2.Zero;
@@ -196,5 +213,11 @@ namespace BaseProject.GameObjects
             }
             base.HandleInput(inputHelper);
         }
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            button.Draw(gameTime, spriteBatch);
+            base.Draw(gameTime, spriteBatch);
+        }
     }
+
 }
