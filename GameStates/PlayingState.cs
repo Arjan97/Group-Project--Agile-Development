@@ -26,7 +26,7 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            System.Diagnostics.Debug.WriteLine("start");
+           // System.Diagnostics.Debug.WriteLine("start");
             player.isGrounded = false;
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);

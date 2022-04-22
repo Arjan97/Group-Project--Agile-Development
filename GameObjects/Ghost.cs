@@ -14,7 +14,7 @@ namespace BaseProject.GameObjects
         int speed = 240;
         static int maxButtons = 4;
         Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
-        Button button;
+
 
        public Ghost(): base ("img/players/spr_ghost")
         {
@@ -22,15 +22,12 @@ namespace BaseProject.GameObjects
             position.X = GameEnvironment.Screen.X / 2;
             position.Y = GameEnvironment.Screen.Y / 2;
             scale = 1.5f;
-            button = new Button(position.X, position.Y);
         }
 
         public override void Update(GameTime gameTime)
         {
             float bounce = (float)Math.Sin(gameTime.TotalGameTime.Ticks /  10000);
             position.Y += bounce;
-            System.Diagnostics.Debug.WriteLine(bounce);
-            button.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -98,9 +95,21 @@ namespace BaseProject.GameObjects
                     if(trap.Value is Switch)
                     {
                         Switch switchTrap = (Switch)trap.Value;
+                        if (switchTrap.AssignedKey != Keys.None)
+                        {
+                            keys.Remove(trap.Value.AssignedKey);
+                        }
+
                         if (switchTrap.AssignedSecondKey != Keys.None)
                         {
                             keys.Remove(switchTrap.AssignedSecondKey);
+                        }
+                    }
+                    else
+                    {
+                        if (trap.Value.AssignedKey != Keys.None)
+                        {
+                            keys.Remove(trap.Value.AssignedKey);
                         }
                     }
                 }
@@ -126,9 +135,9 @@ namespace BaseProject.GameObjects
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
                 foreach (KeyValuePair<float, Trap> trap in traplist)
                 {
-                    if (trap.Value.GlobalPosition.X >= 0)
-                    {
                         int pos = GameEnvironment.Random.Next(0, keysLeft - 1);
+
+
                         if (trap.Value is Switch)
                         {
                             Switch switchTrap = (Switch)trap.Value;
@@ -155,15 +164,22 @@ namespace BaseProject.GameObjects
                                 keysLeft--;
                                 break;
                             }
-                        }
-                        //default function to assign keys 
-                        if (trap.Value.AssignedKey == Keys.None)
-                        {
-                            trap.Value.AssignedKey = keys[pos];
+
+                            if (switchTrap.AssignedKey == Keys.None)
+                            {
+                            switchTrap.AssignedKey = keys[pos];
                             keys.Remove(keys[pos]);
                             keysLeft--;
                             break;
+                            }
                         }
+                    //default function to assign keys 
+                    if (trap.Value.AssignedKey == Keys.None)
+                    {
+                        trap.Value.AssignedKey = keys[pos];
+                        keys.Remove(keys[pos]);
+                        keysLeft--;
+                        break;
                     }
                 }
                 //breaks the while loop if there are no more traps who need keys
@@ -213,11 +229,7 @@ namespace BaseProject.GameObjects
             }
             base.HandleInput(inputHelper);
         }
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            button.Draw(gameTime, spriteBatch);
-            base.Draw(gameTime, spriteBatch);
-        }
+
     }
 
 }
