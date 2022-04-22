@@ -6,7 +6,7 @@ public class SpriteGameObject : GameObject
     protected Color shade = Color.White;
     protected SpriteSheet sprite;
     protected Vector2 origin;
-    protected float scale = 1f;
+    protected Vector2 scale = new Vector2(1f, 1f);
     public bool PerPixelCollisionDetection = true;
 
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
@@ -63,7 +63,7 @@ public class SpriteGameObject : GameObject
     /// <summary>
     /// Returns / sets the scale of the sprite.
     /// </summary>
-    public float Scale {
+    public Vector2 Scale {
         get { return scale; }
         set { scale = value;  }
     }

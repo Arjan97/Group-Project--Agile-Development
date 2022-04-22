@@ -34,7 +34,7 @@ namespace BaseProject.GameObjects
         {
             position.X = x;
             position.Y = y;
-            scale = 0.5f;
+            scale = new Vector2(0.5f, 0.5f);
         }
 
         //function to give the button a different key
