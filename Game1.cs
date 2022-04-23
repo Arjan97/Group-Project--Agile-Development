@@ -13,9 +13,10 @@ namespace BaseProject
 
             screen = new Point(1280, 720);
             ApplyResolutionSettings();
- 
-            GameStateManager.AddGameState("playState", new PlayingState());
-            GameStateManager.SwitchTo("playState");
+            gameStateManager.AddGameState("startScreen", new StartScreen());
+            gameStateManager.AddGameState("mainMenuState", new MainMenuState());
+            GameStateManager.AddGameState("playingState", new PlayingState());
+            GameStateManager.SwitchTo("startScreen");
         }
 
         protected override void Draw(GameTime gameTime)

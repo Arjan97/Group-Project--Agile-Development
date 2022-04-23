@@ -28,7 +28,7 @@ namespace BaseProject.GameObjects
 
 
 
-        public Player() : base("player/spr_player")
+        public Player() : base("img/players/spr_player")
         {
             keyPressed = false;
             pVelocity = velocity;
@@ -41,7 +41,7 @@ namespace BaseProject.GameObjects
             Origin = Center;
             jumpframes = 0;
             Reset();
-
+            scale = new Vector2(1, 2);
         }
 
         public override void Reset()

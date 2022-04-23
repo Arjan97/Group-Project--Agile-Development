@@ -4,18 +4,27 @@ using System.Text;
 using System.Drawing;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using BaseProject.GameObjects;
 
 namespace BaseProject.GameStates
 {
-    internal class MenuState : GameObjectList
+    internal class Menu : GameObjectList
     {
         Point currentOption;
         Point maxOptions = new Point(0,0);
-        protected SpriteGameObject[,] options;
-        public MenuState(int x, int y)
+        protected optionButton[,] options;
+        SpriteGameObject arrow;
+
+        public Menu(int x, int y)
         {
-            maxOptions = new Point(x-1, y-1);
-            options = new SpriteGameObject[x,y];
+            if (x > 0 && y > 0)
+            {
+                maxOptions = new Point(x - 1, y - 1);
+                options = new optionButton[x, y];
+                arrow = new SpriteGameObject("img/menu/spr_selectIcon");
+                arrow.Scale = new Microsoft.Xna.Framework.Vector2(2, 2);
+                Add(arrow);
+            }
         }
 
 
@@ -40,11 +49,17 @@ namespace BaseProject.GameStates
             {
                 for(int y = 0; y < maxOptions.Y+1; y++) { options[x,y].Update(gameTime);}
             }
+            PositionArrow();
             base.Update(gameTime);
         }
+
+        void PositionArrow()
+        {
+            optionButton currentOption = options[this.currentOption.X, this.currentOption.Y];
+            arrow.Position = new Microsoft.Xna.Framework.Vector2(currentOption.Position.X - (currentOption.Width/2 + arrow.Width), currentOption.Position.Y); }
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, SpriteBatch spriteBatch)
         {
-            for (int x = 0; x < maxOptions.X + 1; x++)
+            for (int x = 0; x < maxOptions.X+1; x++)
             {
                 for (int y = 0; y < maxOptions.Y + 1; y++) { options[x, y].Draw(gameTime, spriteBatch); }
             }

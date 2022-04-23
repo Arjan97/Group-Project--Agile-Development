@@ -17,7 +17,7 @@ namespace BaseProject.GameObjects
         public TileList()
         {
             LoadLevel(0);
-            this.id = "TileList";
+            id = "TileList";
         }
 
 
