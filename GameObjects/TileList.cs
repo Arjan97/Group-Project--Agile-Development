@@ -16,11 +16,8 @@ namespace BaseProject.GameObjects
 
         public TileList()
         {
-            LoadLevel(0);
             id = "TileList";
         }
-
-
 
         public void LoadLevel(int levelNr)
         {

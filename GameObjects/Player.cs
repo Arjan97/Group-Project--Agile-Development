@@ -41,7 +41,6 @@ namespace BaseProject.GameObjects
             Origin = Center;
             jumpframes = 0;
             Reset();
-            scale = new Vector2(1, 2);
         }
 
         public override void Reset()

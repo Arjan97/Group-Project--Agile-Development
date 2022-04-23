@@ -7,6 +7,7 @@ namespace BaseProject
 {
     public class Game1 : GameEnvironment
     {      
+    public static int maxLevels = 1;
         protected override void LoadContent()
         {
             base.LoadContent();

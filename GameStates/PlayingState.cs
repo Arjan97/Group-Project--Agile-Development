@@ -40,6 +40,11 @@ namespace BaseProject.GameStates
             base.Draw(gameTime, spriteBatch);
         }
 
+        public void LoadLevel(int level)
+        {
+            tileList.LoadLevel(level);
+        }
+
         //function that moves the camera
         public void HandleCamera()
         {
