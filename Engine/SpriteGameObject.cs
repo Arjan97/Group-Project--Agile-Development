@@ -31,7 +31,7 @@ public class SpriteGameObject : GameObject
             return;
         }
         sprite.Draw(spriteBatch, GlobalPosition, origin, scale);
-        DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
+        //DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
     }
 
     public SpriteSheet Sprite
