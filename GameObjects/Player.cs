@@ -19,8 +19,8 @@ namespace BaseProject.GameObjects
         public Vector2 pVelocity;
         public bool isColliding;
         public bool keyPressed;
-        public string collidingSide;
-        public bool horizontalCollision;
+        public string HorizontalCollidingSide, verticalCollidingSide;
+        public bool horizontalCollision, verticalCollision;
         public bool isGrounded;
         public bool isJumping;
         public int jumpframes;
@@ -67,7 +67,7 @@ namespace BaseProject.GameObjects
 
                 if (horizontalCollision)
                 {
-                    switch (collidingSide)
+                    switch (HorizontalCollidingSide)
                     {
                         case "left":
                             //System.Diagnostics.Debug.WriteLine("left");
@@ -87,22 +87,43 @@ namespace BaseProject.GameObjects
                     }
                     horizontalCollision = false;
                 }
-     
+                if (verticalCollision)
+                {
+                    switch (verticalCollidingSide)
+                    {
+                        case "down":
+                            //System.Diagnostics.Debug.WriteLine("left");
+                            velocity.Y = 3;
+                            verticalCollision = false;
+                            break;
+                        case "up":
+                            velocity.Y = -3;
+                            //System.Diagnostics.Debug.WriteLine("right");
+                            verticalCollision = false;
+                            //disabledSide = "right";
+                            break;
+                        default:
+                            break;
+
+                    }
+                    horizontalCollision = false;
+                }
+
             } else if(isGrounded){
                 disabledSide = "none";
             }
 
-            if (isJumping && jumpframes < 15 && jumpKeyPressed)
+            if (isJumping && jumpframes < 30 && jumpKeyPressed && (verticalCollidingSide != "up"))
             {
                 if(jumpframes == 1)
                 {
-                    velocity.Y += -15;
-                }  else if(jumpframes < 5)
+                    velocity.Y -= 30;
+                }  else if(jumpframes < 10)
                 {
-                    velocity.Y += -12;
+                    velocity.Y -= 15;
                 } else
                 {
-                    velocity.Y += -9;
+                    velocity.Y -= 5;
                 }
 
 
@@ -112,7 +133,7 @@ namespace BaseProject.GameObjects
             {
                 if (!isGrounded)
                 {
-                    velocity.Y += 2 * i;
+                    velocity.Y += 4.5f * i;
                     //System.Diagnostics.Debug.WriteLine("valt");
 
                 }
@@ -135,24 +156,18 @@ namespace BaseProject.GameObjects
         {
             base.HandleInput(inputHelper);
 
-            System.Diagnostics.Debug.WriteLine("side: " + disabledSide);
-            if (inputHelper.IsKeyDown(Keys.Left) && horizontalCollision == false && disabledSide != "left")
+            if (inputHelper.IsKeyDown(Keys.Left) && horizontalCollision == false)
             {
-                if (disabledSide == "right")
-                {
-                    disabledSide = "none";
-                }
                 //System.Diagnostics.Debug.WriteLine(horizontalCollision);
                 velocity.X = -speed;
+                Player testPlayer = new Player();
+                testPlayer.position = testPlayer.position += velocity;
             }
 
-            else if (inputHelper.IsKeyDown(Keys.Right) && disabledSide != "right")
+            else if (inputHelper.IsKeyDown(Keys.Right))
             {
                 velocity.X = speed;
-                if(disabledSide == "left")
-                {
-                    disabledSide = "none";
-                }
+
             }
             if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
             {
@@ -179,23 +194,23 @@ namespace BaseProject.GameObjects
 
         public void HandleColission(Tile tile)
         {
-
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
-            //System.Diagnostics.Debug.WriteLine(intersection.X + " " + intersection.Y);
-
 
             if (Math.Abs(intersection.X) > Math.Abs(intersection.Y))
             {
                 if (intersection.Y < 0)
                 {
                     isColliding = true;
-                    // System.Diagnostics.Debug.WriteLine("up");
+                     //System.Diagnostics.Debug.WriteLine("down");
                     isGrounded = true;
+                    verticalCollidingSide = "down";
                 }
                 else
                 {
                     isColliding = true;
-                    // System.Diagnostics.Debug.WriteLine("down");
+                    System.Diagnostics.Debug.WriteLine("up");
+                    verticalCollidingSide = "up";
+
                 }
             }
             else
@@ -203,13 +218,13 @@ namespace BaseProject.GameObjects
                 if (intersection.X < 0)
                 {
                     isColliding = true;
-                    collidingSide = "right";
+                    HorizontalCollidingSide = "right";
                     horizontalCollision = true;
                 }
                 else
                 {
                     isColliding = true;
-                    collidingSide = "left";
+                    HorizontalCollidingSide = "left";
                     horizontalCollision = true;
                 }
                 // System.Diagnostics.Debug.WriteLine(collidingSide);
