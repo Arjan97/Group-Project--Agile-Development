@@ -25,6 +25,7 @@ namespace BaseProject.GameObjects
         public bool isJumping;
         public int jumpframes;
         public bool jumpKeyPressed;
+        public string disabledSide;
 
 
 
@@ -70,13 +71,15 @@ namespace BaseProject.GameObjects
                     {
                         case "left":
                             //System.Diagnostics.Debug.WriteLine("left");
-                            velocity.X = -1;
+                            velocity.X = 3;
                             horizontalCollision = false;
+                            disabledSide = "left";
                             break;
                         case "right":
-                            velocity.X = 1;
+                            velocity.X = -3;
                             //System.Diagnostics.Debug.WriteLine("right");
                             horizontalCollision = false;
+                            disabledSide = "right";
                             break;
                         default:
                             break;
@@ -84,6 +87,9 @@ namespace BaseProject.GameObjects
                     }
                     horizontalCollision = false;
                 }
+     
+            } else if(isGrounded){
+                disabledSide = "none";
             }
 
             if (isJumping && jumpframes < 15 && jumpKeyPressed)
@@ -129,14 +135,25 @@ namespace BaseProject.GameObjects
         {
             base.HandleInput(inputHelper);
 
-            if (inputHelper.IsKeyDown(Keys.Left) && horizontalCollision == false)
+            System.Diagnostics.Debug.WriteLine("side: " + disabledSide);
+            if (inputHelper.IsKeyDown(Keys.Left) && horizontalCollision == false && disabledSide != "left")
             {
+                if (disabledSide == "right")
+                {
+                    disabledSide = "none";
+                }
                 //System.Diagnostics.Debug.WriteLine(horizontalCollision);
                 velocity.X = -speed;
             }
 
-            else if (inputHelper.IsKeyDown(Keys.Right))
+            else if (inputHelper.IsKeyDown(Keys.Right) && disabledSide != "right")
+            {
                 velocity.X = speed;
+                if(disabledSide == "left")
+                {
+                    disabledSide = "none";
+                }
+            }
             if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
             {
                 isColliding = false;
@@ -186,13 +203,13 @@ namespace BaseProject.GameObjects
                 if (intersection.X < 0)
                 {
                     isColliding = true;
-                    collidingSide = "left";
+                    collidingSide = "right";
                     horizontalCollision = true;
                 }
                 else
                 {
                     isColliding = true;
-                    collidingSide = "right";
+                    collidingSide = "left";
                     horizontalCollision = true;
                 }
                 // System.Diagnostics.Debug.WriteLine(collidingSide);
