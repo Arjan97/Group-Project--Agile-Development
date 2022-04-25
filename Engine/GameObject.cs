@@ -37,7 +37,7 @@ public abstract class GameObject : IGameLoopObject
         visible = true;
     }
 
-    public virtual void HandleColission(SpriteGameObject obj) {  }
+    public virtual void HandleColission(GameObject obj) {  }
 
     public virtual void CheckColission(SpriteGameObject obj)
     {
@@ -74,8 +74,8 @@ public abstract class GameObject : IGameLoopObject
             }
 
             //rest colission
-            other.HandleColission((SpriteGameObject)one);
-            one.HandleColission((SpriteGameObject)other);
+            other.HandleColission(one);
+            one.HandleColission(other);
         }
 
     public virtual Vector2 Position

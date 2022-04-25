@@ -25,6 +25,7 @@ namespace BaseProject.GameObjects
             DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
 
         }
-
+        
+        
     }
 }
