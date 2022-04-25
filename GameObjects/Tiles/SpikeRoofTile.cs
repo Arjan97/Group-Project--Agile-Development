@@ -15,10 +15,22 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void Activate()
         {
+            moving = true;
             velocity.Y += 200;
             base.Activate();
         }
+        public override void HandleColission(GameObject tile)
+        {
+            if (tile is Tile)
+            {
+                 visible = false;
+            }
+        }
 
+        public override void CheckColission(SpriteGameObject obj)
+        {   
+            base.CheckColission(obj);
+        }
 
     }
 }

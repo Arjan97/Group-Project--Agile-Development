@@ -8,6 +8,7 @@ namespace BaseProject.GameObjects
 {
     public class Tile : SpriteGameObject
     {
+        public bool moving = false;
        public int tileSize = 60;
 
         public Vector2 location;

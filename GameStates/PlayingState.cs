@@ -31,11 +31,30 @@ namespace BaseProject.GameStates
             // System.Diagnostics.Debug.WriteLine("start");
             player.isGrounded = false;
             tileList.CheckColission(player);
+            CheckMovingTilesColission(tileList);
             ghost.SetGhostDistance(tileList);
             base.Update(gameTime);
             HandleCamera();
             
             
+        }
+
+        private void CheckMovingTilesColission(GameObjectList target)
+        {
+            foreach(GameObject tile in target.Children)
+            {
+                if(tile is GameObjectList)
+                {
+                   CheckMovingTilesColission((GameObjectList)tile);
+
+                }
+
+                else if(((Tile)tile).moving)
+                {
+                    tile.CheckColission(tileList);
+                }
+            }
+
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BaseProject.GameObjects;
+using BaseProject.GameObjects.Tiles;
 
 public abstract class GameObject : IGameLoopObject
 {
@@ -39,6 +40,17 @@ public abstract class GameObject : IGameLoopObject
 
     public virtual void HandleColission(GameObject obj) {  }
 
+    public void CheckColission(GameObjectList list)
+    {
+        foreach (GameObject obj2 in list.Children)
+        {
+            if (obj2 is SpriteGameObject)
+            {
+                this.CheckColission((SpriteGameObject)obj2);
+            }
+        }
+    }
+
     public virtual void CheckColission(SpriteGameObject obj)
     {
         if (this is GameObjectList)
@@ -51,7 +63,6 @@ public abstract class GameObject : IGameLoopObject
         }
         else
         {
-
             SpriteGameObject oneSprite = (SpriteGameObject)this;
             if (oneSprite.CollidesWith(obj))
             {
@@ -72,7 +83,10 @@ public abstract class GameObject : IGameLoopObject
                 tile.HandleColission(player);
                 return;
             }
-
+            if(one is SpikeRoofTile)
+            {
+            System.Diagnostics.Debug.WriteLine("hallo");
+            }
             //rest colission
             other.HandleColission(one);
             one.HandleColission(other);
