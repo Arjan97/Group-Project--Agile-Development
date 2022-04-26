@@ -15,13 +15,18 @@ namespace BaseProject.GameObjects.Tiles
             button.Visible = false;
         }
 
-        public void Activate(string choise)
+        public void Activate(string choice)
         {
             Activated = true;
 
             //searches chosen trap and activates it
-            SwitchObject target = (SwitchObject)Find(choise);
+            SwitchObject target = (SwitchObject)Find(choice);
             target.Arm();
+            foreach (SwitchObject trap in children)
+            {
+                trap.button.Visible = false;
+            }
+
         }
 
         public override void HandleInput(InputHelper inputHelper)

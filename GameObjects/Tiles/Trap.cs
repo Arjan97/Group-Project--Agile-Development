@@ -13,7 +13,7 @@ namespace BaseProject.GameObjects.Tiles
         public int tileSize = (new Tile("", 0, 0)).tileSize;
         public float ghostDistance;
         public Vector2 buttonPosition;
-        protected Button button;
+        public Button button;
 
        internal bool Activated = false;
         public Trap(int x, int y, int length)

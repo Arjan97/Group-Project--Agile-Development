@@ -14,7 +14,6 @@ namespace BaseProject.GameObjects
     {
         public bool hasJumped;
         public float speed;
-        Vector2 startPosition;
         public float jumpSpeed;
         public bool isFalling;
         public Vector2 pVelocity;
@@ -26,6 +25,7 @@ namespace BaseProject.GameObjects
         public bool isJumping;
         public int jumpframes;
         public bool jumpKeyPressed;
+        public bool died;
 
 
 
@@ -36,7 +36,7 @@ namespace BaseProject.GameObjects
             isFalling = true;
             isColliding = false;
             hasJumped = false;
-            startPosition = GameEnvironment.Screen.ToVector2() / 7;
+            died = false;
             jumpSpeed = 100f;
             speed = 5f;
             Origin = Center;
@@ -48,8 +48,10 @@ namespace BaseProject.GameObjects
         public override void Reset()
         {
             base.Reset();
-            position = startPosition;
+            position.X = GameEnvironment.Screen.X / 7;
+            position.Y = GameEnvironment.Screen.Y / 2;
             Velocity = Vector2.Zero;
+            died=false;
         }
 
         public override void Update(GameTime gameTime)
@@ -172,6 +174,14 @@ namespace BaseProject.GameObjects
             {
                 death();
             }
+            if(tile is SwitchTile)
+            {
+              SwitchObject switchTile = (SwitchObject)tile.Parent;
+                if (switchTile.Armed)
+                {
+                    death();
+                }
+            }
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
             //System.Diagnostics.Debug.WriteLine(intersection.X + " " + intersection.Y);
@@ -214,6 +224,7 @@ namespace BaseProject.GameObjects
         void death()
         {
             Reset();
+            died = true;
         }
     }
 }

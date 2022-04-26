@@ -64,6 +64,11 @@ namespace BaseProject.GameStates
         //function that moves the camera
         public void HandleCamera()
         {
+            if(player.died == true)
+            {
+                position.X = 30;
+                player.died = false;
+            }
             //check if player turns around
             if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
