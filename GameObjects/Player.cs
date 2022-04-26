@@ -2,10 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BaseProject.GameObjects.Tiles;
 
 namespace BaseProject.GameObjects
 {
@@ -41,6 +38,15 @@ namespace BaseProject.GameObjects
             Origin = Center;
             jumpframes = 0;
             Reset();
+        }
+
+        public override void HandleColission(GameObject obj)
+        {
+            if(obj is Spike)
+            {
+
+            }
+            base.HandleColission(obj);
         }
 
         public override void Reset()

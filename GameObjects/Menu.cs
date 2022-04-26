@@ -4,13 +4,13 @@ using System.Text;
 using System.Drawing;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using BaseProject.GameObjects;
+using BaseProject.GameObjects.menuObjects;
 
 namespace BaseProject.GameStates
 {
     internal class Menu : GameObjectList
     {
-        Point currentOption;
+        protected Point currentOption = new Point(0,0);
         Point maxOptions = new Point(0,0);
         protected optionButton[,] options;
         SpriteGameObject arrow;
@@ -40,6 +40,8 @@ namespace BaseProject.GameStates
            if (inputHelper.KeyPressed(Keys.E) || inputHelper.KeyPressed(Keys.NumPad6)){
                 GoForward(currentOption);
            }
+            SkipNull(inputHelper);
+            PositionArrow();
             base.HandleInput(inputHelper);
         }
 
@@ -47,9 +49,8 @@ namespace BaseProject.GameStates
         {
             for(int x = 0; x < maxOptions.X+1; x++)
             {
-                for(int y = 0; y < maxOptions.Y+1; y++) { options[x,y].Update(gameTime);}
+                for(int y = 0; y < maxOptions.Y+1; y++) { if(options[x,y] != null) options[x,y].Update(gameTime);}
             }
-            PositionArrow();
             base.Update(gameTime);
         }
 
@@ -59,14 +60,23 @@ namespace BaseProject.GameStates
             arrow.Position = new Microsoft.Xna.Framework.Vector2(currentOption.Position.X - (currentOption.Width/2 + arrow.Width), currentOption.Position.Y); }
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, SpriteBatch spriteBatch)
         {
-            for (int x = 0; x < maxOptions.X+1; x++)
+            for (int x = 0; x <=maxOptions.X; x++)
             {
-                for (int y = 0; y < maxOptions.Y + 1; y++) { options[x, y].Draw(gameTime, spriteBatch); }
+                for (int y = 0; y <=maxOptions.Y; y++) { if (options[x, y] != null) { options[x, y].Draw(gameTime, spriteBatch); } }
             }
             base.Draw(gameTime, spriteBatch);
         }
         protected virtual void GoBack() { }
         protected virtual void GoForward(Point choise) { }
+
+        void SkipNull(InputHelper inputHelper)
+        {
+            while (options[currentOption.X, currentOption.Y] == null)
+            {
+                MoveCursor(inputHelper);
+                Wrap();
+            }
+        }
 
         void Wrap()
         {

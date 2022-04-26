@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using BaseProject.GameObjects;
-using BaseProject.GameStates;
+﻿using System.Drawing;
+using BaseProject.GameObjects.menuObjects;
 
 namespace BaseProject.GameStates
 {
@@ -11,14 +7,14 @@ namespace BaseProject.GameStates
     {
         public MainMenuState() : base(3,1)
         {
-            options[0, 0] = new optionButton(GameEnvironment.Screen.X / 3, 500, 0.5f, 0.25f, "random level");
-            options[1, 0] = new optionButton(GameEnvironment.Screen.X / 2, 500, 0.5f, 0.25f, "level select");
-            options[2, 0] = new optionButton(GameEnvironment.Screen.X *2/3, 500, 0.5f, 0.25f, "quit game");
+            options[0, 0] = new optionButton(GameEnvironment.Screen.X / 3, 500, "random level");
+            options[1, 0] = new optionButton(GameEnvironment.Screen.X / 2, 500, "level select");
+            options[2, 0] = new optionButton(GameEnvironment.Screen.X *2/3, 500, "quit game");
         }
 
         protected override void GoBack()
         {
-            GameEnvironment.GameStateManager.SwitchTo("StartScreen");
+            GameEnvironment.GameStateManager.SwitchTo("startScreen");
         }
 
         protected override void GoForward(Point choise)

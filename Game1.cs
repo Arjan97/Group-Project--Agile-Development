@@ -16,6 +16,7 @@ namespace BaseProject
             ApplyResolutionSettings();
             gameStateManager.AddGameState("startScreen", new StartScreen());
             gameStateManager.AddGameState("mainMenuState", new MainMenuState());
+            gameStateManager.AddGameState("levelSelectState", new LevelSelectState());
             GameStateManager.AddGameState("playingState", new PlayingState());
             GameStateManager.SwitchTo("startScreen");
         }
