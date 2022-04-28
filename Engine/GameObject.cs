@@ -71,11 +71,14 @@ public abstract class GameObject : IGameLoopObject
                 player.HandleColission(tile);
                 tile.HandleColission(player);
                 return;
-            }
+            } else
+        {
 
             //rest colission
             other.HandleColission((SpriteGameObject)one);
             one.HandleColission((SpriteGameObject)other);
+        }
+
         }
 
     public virtual Vector2 Position
