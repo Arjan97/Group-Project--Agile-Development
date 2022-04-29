@@ -11,7 +11,7 @@ namespace BaseProject.GameObjects
 {
     public class Ghost : SpriteGameObject
     {
-        int speed = 240;
+        static int speed = 500;
         static int maxButtons = 4;
         Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
 
@@ -188,6 +188,10 @@ namespace BaseProject.GameObjects
         }
 
         //function so ghost won't leave screen
+        /// <summary>
+        ///  Hier neun neuro
+        /// </summary>
+        /// <param name="camPos"> whew </param>
         public void StayOnScreen(Vector2 camPos)
         {
             if(GlobalPosition.X < 0)
