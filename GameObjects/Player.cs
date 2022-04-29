@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using BaseProject.GameObjects.Tiles;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,6 @@ namespace BaseProject.GameObjects
     {
         public bool hasJumped;
         public float speed;
-        Vector2 startPosition;
         public float jumpSpeed;
         public bool isFalling;
         public Vector2 pVelocity;
@@ -25,31 +25,41 @@ namespace BaseProject.GameObjects
         public bool isJumping;
         public int jumpframes;
         public bool jumpKeyPressed;
-        public string disabledSide;
+        public bool died;
 
 
 
-        public Player() : base("player/spr_player")
+        public Player() : base("img/players/spr_player")
         {
             keyPressed = false;
             pVelocity = velocity;
             isFalling = true;
             isColliding = false;
             hasJumped = false;
-            startPosition = GameEnvironment.Screen.ToVector2() / 2;
+            died = false;
             jumpSpeed = 100f;
             speed = 5f;
             Origin = Center;
             jumpframes = 0;
             Reset();
+        }
 
+        public override void HandleColission(GameObject obj)
+        {
+            if(obj is Spike)
+            {
+
+            }
+            base.HandleColission(obj);
         }
 
         public override void Reset()
         {
             base.Reset();
-            position = startPosition;
+            position.X = GameEnvironment.Screen.X / 7;
+            position.Y = GameEnvironment.Screen.Y / 2;
             Velocity = Vector2.Zero;
+            died=false;
         }
 
         public override void Update(GameTime gameTime)
@@ -59,7 +69,13 @@ namespace BaseProject.GameObjects
             
             float i = 1;
             //velocity.Y += 2 * i;
-            if (isJumping && jumpframes < 30 && jumpKeyPressed && (verticalCollidingSide != "up"))
+
+            if(position.Y > GameEnvironment.Screen.Y)
+            {
+                death();
+            }
+
+            if (isColliding)
             {
                 if(jumpframes == 1)
                 {
@@ -130,10 +146,24 @@ namespace BaseProject.GameObjects
 
         public void HandleColission(Tile tile)
         {
+            if (tile is SpikeTile || tile is SpikeRoofTile)
+            {
+                death();
+            }
+            if(tile is SwitchTile)
+            {
+              SwitchObject switchTile = (SwitchObject)tile.Parent;
+                if (switchTile.Armed)
+                {
+                    death();
+                }
+            }
+            
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
 
             if (Math.Abs(intersection.X) > Math.Abs(intersection.Y))
             {
+               
                 if (intersection.Y < 0)
                 {
                     isColliding = true;
@@ -168,6 +198,11 @@ namespace BaseProject.GameObjects
                 }
                 // System.Diagnostics.Debug.WriteLine(collidingSide);
             }
+        }
+        void death()
+        {
+            Reset();
+            died = true;
         }
     }
 }

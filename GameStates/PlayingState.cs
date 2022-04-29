@@ -14,6 +14,7 @@ namespace BaseProject.GameStates
         Player player = new Player();
         TileList tileList = new TileList();
         Ghost ghost = new Ghost();
+        bool photoMode = false;
 
         bool headingRight = true;
 
@@ -26,23 +27,52 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
-           // System.Diagnostics.Debug.WriteLine("start");
+            // System.Diagnostics.Debug.WriteLine("start");
             player.isGrounded = false;
             tileList.CheckColission(player);
+            CheckMovingTilesColission(tileList);
             ghost.SetGhostDistance(tileList);
             base.Update(gameTime);
             HandleCamera();
+            
+            
         }
 
+        private void CheckMovingTilesColission(GameObjectList target)
+        {
+            foreach(GameObject tile in target.Children)
+            {
+                if(tile is GameObjectList)
+                {
+                   CheckMovingTilesColission((GameObjectList)tile);
 
+                }
+
+                else if(((Tile)tile).moving)
+                {
+                    tile.CheckColission(tileList);
+                }
+            }
+
+        }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
         }
 
+        public void LoadLevel(int level)
+        {
+            tileList.LoadLevel(level);
+        }
+
         //function that moves the camera
         public void HandleCamera()
         {
+            if(player.died == true)
+            {
+                position.X = 30;
+                player.died = false;
+            }
             //check if player turns around
             if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
@@ -60,6 +90,23 @@ namespace BaseProject.GameStates
                 position.X += 5f;
             }
             ghost.StayOnScreen(position);
+        }
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            if (inputHelper.IsKeyDown(Keys.D0))
+            {
+                photoMode = true;
+                tileList.HideButtons();
+                ghost.Visible = false;
+            }
+            else if(photoMode)
+            {
+                ghost.Visible = true;
+                tileList.ShowButtons();
+                photoMode = false; 
+            }
+            base.HandleInput(inputHelper);
         }
 
     }     

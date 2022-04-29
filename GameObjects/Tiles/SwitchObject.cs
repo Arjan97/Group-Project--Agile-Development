@@ -6,6 +6,7 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class SwitchObject : Trap
     {
+        bool armed = false;
         public SwitchObject(int x, int y, int length, string id) : base(x, y, length)
         {
             this.id = id;
@@ -24,10 +25,12 @@ namespace BaseProject.GameObjects.Tiles
         public override void Activate()
         {
             Switch switchtrap = (Switch)parent;
-            switchtrap.Activate("1");
+            switchtrap.Activate(id);
             Activated = true;
         }
 
-        public void Arm() { System.Diagnostics.Debug.WriteLine("bang"); }
+        public void Arm() { armed = true; }
+
+        public bool Armed { get => armed; }
     }
 }

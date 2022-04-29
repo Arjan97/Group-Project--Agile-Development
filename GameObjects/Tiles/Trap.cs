@@ -13,7 +13,7 @@ namespace BaseProject.GameObjects.Tiles
         public int tileSize = (new Tile("", 0, 0)).tileSize;
         public float ghostDistance;
         public Vector2 buttonPosition;
-        protected Button button;
+        public Button button;
 
        internal bool Activated = false;
         public Trap(int x, int y, int length)
@@ -36,7 +36,7 @@ namespace BaseProject.GameObjects.Tiles
         {
 
             base.Draw(gameTime, spriteBatch);
-            if (button.Visible)
+            if (button.Visible && !button.Hidden)
             {
                 button.Draw(gameTime, spriteBatch);
             }
@@ -59,6 +59,11 @@ namespace BaseProject.GameObjects.Tiles
         {
             button.HandleInput(inputHelper);
             base.HandleInput(inputHelper);
+        }
+
+        public bool buttonVisibility
+        {
+            set { button.Hidden = !value; }
         }
     }
 }

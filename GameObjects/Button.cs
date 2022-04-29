@@ -7,8 +7,7 @@ namespace BaseProject.GameObjects
     internal class Button : SpriteGameObject
     {
         private Keys assignedKey = Keys.None;
-
-
+        private bool hidden = false;
         public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2")
         {
             parent = trap;
@@ -34,7 +33,7 @@ namespace BaseProject.GameObjects
         {
             position.X = x;
             position.Y = y;
-            scale = 0.5f;
+            scale = new Vector2(0.5f, 0.5f);
         }
 
         //function to give the button a different key
@@ -90,6 +89,12 @@ namespace BaseProject.GameObjects
                 }
                 base.HandleInput(inputHelper);
             }
+        }
+
+        public bool Hidden
+        {
+            get => hidden;
+            set => hidden = value;
         }
 
     }
