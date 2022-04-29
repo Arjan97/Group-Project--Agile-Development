@@ -93,7 +93,7 @@ public abstract class GameObject : IGameLoopObject
             one.HandleColission(other);
         }
 
-        }
+        
 
     public virtual Vector2 Position
     {
@@ -177,5 +177,6 @@ public abstract class GameObject : IGameLoopObject
     }
 
     }
+
 
    

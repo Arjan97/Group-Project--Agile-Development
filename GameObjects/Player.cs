@@ -74,18 +74,19 @@ namespace BaseProject.GameObjects
             {
                 death();
             }
-
-            if (isColliding)
+            if (isJumping && jumpframes < 30 && jumpKeyPressed && (verticalCollidingSide != "up"))
             {
-                if(jumpframes == 1)
+                if (jumpframes == 1)
                 {
-                    velocity.Y -= 30;
-                }  else if(jumpframes < 10)
+                    velocity.Y -= 60;
+                }
+                else if (jumpframes < 10)
                 {
-                    velocity.Y -= 17;
-                } else
+                    velocity.Y -= 34;
+                }
+                else
                 {
-                    velocity.Y -= 6;
+                    velocity.Y -= 12;
                 }
 
 
@@ -96,6 +97,11 @@ namespace BaseProject.GameObjects
                 jumpframes = 1;
                 isJumping = false;
             }
+
+
+
+
+            jumpframes++;
 
             if (!isGrounded)
             {
