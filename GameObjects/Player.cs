@@ -26,7 +26,7 @@ namespace BaseProject.GameObjects
         public int jumpframes;
         public bool jumpKeyPressed;
         public bool died;
-
+        private float timer;
 
 
         public Player() : base("img/players/spr_player")
@@ -41,6 +41,7 @@ namespace BaseProject.GameObjects
             speed = 5f;
             Origin = Center;
             jumpframes = 0;
+            timer = 0;
             Reset();
         }
 
@@ -155,14 +156,26 @@ namespace BaseProject.GameObjects
         {
             if (tile is SpikeTile || tile is SpikeRoofTile)
             {
-                death();
+                timer++;
+                if(timer == 18)
+                {
+                    death();
+                    timer = 0;
+                }
+                
             }
             if(tile is SwitchTile)
             {
               SwitchObject switchTile = (SwitchObject)tile.Parent;
                 if (switchTile.Armed)
                 {
-                    death();
+                    timer++;
+                    if (timer == 20)
+                    {
+                        death();
+                        timer = 0;
+                    }
+
                 }
             }
             
@@ -208,8 +221,8 @@ namespace BaseProject.GameObjects
         }
         void death()
         {
-            Reset();
-            died = true;
+           Reset();            
+           died = true;
         }
     }
 }
