@@ -113,7 +113,9 @@ namespace BaseProject.GameObjects
             return null;
         }
 
+
         public Vector2 LevelSize { get { return levelSize; } }
 
     }
+    
 }

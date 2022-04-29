@@ -27,15 +27,15 @@ namespace BaseProject.GameStates
 
         public override void Update(GameTime gameTime)
         {
-           // System.Diagnostics.Debug.WriteLine("start");
+            // System.Diagnostics.Debug.WriteLine("start");
             player.isGrounded = false;
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
             base.Update(gameTime);
             HandleCamera();
+            
+            
         }
-
-
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);

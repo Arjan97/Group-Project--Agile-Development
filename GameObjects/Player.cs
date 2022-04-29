@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using BaseProject.GameObjects.Tiles;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BaseProject.GameObjects
 {
@@ -32,7 +36,7 @@ namespace BaseProject.GameObjects
             isFalling = true;
             isColliding = false;
             hasJumped = false;
-            startPosition = GameEnvironment.Screen.ToVector2() / 2;
+            startPosition = GameEnvironment.Screen.ToVector2() / 7;
             jumpSpeed = 100f;
             speed = 5f;
             Origin = Center;
@@ -62,6 +66,11 @@ namespace BaseProject.GameObjects
 
             float i = 1;
             //velocity.Y += 2 * i;
+
+            if(position.Y > GameEnvironment.Screen.Y)
+            {
+                death();
+            }
 
             if (isColliding)
             {
@@ -167,18 +176,25 @@ namespace BaseProject.GameObjects
 
         public void HandleColission(Tile tile)
         {
-
+            if (tile is SpikeTile || tile is SpikeRoofTile)
+            {
+                death();
+            }
+            
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
             //System.Diagnostics.Debug.WriteLine(intersection.X + " " + intersection.Y);
 
 
             if (Math.Abs(intersection.X) > Math.Abs(intersection.Y))
             {
+               
                 if (intersection.Y < 0)
                 {
                     isColliding = true;
                     // System.Diagnostics.Debug.WriteLine("up");
                     isGrounded = true;
+                    
+                    
                 }
                 else
                 {
@@ -202,6 +218,10 @@ namespace BaseProject.GameObjects
                 }
                 // System.Diagnostics.Debug.WriteLine(collidingSide);
             }
+        }
+        void death()
+        {
+            Reset();
         }
     }
 }
