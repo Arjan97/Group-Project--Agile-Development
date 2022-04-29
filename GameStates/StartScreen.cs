@@ -8,7 +8,7 @@ namespace BaseProject.GameStates
     {
         public  StartScreen()
         {
-            Add(new SpriteGameObject("img/players/spr_player"));
+            Add(new SpriteGameObject("img/players/spr_player"/*placeholder for background img*/));
         }
 
         public override void HandleInput(InputHelper inputHelper)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameObjects.menuObjects
@@ -13,10 +10,11 @@ namespace BaseProject.GameObjects.menuObjects
         {
             Init(x,y);
             icon = new SpriteGameObject($"img/levels/icons/spr_iconLevel{level}");
-            icon.Position = new Vector2(Position.X, Position.Y -30);
-            
+            icon.Position = new Vector2(Position.X, Position.Y -30); 
             icon.Scale = new Vector2(1.5f, 1.5f);
         }
+
+        //function that gets called when its an empty slot
         public LevelOptionButton(int x, int y) : base(x, y, " ", 1.5f, 1.5f)
         {
             Init(x,y);

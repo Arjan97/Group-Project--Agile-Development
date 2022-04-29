@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,11 +13,11 @@ namespace BaseProject.GameObjects.menuObjects
             scale = new Vector2(scaleX, scaleY);
             origin = Center;
 
-            //ifstatement to check if the label has text
-                label = new TextGameObject("font/Arial12");
-                label.Text = labelTxt;
-                label.Parent = this;
-                label.Position = new Vector2(-Width*1/3, -12);
+            //initialises the text label
+            label = new TextGameObject("font/Arial12");
+            label.Text = labelTxt;
+            label.Parent = this;
+            label.Position = new Vector2(-Width*1/3, -12);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

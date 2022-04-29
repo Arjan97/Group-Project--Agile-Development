@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using BaseProject.GameObjects.menuObjects;
@@ -17,14 +14,13 @@ namespace BaseProject.GameStates
 
         public Menu(int x, int y)
         {
-            if (x > 0 && y > 0)
-            {
+            if (!(x > 0 && y > 0)) return;//check if the menu has options to cycle thru
+
                 maxOptions = new Point(x - 1, y - 1);
                 options = new optionButton[x, y];
                 arrow = new SpriteGameObject("img/menu/spr_selectIcon");
-                arrow.Scale = new Microsoft.Xna.Framework.Vector2(2, 2);
+                arrow.Scale = new Vector2(2, 2);
                 Add(arrow);
-            }
         }
 
 
@@ -45,7 +41,7 @@ namespace BaseProject.GameStates
             base.HandleInput(inputHelper);
         }
 
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             for(int x = 0; x < maxOptions.X+1; x++)
             {
@@ -54,21 +50,26 @@ namespace BaseProject.GameStates
             base.Update(gameTime);
         }
 
+        //function to place the selection arrow at the right option
         void PositionArrow()
         {
             optionButton currentOption = options[this.currentOption.X, this.currentOption.Y];
-            arrow.Position = new Microsoft.Xna.Framework.Vector2(currentOption.Position.X - (currentOption.Width/2 + arrow.Width), currentOption.Position.Y); }
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, SpriteBatch spriteBatch)
+            arrow.Position = new Vector2(currentOption.Position.X - (currentOption.Width/2 + arrow.Width), currentOption.Position.Y); 
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             for (int x = 0; x <=maxOptions.X; x++)
             {
-                for (int y = 0; y <=maxOptions.Y; y++) { if (options[x, y] != null) { options[x, y].Draw(gameTime, spriteBatch); } }
+                for (int y = 0; y <=maxOptions.Y; y++) { if (options[x, y] != null)  options[x, y].Draw(gameTime, spriteBatch);  }
             }
             base.Draw(gameTime, spriteBatch);
         }
         protected virtual void GoBack() { }
         protected virtual void GoForward(Point choise) { }
 
+
+        //function that skips selections that dont have options
         void SkipNull(InputHelper inputHelper)
         {
             while (options[currentOption.X, currentOption.Y] == null)
@@ -78,6 +79,7 @@ namespace BaseProject.GameStates
             }
         }
 
+        //function that moves the cursor from one edge of the options to the other
         void Wrap()
         {
             if(currentOption.X > maxOptions.X)
