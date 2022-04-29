@@ -13,6 +13,7 @@ namespace BaseProject.GameObjects
     {
         Vector2 levelSize;
         string colorCode;
+        public int nextLevelNr = -1;
 
         public TileList()
         {
@@ -40,6 +41,31 @@ namespace BaseProject.GameObjects
                     traptile.buttonVisibility = true;
                 }
             }
+        }
+
+        private void CheckMovingTilesColission(GameObjectList target)
+        {
+            foreach (GameObject tile in target.Children)
+            {
+                if (tile is GameObjectList)
+                {
+                    CheckMovingTilesColission((GameObjectList)tile);
+
+                }
+
+                else if (((Tile)tile).moving)
+                {
+                    tile.CheckColission(this);
+                }
+            }
+
+        }
+
+        public void nextLevel(int levelNr)
+        {
+            children.Clear();
+            nextLevelNr = -1;
+            LoadLevel(levelNr);
         }
 
         public void LoadLevel(int levelNr)
@@ -113,6 +139,15 @@ namespace BaseProject.GameObjects
             return null;
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            if(nextLevelNr > -1)
+            {
+                nextLevel(nextLevelNr);
+            }
+            CheckMovingTilesColission(this);
+            base.Update(gameTime);
+        }
 
         public Vector2 LevelSize { get { return levelSize; } }
 

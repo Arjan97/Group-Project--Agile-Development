@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
@@ -223,6 +224,8 @@ namespace BaseProject.GameObjects
         {
            Reset();            
            died = true;
+            PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
+            play.tileList.nextLevelNr = 0;
         }
     }
 }
