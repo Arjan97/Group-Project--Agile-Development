@@ -66,10 +66,10 @@ namespace BaseProject.GameObjects
                     velocity.Y -= 30;
                 }  else if(jumpframes < 10)
                 {
-                    velocity.Y -= 15;
+                    velocity.Y -= 17;
                 } else
                 {
-                    velocity.Y -= 5;
+                    velocity.Y -= 6;
                 }
 
 
