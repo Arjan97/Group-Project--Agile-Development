@@ -36,7 +36,7 @@ namespace BaseProject.GameObjects.Tiles
         {
 
             base.Draw(gameTime, spriteBatch);
-            if (button.Visible)
+            if (button.Visible && !button.Hidden)
             {
                 button.Draw(gameTime, spriteBatch);
             }
@@ -61,5 +61,9 @@ namespace BaseProject.GameObjects.Tiles
             base.HandleInput(inputHelper);
         }
 
+        public bool buttonVisibility
+        {
+            set { button.Hidden = !value; }
+        }
     }
 }

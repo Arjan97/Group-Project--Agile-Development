@@ -70,6 +70,7 @@ public abstract class GameObject : IGameLoopObject
             }
         }
     }
+
     //function who changes objects back to their types
         void SortColission(GameObject one, GameObject other)
         {

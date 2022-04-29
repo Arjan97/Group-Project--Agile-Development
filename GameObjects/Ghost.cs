@@ -21,7 +21,7 @@ namespace BaseProject.GameObjects
             id = "Ghost";
             position.X = GameEnvironment.Screen.X / 2;
             position.Y = GameEnvironment.Screen.Y / 2;
-            scale = 1.5f;
+            scale = new Vector2(1.5f, 1.5f);
         }
 
         public override void Update(GameTime gameTime)

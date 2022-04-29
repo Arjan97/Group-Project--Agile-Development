@@ -16,11 +16,31 @@ namespace BaseProject.GameObjects
 
         public TileList()
         {
-            LoadLevel(0);
-            this.id = "TileList";
+            id = "TileList";
         }
 
-
+        public void HideButtons()
+        {
+            foreach (GameObject tile in Children)
+            {
+                if(tile is Trap)
+                {
+                    Trap traptile = (Trap)tile;
+                    traptile.buttonVisibility = false;
+                }
+            }
+        }
+        public void ShowButtons()
+        {
+            foreach (GameObject tile in Children)
+            {
+                if (tile is Trap)
+                {
+                    Trap traptile = (Trap)tile;
+                    traptile.buttonVisibility = true;
+                }
+            }
+        }
 
         public void LoadLevel(int levelNr)
         {

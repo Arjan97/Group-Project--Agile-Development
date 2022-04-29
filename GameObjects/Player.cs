@@ -29,7 +29,7 @@ namespace BaseProject.GameObjects
 
 
 
-        public Player() : base("player/spr_player")
+        public Player() : base("img/players/spr_player")
         {
             keyPressed = false;
             pVelocity = velocity;
@@ -42,7 +42,15 @@ namespace BaseProject.GameObjects
             Origin = Center;
             jumpframes = 0;
             Reset();
+        }
 
+        public override void HandleColission(GameObject obj)
+        {
+            if(obj is Spike)
+            {
+
+            }
+            base.HandleColission(obj);
         }
 
         public override void Reset()

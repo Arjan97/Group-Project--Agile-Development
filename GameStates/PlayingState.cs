@@ -14,8 +14,7 @@ namespace BaseProject.GameStates
         Player player = new Player();
         TileList tileList = new TileList();
         Ghost ghost = new Ghost();
-        
-
+        bool photoMode = false;
 
         bool headingRight = true;
 
@@ -61,6 +60,11 @@ namespace BaseProject.GameStates
             base.Draw(gameTime, spriteBatch);
         }
 
+        public void LoadLevel(int level)
+        {
+            tileList.LoadLevel(level);
+        }
+
         //function that moves the camera
         public void HandleCamera()
         {
@@ -87,7 +91,23 @@ namespace BaseProject.GameStates
             }
             ghost.StayOnScreen(position);
         }
-        
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            if (inputHelper.IsKeyDown(Keys.D0))
+            {
+                photoMode = true;
+                tileList.HideButtons();
+                ghost.Visible = false;
+            }
+            else if(photoMode)
+            {
+                ghost.Visible = true;
+                tileList.ShowButtons();
+                photoMode = false; 
+            }
+            base.HandleInput(inputHelper);
+        }
 
     }     
 }

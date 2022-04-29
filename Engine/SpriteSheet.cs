@@ -45,7 +45,7 @@ public class SpriteSheet
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, float scale)
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, Vector2 scale)
     {
         int columnIndex = sheetIndex % sheetColumns;
         int rowIndex = sheetIndex / sheetColumns % sheetRows;
