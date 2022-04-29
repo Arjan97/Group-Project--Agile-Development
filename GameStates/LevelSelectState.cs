@@ -76,6 +76,12 @@ namespace BaseProject.GameStates
                 loadPage(currentPage--);
                 return;
             }
+            //check if the choisen option has a level assigned
+            if(options[choise.X, choise.Y] is LevelOptionButton)
+            {
+                LevelOptionButton levelchoise = (LevelOptionButton)options[choise.X, choise.Y];
+                if(levelchoise.HasLevel) return;
+            }
 
             //loads selected level
             GameEnvironment.GameStateManager.SwitchTo("playingState");

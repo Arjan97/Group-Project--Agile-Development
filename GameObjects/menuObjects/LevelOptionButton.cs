@@ -32,5 +32,7 @@ namespace BaseProject.GameObjects.menuObjects
             if(icon != null) icon.Draw(gameTime, spriteBatch);
 
         }
+
+        public bool HasLevel { get { return icon == null; } }
     }
 }
