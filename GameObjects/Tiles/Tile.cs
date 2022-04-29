@@ -9,10 +9,10 @@ namespace BaseProject.GameObjects
     public class Tile : SpriteGameObject
     {
         public bool moving = false;
-       public int tileSize = 60;
+       public static int tileSize = 60;
 
         public Vector2 location;
-        public Tile(string assetName, int X, int Y) : base(assetName)
+        public Tile(string assetName, int X, int Y) : base(assetName, -1)
         {
             location = new Vector2(X, Y);
             position.X = X * tileSize;

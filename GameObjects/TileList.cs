@@ -97,7 +97,7 @@ namespace BaseProject.GameObjects
 
                 }
             }
-            int tileSize = new Tile("img/tiles/spr_bridge",0,0).tileSize;
+            int tileSize = Tile.tileSize;
             levelSize = new Vector2(level.Width*tileSize, level.Height*tileSize);
         }
 
