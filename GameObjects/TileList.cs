@@ -100,7 +100,7 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "888888":
-                            Add(new Bridge(x, y, 4));
+                            Add(new Bridge(x, y, 6));
                             break;
 
                         case "2362836":

@@ -58,7 +58,7 @@ namespace BaseProject.GameObjects
         public override void Reset()
         {
             base.Reset();
-            position.X = GameEnvironment.Screen.X / 7;
+            position.X = 1.5f*Tile.tileSize;
             position.Y = GameEnvironment.Screen.Y / 2;
             Velocity = Vector2.Zero;
             died=false;
