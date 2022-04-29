@@ -71,6 +71,7 @@ namespace BaseProject.GameStates
             if(player.died == true)
             {
                 position.X = 30;
+                ghost.Position = GameEnvironment.Screen.ToVector2()/2;
                 player.died = false;
             }
             //check if player turns around
