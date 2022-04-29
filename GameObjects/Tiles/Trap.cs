@@ -10,7 +10,7 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Trap : GameObjectList
     {
-        public int tileSize = (new Tile("", 0, 0)).tileSize;
+        public int tileSize = Tile.tileSize;
         public float ghostDistance;
         public Vector2 buttonPosition;
         public Button button;

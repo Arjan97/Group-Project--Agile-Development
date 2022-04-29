@@ -8,7 +8,7 @@ namespace BaseProject.GameObjects
     {
         private Keys assignedKey = Keys.None;
         private bool hidden = false;
-        public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2")
+        public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 0)
         {
             parent = trap;
             Initialize(position.X, position.Y);
@@ -21,13 +21,7 @@ namespace BaseProject.GameObjects
 
 
 
-       /* public Button(float x, float y, Trap trap) : base("img/buttons@2x2")
-        {
 
-            target = trap;
-            Initialize(x,y);
-
-        }*/
 
         private void Initialize(float x, float y)
         {
