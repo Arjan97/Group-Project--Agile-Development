@@ -96,6 +96,7 @@ namespace BaseProject.GameObjects
                     
 
 
+                    Tile neighbour = FindTile(x - 1, y);
                     switch (colorCode)
                     {
                         case "195195195":
@@ -104,7 +105,6 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "888888":
-                            Tile neighbour = FindTile(x - 1, y);
                             if (neighbour is BridgeTile)
                             {
                                 ((Bridge)((BridgeTile)neighbour).Parent).Add(new BridgeTile(x,y));
@@ -117,11 +117,25 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "2362836":
-                            Add(new SpikeRoof(x, y, 3));
+                            if (neighbour is SpikeRoofTile)
+                            {
+                                ((SpikeRoof)((SpikeRoofTile)neighbour).Parent).Add(new SpikeRoofTile(x, y));
+                            }
+                            else
+                            {
+                                Add(new SpikeRoof(x, y));
+                            }
                             break;
 
                         case "127510":
-                            Add(new Spike(x, y, 3));
+                            if (neighbour is SpikeTile)
+                            {
+                                ((Spike)((SpikeTile)neighbour).Parent).Add(new SpikeTile(x, y));
+                            }
+                            else
+                            {
+                                Add(new Spike(x, y));
+                            }
                             break;
 
                         case "25512739":
@@ -157,7 +171,20 @@ namespace BaseProject.GameObjects
         {
             foreach (GameObject obj in children)
             {
-                if(obj is Trap)
+                if(obj is Switch)
+                {
+                    foreach (SwitchObject switchObject in ((Switch)obj).Children)
+                    {
+                        foreach (Tile tile in switchObject.Children)
+                        {
+                            if (tile.location == new Vector2(x, y))
+                            {
+                                return tile;
+                            }
+                        }
+                    }
+                }
+                else if(obj is Trap)
                 {
                     foreach (Tile tile in ((Trap)obj).Children)
                     {
