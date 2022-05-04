@@ -13,15 +13,13 @@ namespace BaseProject.GameObjects
 {
     public class Player : SpriteGameObject
     {
-        public bool hasJumped;
         public float speed;
         public float jumpSpeed;
         public bool isFalling;
         public Vector2 pVelocity;
         public bool isColliding;
         public bool keyPressed;
-        public string HorizontalCollidingSide, verticalCollidingSide;
-        public bool horizontalCollision, verticalCollision;
+        public string verticalCollidingSide;
         public bool isGrounded;
         public bool isJumping;
         public int jumpframes;
@@ -36,7 +34,6 @@ namespace BaseProject.GameObjects
             pVelocity = velocity;
             isFalling = true;
             isColliding = false;
-            hasJumped = false;
             died = false;
             jumpSpeed = 100f;
             speed = 5f;
@@ -66,31 +63,31 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-
             base.Update(gameTime);
             
             float i = 1;
-            //velocity.Y += 2 * i;
 
+            //dying when falling of the map
             if(position.Y > GameEnvironment.Screen.Y)
             {
                 death();
             }
+
+            //checking different stages of the jump
             if (isJumping && jumpframes < 30 && jumpKeyPressed && (verticalCollidingSide != "up"))
             {
                 if (jumpframes == 1)
                 {
-                    velocity.Y -= 60;
+                    velocity.Y -= 30;
                 }
                 else if (jumpframes < 10)
                 {
-                    velocity.Y -= 34;
+                    velocity.Y -= 17;
                 }
                 else
                 {
-                    velocity.Y -= 12;
+                    velocity.Y -= 6;
                 }
-
 
                 jumpframes++;
             }
@@ -99,27 +96,20 @@ namespace BaseProject.GameObjects
                 jumpframes = 1;
                 isJumping = false;
             }
-
-
-
-
-            jumpframes++;
-
+            
+            //adding gravity
             if (!isGrounded)
             {
                 velocity.Y += 4.5f * i;
             }
+
             position += velocity;
             Velocity = Vector2.Zero;
-
-          
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-
-
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -155,6 +145,7 @@ namespace BaseProject.GameObjects
 
         public void HandleColission(Tile tile)
         {
+            //checking and handling collision with SpikeTile
             if (tile is SpikeTile || tile is SpikeRoofTile)
             {
                 timer++;
@@ -165,6 +156,7 @@ namespace BaseProject.GameObjects
                 }
                 
             }
+            //checking and handling collision with SwitchTile
             if(tile is SwitchTile)
             {
               SwitchObject switchTile = (SwitchObject)tile.Parent;
@@ -182,9 +174,11 @@ namespace BaseProject.GameObjects
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
 
+            //checking if its a vertical collision
             if (Math.Abs(intersection.X) > Math.Abs(intersection.Y))
             {
                
+                //collision bottom side player and top side tile
                 if (intersection.Y < 0)
                 {
                     isColliding = true;
@@ -193,33 +187,32 @@ namespace BaseProject.GameObjects
                     position.Y -= Math.Abs(intersection.Y) - 1;
                     
                 }
+                //collision top side player and bottom side tile
                 else
                 {
                     isColliding = true;
-                    //System.Diagnostics.Debug.WriteLine("up");
                     verticalCollidingSide = "up";
 
                 }
             }
             else
             {
+                //collision right side player and left side tile
                 if (intersection.X < 0)
                 {
                     isColliding = true;
-                    HorizontalCollidingSide = "right";
-                    horizontalCollision = true;
                     position.X -= Math.Abs(intersection.X);
                 }
+                //collision left side player and right side tile
                 else
                 {
                     isColliding = true;
-                    HorizontalCollidingSide = "left";
-                    horizontalCollision = true;
                     position.X += Math.Abs(intersection.X);
                 }
-                // System.Diagnostics.Debug.WriteLine(collidingSide);
             }
         }
+
+        //function to handle the death of a player
         void death()
         {
            Reset();            
