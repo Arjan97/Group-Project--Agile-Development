@@ -104,6 +104,7 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "888888":
+                            
                             Add(new Bridge(x, y));
                             break;
 
@@ -146,11 +147,20 @@ namespace BaseProject.GameObjects
 
         private Tile FindTile(int x, int y)
         {
-            foreach (Tile obj in children)
+            foreach (GameObject obj in children)
             {
-                if (obj.location.X == x && obj.location.Y == y)
+                if(obj is Trap)
                 {
-                    return obj;
+                    foreach (Tile tile in ((Trap)obj).Children)
+                    {
+                        if (tile.location == new Vector2(x,y))
+                        {
+                            return tile;
+                        }
+                    }
+                }else if (((Tile)obj).location == new Vector2(x,y))
+                {
+                    return (Tile)obj;
                 }
             }
             return null;
