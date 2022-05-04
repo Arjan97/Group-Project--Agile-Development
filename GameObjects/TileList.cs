@@ -104,8 +104,16 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "888888":
-                            
+                            Tile neighbour = FindTile(x - 1, y);
+                            if (neighbour is BridgeTile)
+                            {
+                                ((Bridge)((BridgeTile)neighbour).Parent).Add(new BridgeTile(x,y));
+                            }
+                            else
+                            {
                             Add(new Bridge(x, y));
+                            }
+                                
                             break;
 
                         case "2362836":
