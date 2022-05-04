@@ -16,9 +16,20 @@ namespace BaseProject.GameObjects.Tiles
         public Button button;
 
        internal bool Activated = false;
+        public Trap(int x, int y)
+        {
+            System.Diagnostics.Debug.WriteLine(Position);
+            //CreateButton();
+        }
         public Trap(int x, int y, int length)
         {
-            buttonPosition = new Vector2(x * tileSize + tileSize * length / 2, y * tileSize + tileSize);
+            //CreateButton();
+        }
+
+        public virtual void CreateButton()
+        {
+            int length = children.Count;
+            buttonPosition = new Vector2(Children[0].Position.X + tileSize * length / 2, Children[0].Position.Y);
             button = new Button(buttonPosition, this);
         }
 

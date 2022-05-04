@@ -68,6 +68,7 @@ namespace BaseProject.GameObjects
             LoadLevel(levelNr);
         }
 
+
         public void LoadLevel(int levelNr)
         {
             //loads the level image
@@ -87,9 +88,12 @@ namespace BaseProject.GameObjects
                     //convert color code to string
                     string color = colors[x + (y * Level.Width)].ToString();
                     string[] fuckzooi = color.Split(new Char[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
+                    if(x == 5 && y == 3) System.Diagnostics.Debug.WriteLine(color);
                     colorCode = fuckzooi[1];
                     colorCode += fuckzooi[3];
                     colorCode += fuckzooi[5];
+                    int length = 255 - int.Parse(fuckzooi[7].Substring(0, fuckzooi[7].Length - 1));
+                    
 
 
                     switch (colorCode)
@@ -100,7 +104,7 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "888888":
-                            Add(new Bridge(x, y, 6));
+                            Add(new Bridge(x, y));
                             break;
 
                         case "2362836":
@@ -122,6 +126,19 @@ namespace BaseProject.GameObjects
 
 
                 }
+            }
+            foreach (GameObject obj in Children)
+            {
+                if (obj is Trap)
+                    {
+                    if(obj is Switch){
+                        foreach (GameObject obj2 in ((Switch)obj).Children)
+                        {
+                            ((Trap)obj2).CreateButton();
+                        }
+                    }
+                    ((Trap)obj).CreateButton();
+                    }
             }
             int tileSize = Tile.tileSize;
             levelSize = new Vector2(level.Width*tileSize, level.Height*tileSize);

@@ -12,6 +12,11 @@ namespace BaseProject.GameObjects.Tiles
         {
             Add(new SwitchObject(x, y, length, "1"));
             Add(new SwitchObject(x2, y2, length2, "2"));
+        }
+
+        public override void CreateButton()
+        {
+            base.CreateButton();
             button.Visible = false;
         }
 
