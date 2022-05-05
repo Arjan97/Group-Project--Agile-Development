@@ -80,6 +80,7 @@ namespace BaseProject.GameObjects
             Color[] colors = new Color[Level.Width * Level.Height];
             Level.GetData<Color>(colors);
 
+            //variables used to connect switchobjects with eachoter
             Switch lastSwitch = null;
             int switchCounter = 0;
 
@@ -96,7 +97,7 @@ namespace BaseProject.GameObjects
                     colorCode += fuckzooi[3];
                     colorCode += fuckzooi[5];
                     
-
+                    
                     Tile neighbour = FindTile(x - 1, y);
                     switch (colorCode)
                     {
@@ -167,6 +168,7 @@ namespace BaseProject.GameObjects
 
                 }
             }
+            //cycles to all the tiles to give buttons to traps
             foreach (GameObject obj in Children)
             {
                 if (obj is Trap)
@@ -175,14 +177,12 @@ namespace BaseProject.GameObjects
                         foreach (GameObject obj2 in ((Switch)obj).Children)
                         {
                             ((Trap)obj2).CreateButton();
-                            System.Diagnostics.Debug.WriteLine("yes");
                         }
                     }
                     ((Trap)obj).CreateButton();
                     }
             }
-            int tileSize = Tile.tileSize;
-            levelSize = new Vector2(level.Width*tileSize, level.Height*tileSize);
+            levelSize = new Vector2(level.Width*Tile.tileSize, level.Height*Tile.tileSize);
         }
 
         private Tile FindTile(int x, int y)

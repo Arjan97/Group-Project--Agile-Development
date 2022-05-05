@@ -14,7 +14,6 @@ namespace BaseProject.GameObjects.Tiles
         {
             base.CreateButton();
             button.Position += new Vector2(0,tileSize/2);
-            System.Diagnostics.Debug.WriteLine(button.Position);
         }
 
         public override void Update(GameTime gameTime)

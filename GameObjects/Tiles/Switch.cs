@@ -19,7 +19,6 @@ namespace BaseProject.GameObjects.Tiles
             base.CreateButton();
             button.Visible = false;
             buttonPosition = ((SwitchObject)Children[0]).ButtonPosition;
-            System.Diagnostics.Debug.WriteLine("pos "+Children[0].Position);
         }
 
         public void Activate(string choice)

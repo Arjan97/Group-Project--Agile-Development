@@ -129,7 +129,6 @@ namespace BaseProject.GameObjects
         //function that gives the keys to the traps
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
-            System.Diagnostics.Debug.WriteLine("start");
             int keysLeft = keys.Count;
             while(keysLeft > 0)
             {
@@ -149,7 +148,6 @@ namespace BaseProject.GameObjects
                                 //if there are enough keys left the keys will be assigned
                                 if (keysLeft >= 2)
                                 {
-                                System.Diagnostics.Debug.WriteLine("switch");
                                     switchTrap.AssignedKey = keys[pos];
                                     keys.Remove(keys[pos]);
                                     switchTrap.AssignedSecondKey = keys[0];
@@ -177,7 +175,6 @@ namespace BaseProject.GameObjects
                     //default function to assign keys 
                     if (trap.Value.AssignedKey == Keys.None)
                     {
-                        System.Diagnostics.Debug.WriteLine("else");
                         trap.Value.AssignedKey = keys[pos];
                         keys.Remove(keys[pos]);
                         keysLeft--;
