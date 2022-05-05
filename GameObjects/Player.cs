@@ -196,7 +196,6 @@ namespace BaseProject.GameObjects
                 else
                 {
                     isColliding = true;
-                    //System.Diagnostics.Debug.WriteLine("up");
                     verticalCollidingSide = "up";
 
                 }
@@ -217,7 +216,6 @@ namespace BaseProject.GameObjects
                     horizontalCollision = true;
                     position.X += Math.Abs(intersection.X);
                 }
-                // System.Diagnostics.Debug.WriteLine(collidingSide);
             }
         }
         void death()

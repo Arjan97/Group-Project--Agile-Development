@@ -80,6 +80,10 @@ namespace BaseProject.GameObjects
             Color[] colors = new Color[Level.Width * Level.Height];
             Level.GetData<Color>(colors);
 
+            Switch lastSwitch = null;
+            int switchCounter = 0;
+
+
             //assings a tile for each pixel
             for (int x = 0; x < Level.Width; x++)
             {
@@ -88,13 +92,10 @@ namespace BaseProject.GameObjects
                     //convert color code to string
                     string color = colors[x + (y * Level.Width)].ToString();
                     string[] fuckzooi = color.Split(new Char[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
-                    if(x == 5 && y == 3) System.Diagnostics.Debug.WriteLine(color);
                     colorCode = fuckzooi[1];
                     colorCode += fuckzooi[3];
                     colorCode += fuckzooi[5];
-                    int length = 255 - int.Parse(fuckzooi[7].Substring(0, fuckzooi[7].Length - 1));
                     
-
 
                     Tile neighbour = FindTile(x - 1, y);
                     switch (colorCode)
@@ -139,7 +140,23 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "25512739":
-                            Add(new Switch(x, y, 4, 33, 11, 10));
+                            if (neighbour is SwitchTile)
+                            {
+                                ((SwitchObject)((SwitchTile)neighbour).Parent).Add(new SwitchTile(x, y));
+                            }
+                            else
+                            {
+                                switchCounter++;
+                                if(switchCounter %2 != 0)
+                                {
+                                    lastSwitch = new Switch(x,y);
+                                    Add(lastSwitch);
+                                }
+                                else
+                                {
+                                    lastSwitch.Add(new SwitchObject(x, y, "2"));
+                                }
+                            }
                             break;
 
                         case "25520224":
@@ -158,6 +175,7 @@ namespace BaseProject.GameObjects
                         foreach (GameObject obj2 in ((Switch)obj).Children)
                         {
                             ((Trap)obj2).CreateButton();
+                            System.Diagnostics.Debug.WriteLine("yes");
                         }
                     }
                     ((Trap)obj).CreateButton();

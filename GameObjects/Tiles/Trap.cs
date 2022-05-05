@@ -18,13 +18,8 @@ namespace BaseProject.GameObjects.Tiles
        internal bool Activated = false;
         public Trap(int x, int y)
         {
-            System.Diagnostics.Debug.WriteLine(Position);
-            //CreateButton();
         }
-        public Trap(int x, int y, int length)
-        {
-            //CreateButton();
-        }
+
 
         public virtual void CreateButton()
         {
