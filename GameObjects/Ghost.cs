@@ -4,24 +4,24 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
-using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameObjects
 {
-    public class Ghost : SpriteGameObject
+    public class Ghost : AnimatedGameObject
     {
         static int speed = 500;
         static int maxButtons = 4;
         Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
 
 
-       public Ghost(): base ("img/players/spr_ghost")
+       public Ghost(): base ()
         {
             id = "Ghost";
             position.X = GameEnvironment.Screen.X / 2;
             position.Y = GameEnvironment.Screen.Y / 2;
             scale = new Vector2(1.5f, 1.5f);
+            LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
+            LoadAnimation("img/players/spr_ghost", "idle", false);
         }
 
         public override void Update(GameTime gameTime)
@@ -187,10 +187,6 @@ namespace BaseProject.GameObjects
         }
 
         //function so ghost won't leave screen
-        /// <summary>
-        ///  Hier neun neuro
-        /// </summary>
-        /// <param name="camPos"> whew </param>
         public void StayOnScreen(Vector2 camPos)
         {
             if(GlobalPosition.X < 0)
@@ -205,6 +201,7 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+
             velocity = Vector2.Zero;
             if (inputHelper.IsKeyDown(Keys.J) && position.X > 0)
             {
@@ -230,7 +227,19 @@ namespace BaseProject.GameObjects
             {
                 velocity *= 0.75f;
             }
+            HandleAnimation(velocity);
             base.HandleInput(inputHelper);
+        }
+
+
+        private void HandleAnimation(Vector2 velocity)
+        {
+            if(velocity == Vector2.Zero)
+            {
+                PlayAnimation("idle");
+                return;
+            }
+            PlayAnimation("fly");
         }
 
     }
