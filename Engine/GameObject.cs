@@ -84,10 +84,6 @@ public abstract class GameObject : IGameLoopObject
                 tile.HandleColission(player);
                 return;
             }
-            if(one is SpikeRoofTile)
-            {
-            //System.Diagnostics.Debug.WriteLine("hallo");
-            }
             //rest colission
             other.HandleColission(one);
             one.HandleColission(other);
