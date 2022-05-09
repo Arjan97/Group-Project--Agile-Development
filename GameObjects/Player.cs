@@ -29,7 +29,7 @@ namespace BaseProject.GameObjects
         public Player() : base(Game1.Depth_Player)
         {
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
-            LoadAnimation("img/players/spr_player_run@4", "run", true, 0.4f);
+            LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
             LoadAnimation("img/players/spr_player_jump@2", "jump", true, 0.5f);
 
             PlayAnimation("idle");
