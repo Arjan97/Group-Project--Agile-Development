@@ -27,6 +27,13 @@ namespace BaseProject.GameObjects
         public bool died;
         private float timer;
 
+        public bool isDashing;
+        private float dashDuration;
+        public int dashPower;
+        public bool isFacingLeft;
+        public bool isFacingRight;
+
+
 
         public Player() : base("img/players/spr_player")
         {
@@ -40,6 +47,13 @@ namespace BaseProject.GameObjects
             Origin = Center;
             jumpframes = 0;
             timer = 0;
+
+            //Player dash ability 
+            isDashing = false;
+            dashDuration = 0;
+            dashPower = 30;
+            isFacingLeft = false; //Checks if the player is facing left, used for the player dash
+
             Reset();
         }
 
@@ -116,25 +130,59 @@ namespace BaseProject.GameObjects
         {
             base.HandleInput(inputHelper);
 
+            //Player Dash ability
+            if (inputHelper.IsKeyDown(Keys.LeftShift))
+            {
+                isDashing = true;
+                dashDuration++;
+
+                if (dashDuration <= 10 && !isFacingLeft)
+                {
+                    velocity.X += dashPower;
+                }
+                else if (dashDuration <= 10 && isFacingLeft)
+                {
+                    System.Diagnostics.Debug.WriteLine(2);
+                    velocity.X += -dashPower;
+                }
+            }
+            //Checks if the player is dashing, then a cooldown is issued
+            if (isDashing){
+                timer++;
+                if (timer >= 200)
+                {
+                    dashDuration = 0;
+                    timer = 0;
+                    isDashing=false;
+                }
+            }
+
             if (inputHelper.IsKeyDown(Keys.Left))
             {
-                velocity.X = -speed;
+                velocity.X += -speed;
                 Player testPlayer = new Player();
                 testPlayer.position = testPlayer.position += velocity;
+                isFacingLeft = true;
             }
 
             else if (inputHelper.IsKeyDown(Keys.Right))
             {
-                velocity.X = speed;
-
+                velocity.X += speed;
+                isFacingLeft = false;
             }
+
+
+            if (!inputHelper.IsKeyDown(Keys.Left))
+            {
+                isFacingLeft = false;
+            }
+
             if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
             {
                 isColliding = false;
                 keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
-
             }
             else if (!inputHelper.IsKeyDown(Keys.Up))
             {

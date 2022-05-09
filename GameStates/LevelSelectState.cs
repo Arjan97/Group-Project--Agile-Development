@@ -54,7 +54,7 @@ namespace BaseProject.GameStates
             {
                 options[3, 2] = new optionButton(4 * 250, 3 * 200, "Next Page");
             }
-            System.Diagnostics.Debug.WriteLine(currentPage);
+            //System.Diagnostics.Debug.WriteLine(currentPage);
 
         }
 
