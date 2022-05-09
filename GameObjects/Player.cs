@@ -14,12 +14,17 @@ namespace BaseProject.GameObjects
     public class Player : AnimatedGameObject
     {
         public float speed, jumpSpeed;
-        public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, facingLeft, blockMovement;
+        public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement;
         public Vector2 pVelocity;
         public string verticalCollidingSide;
         public int jumpframes, blockedframes;
         private float timer;
 
+        public bool isDashing;
+        private float dashDuration;
+        public int dashPower;
+        public bool facingLeft;
+        public bool isFacingRight;
 
         public Player() : base(Game1.Depth_Player)
         {
@@ -39,7 +44,13 @@ namespace BaseProject.GameObjects
             speed = 5f;
             jumpframes = 0;
             timer = 0;
-            facingLeft = false;
+
+            //Player dash ability 
+            isDashing = false;
+            dashDuration = 0;
+            dashPower = 30;
+            isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
+
             Reset();
 
 
@@ -136,11 +147,38 @@ namespace BaseProject.GameObjects
 
             base.HandleInput(inputHelper);
 
+            //Player Dash ability
+            if (inputHelper.IsKeyDown(Keys.LeftShift))
+            {
+                isDashing = true;
+                dashDuration++;
+
+                if (dashDuration <= 10 && !facingLeft)
+                {
+                    velocity.X += dashPower;
+                }
+                else if (dashDuration <= 10 && facingLeft)
+                {
+                    System.Diagnostics.Debug.WriteLine(2);
+                    velocity.X += -dashPower;
+                }
+            }
+            //Checks if the player is dashing, then a cooldown is issued
+            if (isDashing){
+                timer++;
+                if (timer >= 200)
+                {
+                    dashDuration = 0;
+                    timer = 0;
+                    isDashing=false;
+                }
+            }
+
             if (inputHelper.IsKeyDown(Keys.Left))
             {
                 velocity.X = -speed;
-                facingLeft = true;
                 PlayAnimation("run");
+                facingLeft = true;
             }
 
             else if (inputHelper.IsKeyDown(Keys.Right))
@@ -153,13 +191,13 @@ namespace BaseProject.GameObjects
             {
                 PlayAnimation("idle");
             }
+
             if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
             {
                 isColliding = false;
                 keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
-
             }
             else if (!inputHelper.IsKeyDown(Keys.Up))
             {
@@ -249,7 +287,6 @@ namespace BaseProject.GameObjects
         void death()
         {
             //TODO death annimation
-            
            Reset();            
            died = true;
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");

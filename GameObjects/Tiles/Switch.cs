@@ -8,11 +8,17 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Switch : Trap
     {
-        public Switch(int x, int y, int length, int x2, int y2, int length2) : base(x, y, length)
+        public Switch(int x, int y) : base(x, y)
         {
-            Add(new SwitchObject(x, y, length, "1"));
-            Add(new SwitchObject(x2, y2, length2, "2"));
+            Add(new SwitchObject(x, y, "1"));
+            
+        }
+
+        public override void CreateButton()
+        {
+            base.CreateButton();
             button.Visible = false;
+            buttonPosition = ((SwitchObject)Children[0]).ButtonPosition;
         }
 
         public void Activate(string choice)
@@ -39,13 +45,11 @@ namespace BaseProject.GameObjects.Tiles
         public override Keys AssignedKey { 
             get {
                 SwitchObject switchobject = (SwitchObject)Find("1");
-               // System.Diagnostics.Debug.WriteLine("get");
                 return switchobject.AssignedKey;
                 }
             set
             {
                 SwitchObject switchobject = (SwitchObject)Find("1");
-                //System.Diagnostics.Debug.WriteLine("set");
                 switchobject.AssignedKey = value;
             }
         }
