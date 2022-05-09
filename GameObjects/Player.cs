@@ -14,7 +14,7 @@ namespace BaseProject.GameObjects
     public class Player : AnimatedGameObject
     {
         public float speed, jumpSpeed;
-        public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement;
+        public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
         public Vector2 pVelocity;
         public string verticalCollidingSide;
         public int jumpframes, blockedframes;
@@ -23,7 +23,7 @@ namespace BaseProject.GameObjects
         public bool isDashing;
         private float dashDuration;
         public int dashPower;
-        public bool facingLeft;
+        public bool isFacingLeft;
         public bool isFacingRight;
 
         public Player() : base(Game1.Depth_Player)
@@ -49,7 +49,7 @@ namespace BaseProject.GameObjects
             isDashing = false;
             dashDuration = 0;
             dashPower = 30;
-            facingLeft = false; //Checks if the player is facing left, used for the player dash and animation
+            isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
             Reset();
 
@@ -132,8 +132,37 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            //code to block all movement
-            if(blockMovement)
+
+            //Player Dash ability
+            if (inputHelper.IsKeyDown(Keys.LeftShift))
+            {
+                isDashing = true;
+                dashDuration++;
+
+                if (dashDuration <= 10 && !isFacingLeft)
+                {
+                    velocity.X += dashPower;
+
+                }
+                else if (dashDuration <= 10 && isFacingLeft)
+                {
+                    velocity.X += -dashPower;
+                }
+            }
+            //Checks if the player is dashing, then a cooldown is issued
+            if (isDashing)
+            {
+                timer++;
+                if (timer >= 200)
+                {
+                    dashDuration = 0;
+                    timer = 0;
+                    isDashing = false;
+                }
+            }
+
+            //code to block all movement except the dash
+            if (blockMovement)
             {
                 if(blockedframes == 15)
                 {
@@ -147,44 +176,18 @@ namespace BaseProject.GameObjects
 
             base.HandleInput(inputHelper);
 
-            //Player Dash ability
-            if (inputHelper.IsKeyDown(Keys.LeftShift))
-            {
-                System.Diagnostics.Debug.WriteLine("woosh");
-                isDashing = true;
-                dashDuration++;
-
-                if (dashDuration <= 10 && !facingLeft)
-                {
-                    velocity.X += dashPower;
-                }
-                else if (dashDuration <= 10 && facingLeft)
-                {
-                    System.Diagnostics.Debug.WriteLine(2);
-                    velocity.X += -dashPower;
-                }
-            }
-            //Checks if the player is dashing, then a cooldown is issued
-            if (isDashing){
-                timer++;
-                if (timer >= 200)
-                {
-                    dashDuration = 0;
-                    timer = 0;
-                    isDashing=false;
-                }
-            }
-
             if (inputHelper.IsKeyDown(Keys.Left))
             {
-                velocity.X = -speed;
+                velocity.X += -speed;
                 PlayAnimation("run");
                 facingLeft = true;
+                isFacingLeft = true;
             }
 
             else if (inputHelper.IsKeyDown(Keys.Right))
             {
-                velocity.X = speed;
+                velocity.X += speed;
+                isFacingLeft = false;
                 facingLeft = false;
                 PlayAnimation("run");
                 
@@ -192,6 +195,12 @@ namespace BaseProject.GameObjects
             {
                 PlayAnimation("idle");
             }
+
+            if (!inputHelper.IsKeyDown(Keys.Left))
+            {
+                isFacingLeft = false;
+            }
+
 
             if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
             {
