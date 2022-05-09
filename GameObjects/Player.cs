@@ -49,7 +49,7 @@ namespace BaseProject.GameObjects
             isDashing = false;
             dashDuration = 0;
             dashPower = 30;
-            isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
+            facingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
             Reset();
 
@@ -150,6 +150,7 @@ namespace BaseProject.GameObjects
             //Player Dash ability
             if (inputHelper.IsKeyDown(Keys.LeftShift))
             {
+                System.Diagnostics.Debug.WriteLine("woosh");
                 isDashing = true;
                 dashDuration++;
 
