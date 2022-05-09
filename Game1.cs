@@ -6,8 +6,9 @@ using BaseProject.GameStates;
 namespace BaseProject
 {
     public class Game1 : GameEnvironment
-    {      
-    public static int maxLevels = 1;
+    {
+        public const int Depth_Player = 0; // for the player
+        public static int maxLevels = 1;
         protected override void LoadContent()
         {
             base.LoadContent();

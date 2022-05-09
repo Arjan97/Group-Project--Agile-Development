@@ -19,7 +19,7 @@ namespace BaseProject.GameObjects.Tiles
             foreach (SpikeTile SpikeTile in Children)
             {
                 SpikeTile.indicator.Update(gameTime);
-                System.Diagnostics.Debug.WriteLine(SpikeTile.indicator.GlobalPosition);
+                //System.Diagnostics.Debug.WriteLine(SpikeTile.indicator.GlobalPosition);
             }
             base.Update(gameTime);
         }
@@ -28,7 +28,7 @@ namespace BaseProject.GameObjects.Tiles
             foreach (SpikeTile SpikeTile in Children)
             {
                 SpikeTile.indicator.Draw(gameTime, spriteBatch);
-                System.Diagnostics.Debug.WriteLine(SpikeTile.indicator.Position);
+                //System.Diagnostics.Debug.WriteLine(SpikeTile.indicator.Position);
             }
             base.Draw(gameTime, spriteBatch);
         }

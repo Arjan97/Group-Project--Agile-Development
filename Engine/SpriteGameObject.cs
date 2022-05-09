@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseProject.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class SpriteGameObject : GameObject
@@ -32,6 +33,7 @@ public class SpriteGameObject : GameObject
         }
         sprite.Draw(spriteBatch, GlobalPosition, origin, scale);
         //DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
+
     }
 
     public SpriteSheet Sprite
