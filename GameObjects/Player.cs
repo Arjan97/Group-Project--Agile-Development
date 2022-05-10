@@ -26,14 +26,11 @@ namespace BaseProject.GameObjects
         public bool jumpKeyPressed;
         public bool died;
         private float timer;
-
         public bool isDashing;
         private float dashDuration;
         public int dashPower;
         public bool isFacingLeft;
         public bool isFacingRight;
-
-
 
         public Player() : base("img/players/spr_player")
         {
@@ -48,24 +45,14 @@ namespace BaseProject.GameObjects
             jumpframes = 0;
             timer = 0;
 
-            //Player dash ability 
+            //player dash ability 
             isDashing = false;
             dashDuration = 0;
-            dashPower = 30;
-            isFacingLeft = false; //Checks if the player is facing left, used for the player dash
+            dashPower = 20;
+            isFacingLeft = false; //checks if the player is facing left, used for the player dash
 
             Reset();
         }
-
-        public override void HandleColission(GameObject obj)
-        {
-            if(obj is Spike)
-            {
-
-            }
-            base.HandleColission(obj);
-        }
-
         public override void Reset()
         {
             base.Reset();
@@ -100,7 +87,7 @@ namespace BaseProject.GameObjects
                 }
                 else
                 {
-                    velocity.Y -= 6;
+                   // velocity.Y -= 6;
                 }
 
                 jumpframes++;
@@ -130,7 +117,7 @@ namespace BaseProject.GameObjects
         {
             base.HandleInput(inputHelper);
 
-            //Player Dash ability
+            //player dash ability
             if (inputHelper.IsKeyDown(Keys.LeftShift))
             {
                 isDashing = true;
@@ -142,11 +129,10 @@ namespace BaseProject.GameObjects
                 }
                 else if (dashDuration <= 10 && isFacingLeft)
                 {
-                    System.Diagnostics.Debug.WriteLine(2);
                     velocity.X += -dashPower;
                 }
             }
-            //Checks if the player is dashing, then a cooldown is issued
+            //checks if the player is dashing, then a cooldown is issued
             if (isDashing){
                 timer++;
                 if (timer >= 200)
@@ -171,7 +157,6 @@ namespace BaseProject.GameObjects
                 isFacingLeft = false;
             }
 
-
             if (!inputHelper.IsKeyDown(Keys.Left))
             {
                 isFacingLeft = false;
@@ -188,7 +173,6 @@ namespace BaseProject.GameObjects
             {
                 jumpKeyPressed = false;
             }
-
         }
 
         public void HandleColission(Tile tile)
