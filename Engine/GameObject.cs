@@ -84,10 +84,12 @@ public abstract class GameObject : IGameLoopObject
                 tile.HandleColission(player);
                 return;
             }
-            if(one is SpikeRoofTile)
-            {
-            //System.Diagnostics.Debug.WriteLine("hallo");
-            }
+            if(one is Player && ((SpriteGameObject)other).id == "push")
+        {
+            System.Diagnostics.Debug.WriteLine("hallo");
+            ((Player)one).getPushed(((SpriteGameObject)other).velocity.X);
+            return;
+        }
             //rest colission
             other.HandleColission(one);
             one.HandleColission(other);

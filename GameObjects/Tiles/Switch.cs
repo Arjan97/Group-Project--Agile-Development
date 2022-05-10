@@ -39,13 +39,11 @@ namespace BaseProject.GameObjects.Tiles
         public override Keys AssignedKey { 
             get {
                 SwitchObject switchobject = (SwitchObject)Find("1");
-               // System.Diagnostics.Debug.WriteLine("get");
                 return switchobject.AssignedKey;
                 }
             set
             {
                 SwitchObject switchobject = (SwitchObject)Find("1");
-                //System.Diagnostics.Debug.WriteLine("set");
                 switchobject.AssignedKey = value;
             }
         }

@@ -23,16 +23,17 @@ namespace BaseProject.GameStates
             Add(player);
             Add(tileList);
             Add(ghost);
+            Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
         }
 
         public override void Update(GameTime gameTime)
         {
-            // System.Diagnostics.Debug.WriteLine("start");
             base.Update(gameTime);
             player.isGrounded = false;
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
             HandleCamera();
+            player.CheckColission((SpriteGameObject)Find("push"));
         }
 
 
@@ -88,6 +89,7 @@ namespace BaseProject.GameStates
                 tileList.ShowButtons();
                 photoMode = false; 
             }
+            ghost.HandlePush(inputHelper.KeyPressed(Keys.P), (SpriteGameObject)Find("push"));
             base.HandleInput(inputHelper);
         }
 

@@ -179,6 +179,8 @@ namespace BaseProject.GameObjects
 
                 }
             }
+
+
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
 
@@ -196,7 +198,6 @@ namespace BaseProject.GameObjects
                 else
                 {
                     isColliding = true;
-                    //System.Diagnostics.Debug.WriteLine("up");
                     verticalCollidingSide = "up";
 
                 }
@@ -217,7 +218,18 @@ namespace BaseProject.GameObjects
                     horizontalCollision = true;
                     position.X += Math.Abs(intersection.X);
                 }
-                // System.Diagnostics.Debug.WriteLine(collidingSide);
+            }
+        }
+
+        public void getPushed(float speed)
+        {
+            if(speed > 0)
+            {
+                velocity.X += 30;
+            }
+            else
+            {
+                velocity.X -= 30;
             }
         }
         void death()

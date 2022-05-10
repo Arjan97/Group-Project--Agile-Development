@@ -19,7 +19,6 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            // System.Diagnostics.Debug.WriteLine("check");
             base.HandleInput(inputHelper);
         }
         public override void Activate()
