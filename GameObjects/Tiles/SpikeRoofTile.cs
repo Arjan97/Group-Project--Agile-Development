@@ -15,12 +15,14 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void Activate()
         {
+            //when the trap is activated the tiles will drop
             moving = true;
             velocity.Y += 200;
             base.Activate();
         }
         public override void HandleColission(GameObject tile)
-        {
+        {   
+            //when the spiketile collides with another tile it will turn invisible
             if (tile is Tile)
             {
                  visible = false;

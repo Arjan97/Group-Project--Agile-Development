@@ -155,25 +155,16 @@ namespace BaseProject.GameObjects
         {
             if (tile is SpikeTile || tile is SpikeRoofTile)
             {
-                timer++;
-                if(timer == 18)
-                {
-                    death();
-                    timer = 0;
-                }
-                
+               
+                death();
+
             }
             if(tile is SwitchTile)
             {
               SwitchObject switchTile = (SwitchObject)tile.Parent;
-                if (switchTile.Armed)
-                {
-                    timer++;
-                    if (timer == 20)
-                    {
+                if (switchTile.Armed) { 
+ 
                         death();
-                        timer = 0;
-                    }
 
                 }
             }

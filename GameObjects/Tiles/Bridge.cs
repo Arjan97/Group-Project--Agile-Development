@@ -9,6 +9,7 @@ namespace BaseProject.GameObjects.Tiles
     {
         int timer = 0;
         int downTime = 600;
+
         public Bridge(int x, int y, int length) : base(x, y, length)
         {
             for (int i = 0; i < length; i++)
@@ -20,6 +21,7 @@ namespace BaseProject.GameObjects.Tiles
 
             public override void Activate()
         {
+            //when it activates the trap will dissapear
             visible = false;
             base.Activate();
         }
