@@ -239,14 +239,15 @@ namespace BaseProject.GameObjects
             base.HandleInput(inputHelper);
         }
 
+       //despawns the push entity after a certain time
         public void HandlePush(bool activated, SpriteGameObject push)
         {
+            
             if (push.Visible)
             {
                 PushTimer++;
                 if (PushTimer > PushTime)
                 {
-
                     push.Visible = false;
                     PushTimer = 0;
 

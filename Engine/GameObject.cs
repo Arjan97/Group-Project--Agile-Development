@@ -84,9 +84,9 @@ public abstract class GameObject : IGameLoopObject
                 tile.HandleColission(player);
                 return;
             }
-            if(one is Player && ((SpriteGameObject)other).id == "push")
+        //checks if player collides with push projectile
+        if(one is Player && ((SpriteGameObject)other).id == "push")
         {
-            System.Diagnostics.Debug.WriteLine("hallo");
             ((Player)one).getPushed(((SpriteGameObject)other).velocity.X);
             return;
         }

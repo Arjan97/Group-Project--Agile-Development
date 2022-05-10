@@ -221,8 +221,10 @@ namespace BaseProject.GameObjects
             }
         }
 
+        //function thats moves the player, gets called when colliding with push projectile
         public void getPushed(float speed)
         {
+            //checks if the push projectile is moving left or right
             if(speed > 0)
             {
                 velocity.X += 30;
