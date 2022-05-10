@@ -11,26 +11,28 @@ using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
-    public class Player : SpriteGameObject
+    public class Player : AnimatedGameObject
     {
-        public float speed;
-        public float jumpSpeed;
-        public bool isFalling;
+        public float speed, jumpSpeed;
+        public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
         public Vector2 pVelocity;
-        public bool isColliding;
-        public bool keyPressed;
         public string verticalCollidingSide;
-        public bool isGrounded;
-        public bool isJumping;
-        public int jumpframes;
-        public bool jumpKeyPressed;
-        public bool died;
+        public int jumpframes, blockedframes;
         private float timer;
         public bool isDashing;
         private float dashDuration;
         public int dashPower;
         public bool isFacingLeft;
         public bool isFacingRight;
+
+        public Player() : base(Game1.Depth_Player)
+        {
+            LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
+            LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
+            LoadAnimation("img/players/spr_player_jump@2", "jump", true, 0.5f);
+
+            PlayAnimation("idle");
+            SetOriginToBottomCenter();
 
         public Player() : base("img/players/spr_player")
         {
@@ -41,17 +43,18 @@ namespace BaseProject.GameObjects
             died = false;
             jumpSpeed = 100f;
             speed = 5f;
-            Origin = Center;
             jumpframes = 0;
             timer = 0;
 
             //player dash ability 
             isDashing = false;
             dashDuration = 0;
-            dashPower = 20;
-            isFacingLeft = false; //checks if the player is facing left, used for the player dash
+            dashPower = 30;
+            isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
             Reset();
+
+
         }
         public override void Reset()
         {
@@ -89,7 +92,7 @@ namespace BaseProject.GameObjects
                 {
                    // velocity.Y -= 6;
                 }
-
+                PlayAnimation("jump");
                 jumpframes++;
             }
             else
@@ -104,6 +107,11 @@ namespace BaseProject.GameObjects
                 velocity.Y += 4.5f * i;
             }
 
+            if(blockMovement)
+            {
+                blockedframes++;
+            }
+
             position += velocity;
             Velocity = Vector2.Zero;
         }
@@ -115,7 +123,6 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            base.HandleInput(inputHelper);
 
             //player dash ability
             if (inputHelper.IsKeyDown(Keys.LeftShift))
@@ -126,28 +133,45 @@ namespace BaseProject.GameObjects
                 if (dashDuration <= 10 && !isFacingLeft)
                 {
                     velocity.X += dashPower;
+
                 }
                 else if (dashDuration <= 10 && isFacingLeft)
                 {
                     velocity.X += -dashPower;
                 }
             }
-            //checks if the player is dashing, then a cooldown is issued
-            if (isDashing){
+            //Checks if the player is dashing, then a cooldown is issued
+            if (isDashing)
+            {
                 timer++;
                 if (timer >= 200)
                 {
                     dashDuration = 0;
                     timer = 0;
-                    isDashing=false;
+                    isDashing = false;
                 }
             }
+
+            //code to block all movement except the dash
+            if (blockMovement)
+            {
+                if(blockedframes == 15)
+                {
+                    blockMovement = false;
+                    blockedframes = 0;
+                }
+                //possible 'stunned' animation
+                PlayAnimation("idle");
+                return;
+            }
+
+            base.HandleInput(inputHelper);
 
             if (inputHelper.IsKeyDown(Keys.Left))
             {
                 velocity.X += -speed;
-                Player testPlayer = new Player();
-                testPlayer.position = testPlayer.position += velocity;
+                PlayAnimation("run");
+                facingLeft = true;
                 isFacingLeft = true;
             }
 
@@ -155,12 +179,19 @@ namespace BaseProject.GameObjects
             {
                 velocity.X += speed;
                 isFacingLeft = false;
+                facingLeft = false;
+                PlayAnimation("run");
+                
+            } else
+            {
+                PlayAnimation("idle");
             }
 
             if (!inputHelper.IsKeyDown(Keys.Left))
             {
                 isFacingLeft = false;
             }
+
 
             if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
             {
@@ -173,6 +204,9 @@ namespace BaseProject.GameObjects
             {
                 jumpKeyPressed = false;
             }
+
+            sprite.Mirror = facingLeft;
+
         }
 
         public void HandleColission(Tile tile)
@@ -233,13 +267,19 @@ namespace BaseProject.GameObjects
                 if (intersection.X < 0)
                 {
                     isColliding = true;
-                    position.X -= Math.Abs(intersection.X);
+                    position.X -= Math.Abs(intersection.X) -1;
                 }
                 //collision left side player and right side tile
                 else
                 {
                     isColliding = true;
-                    position.X += Math.Abs(intersection.X);
+                    position.X += Math.Abs(intersection.X) +1;
+                }
+
+                //blocking movement when player keeps colliding with wall.
+                if(intersection.X > 8 || intersection.X < -8)
+                {
+                    blockMovement = true;
                 }
             }
         }
@@ -247,10 +287,16 @@ namespace BaseProject.GameObjects
         //function to handle the death of a player
         void death()
         {
+            //TODO death annimation
            Reset();            
            died = true;
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
+        }
+
+        void SetOriginToBottomCenter()
+        {
+            Origin = new Vector2(sprite.Width / 2, sprite.Height);
         }
     }
 }
