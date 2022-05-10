@@ -5,12 +5,14 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Spike : Trap
     {
-        public Spike(int x, int y, int length) : base(x, y, length)
+        public Spike(int x, int y) : base(x, y)
         {
-            for (int i = 0; i < length; i++)
-            {
-                Add(new SpikeTile(x + i, y));
-            }
+                Add(new SpikeTile(x, y));
+        }
+
+        public override void CreateButton()
+        {
+            base.CreateButton();
             button.Position += new Vector2(0,tileSize/2);
         }
 

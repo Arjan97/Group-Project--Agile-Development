@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,20 +8,19 @@ namespace BaseProject.GameObjects.Tiles
     internal class SwitchObject : Trap
     {
         bool armed = false;
-        public SwitchObject(int x, int y, int length, string id) : base(x, y, length)
+        public SwitchObject(int x, int y, string id) : base(x, y)
         {
             this.id = id;
-            for (int i = 0; i < length; i++)
-            {
-                Add(new SwitchTile(x + i, y));
-            }
 
+         Add(new SwitchTile(x, y));
         }
 
-        public override void HandleInput(InputHelper inputHelper)
+        public override void CreateButton()
         {
-            base.HandleInput(inputHelper);
+            base.CreateButton();
+            
         }
+
         public override void Activate()
         {
             Switch switchtrap = (Switch)parent;
@@ -31,5 +31,7 @@ namespace BaseProject.GameObjects.Tiles
         public void Arm() { armed = true; }
 
         public bool Armed { get => armed; }
+
+        public Vector2 ButtonPosition { get => buttonPosition;}
     }
 }

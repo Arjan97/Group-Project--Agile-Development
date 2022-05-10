@@ -154,7 +154,6 @@ namespace BaseProject.GameObjects
                                 //if there are enough keys left the keys will be assigned
                                 if (keysLeft >= 2)
                                 {
-
                                     switchTrap.AssignedKey = keys[pos];
                                     keys.Remove(keys[pos]);
                                     switchTrap.AssignedSecondKey = keys[0];
