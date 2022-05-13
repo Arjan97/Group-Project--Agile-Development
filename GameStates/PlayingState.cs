@@ -15,7 +15,7 @@ namespace BaseProject.GameStates
         public TileList tileList = new TileList();
         Ghost ghost = new Ghost();
         bool photoMode = false;
-
+        bool paused = false;
         bool headingRight = true;
 
         public PlayingState()
@@ -24,22 +24,24 @@ namespace BaseProject.GameStates
             Add(tileList);
             Add(ghost);
             Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
+
+            //creates text that shows up when screen pauses
+            TextGameObject pause = new TextGameObject("font/Arial40",0,"pauseText");
+            pause.Visible = false;
+            pause.Text = "Game Paused";
+            pause.Position = new Vector2(GameEnvironment.Screen.X/2-pause.Text.Length*20, GameEnvironment.Screen.Y/2);
+            Add(pause);
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (paused) { return; }
             base.Update(gameTime);
             player.isGrounded = false;
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
             HandleCamera();
             player.CheckColission((SpriteGameObject)Find("push"));
-        }
-
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            base.Draw(gameTime, spriteBatch);
         }
 
         public void LoadLevel(int level)
@@ -77,6 +79,7 @@ namespace BaseProject.GameStates
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            if (inputHelper.KeyPressed(Keys.T)) HandlePause();
             if (inputHelper.IsKeyDown(Keys.D0))
             {
                 photoMode = true;
@@ -89,9 +92,17 @@ namespace BaseProject.GameStates
                 tileList.ShowButtons();
                 photoMode = false; 
             }
+            if(paused)
+                return;
             ghost.HandlePush(inputHelper.KeyPressed(Keys.P), (SpriteGameObject)Find("push"));
-            base.HandleInput(inputHelper);
+                base.HandleInput(inputHelper);
         }
 
-    }     
+        //function that shows the text
+        void HandlePause()
+        {
+            paused = !paused;
+            Find("pauseText").Visible = paused;
+        }
+    } 
 }
