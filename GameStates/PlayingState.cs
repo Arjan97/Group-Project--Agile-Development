@@ -59,7 +59,7 @@ namespace BaseProject.GameStates
                 player.died = false;
             }
             //check if player turns around
-            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
+            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
                 headingRight = !headingRight;
             }
