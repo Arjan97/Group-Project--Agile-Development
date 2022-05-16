@@ -237,6 +237,8 @@ namespace BaseProject.GameObjects
 
                 }
             }
+
+
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
 
@@ -281,6 +283,20 @@ namespace BaseProject.GameObjects
                 {
                     blockMovement = true;
                 }
+            }
+        }
+
+        //function thats moves the player, gets called when colliding with push projectile
+        public void getPushed(float speed)
+        {
+            //checks if the push projectile is moving left or right
+            if(speed > 0)
+            {
+                velocity.X += 30;
+            }
+            else
+            {
+                velocity.X -= 30;
             }
         }
 
