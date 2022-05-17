@@ -14,7 +14,7 @@ namespace BaseProject.GameObjects
     public class Player : AnimatedGameObject
     {
         public float speed, jumpSpeed;
-        public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
+        public bool isFalling, isColliding, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
         public Vector2 pVelocity;
         public string verticalCollidingSide;
         public int jumpframes, blockedframes;
@@ -34,9 +34,6 @@ namespace BaseProject.GameObjects
             PlayAnimation("idle");
             SetOriginToBottomCenter();
 
-        public Player() : base("img/players/spr_player")
-        {
-            keyPressed = false;
             pVelocity = velocity;
             isFalling = true;
             isColliding = false;
@@ -53,8 +50,6 @@ namespace BaseProject.GameObjects
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
             Reset();
-
-
         }
         public override void Reset()
         {
@@ -123,24 +118,30 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
-
-            //player dash ability
+            //player dash right
             if (inputHelper.IsKeyDown(Keys.LeftShift))
             {
                 isDashing = true;
                 dashDuration++;
 
-                if (dashDuration <= 10 && !isFacingLeft)
+                if (dashDuration <= 10)
                 {
                     velocity.X += dashPower;
-
                 }
-                else if (dashDuration <= 10 && isFacingLeft)
+            }
+
+            //player dash left
+            if (inputHelper.IsKeyDown(Keys.LeftControl))
+            {
+                isDashing = true;
+                dashDuration++;
+
+                if (dashDuration <= 10)
                 {
                     velocity.X += -dashPower;
                 }
             }
-            //Checks if the player is dashing, then a cooldown is issued
+            //checks if the player is dashing, then a cooldown is issued
             if (isDashing)
             {
                 timer++;
@@ -196,7 +197,6 @@ namespace BaseProject.GameObjects
             if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
             {
                 isColliding = false;
-                keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
             }
@@ -251,6 +251,7 @@ namespace BaseProject.GameObjects
                 {
                     isColliding = true;
                     isGrounded = true;
+
                     verticalCollidingSide = "down";
                     position.Y -= Math.Abs(intersection.Y) - 1;
                     
