@@ -186,7 +186,7 @@ namespace BaseProject.GameObjects
             }
 
 
-            if (inputHelper.IsKeyDown(Keys.Up) && groundTimer < 20)
+            if (inputHelper.IsKeyDown(Keys.Up) && groundTimer < 20 && !isJumping)
             {
                 isColliding = false;
                 isJumping = true;
