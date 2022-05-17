@@ -202,7 +202,7 @@ namespace BaseProject.GameObjects
             }
 
 
-            if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
+            if (inputHelper.IsKeyDown(Keys.Up) /* && isGrounded */)
             {
                 isColliding = false;
                 keyPressed = true;
@@ -245,6 +245,16 @@ namespace BaseProject.GameObjects
                     }
 
                 }
+            }
+
+            if(tile is FinishTile)
+            {
+                GameEnvironment.GameStateManager.CurrentGameState.Reset();
+                /*
+                PlayingState playState = (PlayingState) GameEnvironment.GameStateManager.CurrentGameState;
+                playState.LoadLevel(GameEnvironment.Random.Next(Game1.maxLevels));
+                playState.tileList.nextLevelNr = 0;
+                */
             }
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);

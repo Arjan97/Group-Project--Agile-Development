@@ -15,7 +15,7 @@ namespace BaseProject.GameStates
         public TileList tileList = new TileList();
         Ghost ghost = new Ghost();
         bool photoMode = false;
-
+        bool touchedFinish = false;
         bool headingRight = true;
 
         public PlayingState()
@@ -32,6 +32,10 @@ namespace BaseProject.GameStates
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
             HandleCamera();
+            if(touchedFinish)
+            {
+                this.LoadLevel(0);
+            }
         }
 
 
