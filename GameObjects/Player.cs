@@ -76,7 +76,6 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             
             float i = 1;
 
@@ -121,8 +120,9 @@ namespace BaseProject.GameObjects
                 blockedframes++;
             }
 
-            position += velocity;
-            Velocity = Vector2.Zero;
+            velocity *= 40f;
+            base.Update(gameTime);
+            Velocity *= 0.01f;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
