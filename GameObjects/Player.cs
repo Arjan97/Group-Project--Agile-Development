@@ -48,7 +48,7 @@ namespace BaseProject.GameObjects
             //Player dash ability 
             isDashing = false;
             dashDuration = 0;
-            dashPower = 30;
+            dashPower = 15;
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
             Reset();
@@ -223,26 +223,17 @@ namespace BaseProject.GameObjects
             //checking and handling collision with SpikeTile
             if (tile is SpikeTile || tile is SpikeRoofTile)
             {
-                timer++;
-                if(timer == 18)
-                {
-                    death();
-                    timer = 0;
-                }
-                
+               
+                death();
+
             }
             //checking and handling collision with SwitchTile
             if(tile is SwitchTile)
             {
               SwitchObject switchTile = (SwitchObject)tile.Parent;
-                if (switchTile.Armed)
-                {
-                    timer++;
-                    if (timer == 20)
-                    {
+                if (switchTile.Armed) { 
+ 
                         death();
-                        timer = 0;
-                    }
 
                 }
             }
@@ -313,8 +304,8 @@ namespace BaseProject.GameObjects
         void death()
         {
             //TODO death annimation
-           Reset();            
-           died = true;
+            Reset();            
+            died = true;
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
         }

@@ -16,6 +16,7 @@ namespace BaseProject.GameObjects.Tiles
 
             public override void Activate()
         {
+            //when it activates the trap will dissapear
             visible = false;
             base.Activate();
         }
