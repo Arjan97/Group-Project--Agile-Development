@@ -18,6 +18,7 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void Update(GameTime gameTime)
         {
+            //updates the indicator for each spikeTile
             foreach (SpikeTile SpikeTile in Children)
             {
                 SpikeTile.indicator.Update(gameTime);
@@ -26,6 +27,7 @@ namespace BaseProject.GameObjects.Tiles
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            //displays the indicator for each spikeTile
             foreach (SpikeTile SpikeTile in Children)
             {
                 SpikeTile.indicator.Draw(gameTime, spriteBatch);

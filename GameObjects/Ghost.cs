@@ -10,7 +10,13 @@ namespace BaseProject.GameObjects
     public class Ghost : AnimatedGameObject
     {
         static int speed = 500;
+        static float PushSpeed = 300f;
+        static int PushTime = 50;
+        int PushTimer;
+        static int CooldownTime = 300;
+        int CooldownTimer;
         static int maxButtons = 4;
+        bool onCooldown = false;
         Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
 
 
@@ -227,11 +233,58 @@ namespace BaseProject.GameObjects
             {
                 velocity *= 0.75f;
             }
+
             HandleAnimation(velocity);
             base.HandleInput(inputHelper);
         }
 
+       //despawns the push entity after a certain time
+        public void HandlePush(bool activated, SpriteGameObject push)
+        {
+            
+            if (push.Visible)
+            {
+                PushTimer++;
+                if (PushTimer > PushTime)
+                {
+                    push.Visible = false;
+                    PushTimer = 0;
 
+                }
+            }
+            //checks if the button is pressed and the ability is not on cooldown
+            if (activated && !onCooldown)
+            {
+                onCooldown = true;
+                push.Scale = new Vector2(2, 2);
+                push.Position = position -new Vector2(0, sprite.Height/2);
+                push.Visible = true;
+
+                //check which direction the hunter is facing
+                if (sprite.Mirror)
+                {
+                    push.Velocity = new Vector2(PushSpeed, 0);
+                }
+                else
+                {
+                    push.Velocity = new Vector2(-PushSpeed, 0);
+                }
+
+            }
+
+            
+            //times the cooldown
+            if (onCooldown)
+            {
+                CooldownTimer++;
+                if (CooldownTimer > CooldownTime)
+                {
+                    onCooldown = false;
+                    CooldownTimer = 0;
+                }
+            }
+
+        }
         private void HandleAnimation(Vector2 velocity)
         {
             if(velocity == Vector2.Zero)

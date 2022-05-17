@@ -15,6 +15,7 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void Activate()
         {
+            //when the trap is activated, it will fall down
             velocity.Y += 200;
             base.Activate();
 

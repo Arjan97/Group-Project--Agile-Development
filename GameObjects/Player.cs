@@ -48,7 +48,7 @@ namespace BaseProject.GameObjects
             //Player dash ability 
             isDashing = false;
             dashDuration = 0;
-            dashPower = 30;
+            dashPower = 15;
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
             Reset();
@@ -76,7 +76,6 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             
             float i = 1;
 
@@ -121,8 +120,9 @@ namespace BaseProject.GameObjects
                 blockedframes++;
             }
 
-            position += velocity;
-            Velocity = Vector2.Zero;
+            velocity *= 70f;
+            base.Update(gameTime);
+            Velocity *= Vector2.Zero;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -223,39 +223,22 @@ namespace BaseProject.GameObjects
             //checking and handling collision with SpikeTile
             if (tile is SpikeTile || tile is SpikeRoofTile)
             {
-                timer++;
-                if(timer == 18)
-                {
-                    death();
-                    timer = 0;
-                }
-                
+               
+                death();
+
             }
             //checking and handling collision with SwitchTile
             if(tile is SwitchTile)
             {
               SwitchObject switchTile = (SwitchObject)tile.Parent;
-                if (switchTile.Armed)
-                {
-                    timer++;
-                    if (timer == 20)
-                    {
+                if (switchTile.Armed) { 
+ 
                         death();
-                        timer = 0;
-                    }
 
                 }
             }
 
-            if(tile is FinishTile)
-            {
-                GameEnvironment.GameStateManager.CurrentGameState.Reset();
-                /*
-                PlayingState playState = (PlayingState) GameEnvironment.GameStateManager.CurrentGameState;
-                playState.LoadLevel(GameEnvironment.Random.Next(Game1.maxLevels));
-                playState.tileList.nextLevelNr = 0;
-                */
-            }
+
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
 
@@ -303,12 +286,26 @@ namespace BaseProject.GameObjects
             }
         }
 
+        //function thats moves the player, gets called when colliding with push projectile
+        public void getPushed(float speed)
+        {
+            //checks if the push projectile is moving left or right
+            if(speed > 0)
+            {
+                velocity.X += 30;
+            }
+            else
+            {
+                velocity.X -= 30;
+            }
+        }
+
         //function to handle the death of a player
         void death()
         {
             //TODO death annimation
-           Reset();            
-           died = true;
+            Reset();            
+            died = true;
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
         }

@@ -27,6 +27,10 @@ public abstract class GameObject : IGameLoopObject
     public virtual void Update(GameTime gameTime)
     {
         position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        if(this is Player)
+        {
+            System.Diagnostics.Debug.WriteLine(true);
+        }
     }
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -84,6 +88,12 @@ public abstract class GameObject : IGameLoopObject
                 tile.HandleColission(player);
                 return;
             }
+        //checks if player collides with push projectile
+        if(one is Player && ((SpriteGameObject)other).id == "push")
+        {
+            ((Player)one).getPushed(((SpriteGameObject)other).velocity.X);
+            return;
+        }
             //rest colission
             other.HandleColission(one);
             one.HandleColission(other);
