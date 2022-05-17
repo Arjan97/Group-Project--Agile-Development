@@ -14,7 +14,7 @@ namespace BaseProject.GameObjects
     public class Player : AnimatedGameObject
     {
         public float speed, jumpSpeed;
-        public bool isFalling, isColliding, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
+        public bool isFalling, isColliding, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
         public Vector2 pVelocity;
         public string verticalCollidingSide;
         public int jumpframes, blockedframes;
@@ -24,6 +24,7 @@ namespace BaseProject.GameObjects
         public int dashPower;
         public bool isFacingLeft;
         public bool isFacingRight;
+        public int groundTimer;
 
         public Player() : base(Game1.Depth_Player)
         {
@@ -62,6 +63,7 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
+            groundTimer++;
             base.Update(gameTime);
             
             float i = 1;
@@ -97,7 +99,7 @@ namespace BaseProject.GameObjects
             }
             
             //adding gravity
-            if (!isGrounded)
+            if (groundTimer != 0)
             {
                 velocity.Y += 4.5f * i;
             }
@@ -194,7 +196,7 @@ namespace BaseProject.GameObjects
             }
 
 
-            if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
+            if (inputHelper.IsKeyDown(Keys.Up) && groundTimer < 20)
             {
                 isColliding = false;
                 isJumping = true;
@@ -250,7 +252,7 @@ namespace BaseProject.GameObjects
                 if (intersection.Y < 0)
                 {
                     isColliding = true;
-                    isGrounded = true;
+                    groundTimer = 0;
 
                     verticalCollidingSide = "down";
                     position.Y -= Math.Abs(intersection.Y) - 1;
