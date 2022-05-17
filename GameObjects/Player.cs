@@ -3,10 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using BaseProject.GameObjects.Tiles;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
@@ -22,8 +18,6 @@ namespace BaseProject.GameObjects
         public bool isDashing;
         private float dashDuration;
         public int dashPower;
-        public bool isFacingLeft;
-        public bool isFacingRight;
         public int groundTimer;
 
         public Player() : base(Game1.Depth_Player)
@@ -48,8 +42,6 @@ namespace BaseProject.GameObjects
             isDashing = false;
             dashDuration = 0;
             dashPower = 30;
-            isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
-
             Reset();
         }
         public override void Reset()
@@ -87,7 +79,7 @@ namespace BaseProject.GameObjects
                 }
                 else
                 {
-                   // velocity.Y -= 6;
+                    velocity.Y -= 6;
                 }
                 PlayAnimation("jump");
                 jumpframes++;
@@ -176,14 +168,11 @@ namespace BaseProject.GameObjects
                 velocity.X += -speed;
                 PlayAnimation("run");
                 facingLeft = true;
-                isFacingLeft = true;
             }
 
             else if (inputHelper.IsKeyDown(Keys.Right))
             {
                 velocity.X += speed;
-                isFacingLeft = false;
-                facingLeft = false;
                 PlayAnimation("run");
                 
             } else
@@ -193,7 +182,7 @@ namespace BaseProject.GameObjects
 
             if (!inputHelper.IsKeyDown(Keys.Left))
             {
-                isFacingLeft = false;
+                facingLeft = false;
             }
 
 
