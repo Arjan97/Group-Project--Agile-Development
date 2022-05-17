@@ -48,7 +48,7 @@ namespace BaseProject.GameObjects
             //Player dash ability 
             isDashing = false;
             dashDuration = 0;
-            dashPower = 30;
+            dashPower = 15;
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
             Reset();
@@ -288,8 +288,8 @@ namespace BaseProject.GameObjects
         void death()
         {
             //TODO death annimation
-           Reset();            
-           died = true;
+            Reset();            
+            died = true;
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
         }
