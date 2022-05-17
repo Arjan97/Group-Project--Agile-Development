@@ -120,9 +120,9 @@ namespace BaseProject.GameObjects
                 blockedframes++;
             }
 
-            velocity *= 40f;
+            velocity *= 70f;
             base.Update(gameTime);
-            Velocity *= 0.01f;
+            Velocity *= Vector2.Zero;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
