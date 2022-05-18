@@ -13,11 +13,13 @@ namespace BaseProject.GameObjects
 {
     public class Player : AnimatedGameObject
     {
+        Keys movementKey = Keys.O;
+
         public float speed, jumpSpeed;
         public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
         public Vector2 pVelocity;
         public string verticalCollidingSide;
-        public int jumpframes, blockedframes;
+        public int jumpframes, blockedframes, lives, maxLives =3;
         private float timer;
 
         public bool isDashing;
@@ -25,6 +27,7 @@ namespace BaseProject.GameObjects
         public int dashPower;
         public bool isFacingLeft;
         public bool isFacingRight;
+        private GameObjectList livesIcons;
 
         public Player() : base(Game1.Depth_Player)
         {
@@ -50,8 +53,9 @@ namespace BaseProject.GameObjects
             dashDuration = 0;
             dashPower = 15;
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
-
             Reset();
+            createLives();
+            Respawn();
 
 
         }
@@ -68,10 +72,16 @@ namespace BaseProject.GameObjects
         public override void Reset()
         {
             base.Reset();
-            position.X = 1.5f*Tile.tileSize;
+            lives = maxLives;
+
+        }
+
+        public void Respawn()
+        {
+            position.X = 1.5f * Tile.tileSize;
             position.Y = GameEnvironment.Screen.Y / 2;
             Velocity = Vector2.Zero;
-            died=false;
+            died = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -127,6 +137,10 @@ namespace BaseProject.GameObjects
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            for(int i=0; i<lives; i++)
+            {
+                livesIcons.Children[i].Draw(gameTime, spriteBatch);
+            }
             base.Draw(gameTime, spriteBatch);
         }
 
@@ -175,6 +189,8 @@ namespace BaseProject.GameObjects
             }
 
             base.HandleInput(inputHelper);
+
+
 
             if (inputHelper.IsKeyDown(Keys.Left))
             {
@@ -304,12 +320,34 @@ namespace BaseProject.GameObjects
         void death()
         {
             //TODO death annimation
-            Reset();            
+            lives--;
             died = true;
+            if(lives <= 0)//checks if the player can respawn
+            {
+            }
+            else
+            {
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
+             Respawn();
+             System.Diagnostics.Debug.WriteLine(lives);
+            }
         }
 
+        //function to create the lives icons
+        void createLives()
+        {
+            livesIcons = new GameObjectList(0, "lives");
+            livesIcons.Parent = Parent;
+
+            //creates an Icon for each live
+            for(int i = 0; i< maxLives; i++)
+            {
+                SpriteGameObject live = new SpriteGameObject("img/players/spr_testplayer");
+                live.Position += new Vector2(live.Sprite.Width * i,0);
+                livesIcons.Add(live);
+            }
+        }
         void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
