@@ -13,7 +13,6 @@ namespace BaseProject.GameObjects
 {
     public class Player : AnimatedGameObject
     {
-        Keys movementKey = Keys.O;
 
         public float speed, jumpSpeed;
         public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
@@ -71,9 +70,9 @@ namespace BaseProject.GameObjects
 
         public override void Reset()
         {
-            base.Reset();
             lives = maxLives;
-
+            Respawn();
+            base.Reset();
         }
 
         public void Respawn()
@@ -324,6 +323,8 @@ namespace BaseProject.GameObjects
             died = true;
             if(lives <= 0)//checks if the player can respawn
             {
+                GameEnvironment.GameStateManager.SwitchTo("gameOverState");
+                return;
             }
             else
             {

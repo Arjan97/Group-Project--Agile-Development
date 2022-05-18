@@ -23,7 +23,9 @@ namespace BaseProject.GameStates
             Add(player);
             Add(tileList);
             Add(ghost);
-            Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
+            SpriteGameObject push = new SpriteGameObject("img/players/spr_push", 0, "push");
+            push.Visible = false;
+            Add(push);
         }
 
         public override void Update(GameTime gameTime)
@@ -45,6 +47,13 @@ namespace BaseProject.GameStates
         public void LoadLevel(int level)
         {
             tileList.LoadLevel(level);
+        }
+
+        public override void Reset()
+        {
+            tileList.nextLevelNr = tileList.CurrentLevel;
+            base.Reset();
+            Find("push").Visible = false;
         }
 
         //function that moves the camera

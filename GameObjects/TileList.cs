@@ -14,6 +14,7 @@ namespace BaseProject.GameObjects
         Vector2 levelSize;
         string colorCode;
         public int nextLevelNr = -1;
+        private int currentLevel;
 
         public TileList() : base(-1)
         {
@@ -66,7 +67,10 @@ namespace BaseProject.GameObjects
             children.Clear();
             nextLevelNr = -1;
             LoadLevel(levelNr);
+            currentLevel = levelNr;
         }
+
+        public int CurrentLevel { get { return currentLevel; } }
 
 
         public void LoadLevel(int levelNr)
