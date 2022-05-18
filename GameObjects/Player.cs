@@ -339,11 +339,13 @@ namespace BaseProject.GameObjects
         {
             livesIcons = new GameObjectList(0, "lives");
             livesIcons.Parent = Parent;
+            livesIcons.Position = new Vector2(30, GameEnvironment.Screen.Y *1/10);
 
             //creates an Icon for each live
             for(int i = 0; i< maxLives; i++)
             {
                 SpriteGameObject live = new SpriteGameObject("img/players/spr_testplayer");
+                live.Scale = new Vector2(0.5f, 0.5f);
                 live.Position += new Vector2(live.Sprite.Width * i,0);
                 livesIcons.Add(live);
             }

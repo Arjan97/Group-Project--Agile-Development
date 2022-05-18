@@ -15,7 +15,7 @@ namespace BaseProject.GameObjects
         string colorCode;
         public int nextLevelNr = -1;
 
-        public TileList()
+        public TileList() : base(-1)
         {
             id = "TileList";
         }
