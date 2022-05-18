@@ -77,9 +77,17 @@ namespace BaseProject.GameObjects
                 {
                     velocity.Y -= 17;
                 }
-                else
+                else if (jumpframes < 20)
+                {
+                    velocity.Y -= 10;
+                }
+                else if (jumpframes < 25)
                 {
                     velocity.Y -= 6;
+                }
+                else
+                {
+                    velocity.Y -= 4;
                 }
                 PlayAnimation("jump");
                 jumpframes++;
@@ -93,7 +101,7 @@ namespace BaseProject.GameObjects
             //adding gravity
             if (groundTimer != 0)
             {
-                velocity.Y += 4.5f * i;
+                velocity.Y += 6.5f * i; //4.5
             }
 
             if(blockMovement)
