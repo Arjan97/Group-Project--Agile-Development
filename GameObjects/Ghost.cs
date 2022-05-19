@@ -21,7 +21,7 @@ namespace BaseProject.GameObjects
         static int maxButtons = 4;
         bool onCooldown = false;
         Keys[] trapButtons;
-        bool stunned = false;
+        public bool stunned = false;
         int stunnedTimer = 0;
         int stunnedTime = 90;
 
@@ -65,7 +65,6 @@ namespace BaseProject.GameObjects
         {
             position = GameEnvironment.Screen.ToVector2() / 2;
             trapButtons = new Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
-            System.Diagnostics.Debug.WriteLine("test2");
             base.Reset();
         }
         //function to calculate trap distance and assign keys
@@ -168,8 +167,12 @@ namespace BaseProject.GameObjects
         //function that gives the keys to the traps
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
+            if(stunned)
+            {
+                System.Diagnostics.Debug.Write("stunned");
+                return;
+            }
             int keysLeft = keys.Count;
-            System.Diagnostics.Debug.WriteLine(keysLeft);
             while(keysLeft > 0)
             {
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet

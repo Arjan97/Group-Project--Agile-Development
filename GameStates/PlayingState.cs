@@ -104,8 +104,11 @@ namespace BaseProject.GameStates
                 tileList.ShowButtons();
                 photoMode = false; 
             }
-            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
-            base.HandleInput(inputHelper);
+            if (!ghost.stunned)
+            {
+                ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
+            }
+                base.HandleInput(inputHelper);
         }
 
     }     
