@@ -10,6 +10,8 @@ namespace BaseProject.GameObjects
 {
     public class Ghost : AnimatedGameObject
     {
+        InputHandler input;
+
         static int speed = 500;
         static float PushSpeed = 300f;
         static int PushTime = 50;
@@ -18,17 +20,21 @@ namespace BaseProject.GameObjects
         int CooldownTimer;
         static int maxButtons = 4;
         bool onCooldown = false;
-        Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
+        Keys[] trapButtons;
 
 
-       public Ghost(): base ()
+       public Ghost()
         {
+            input = GameEnvironment.input;
+
+
             id = "Ghost";
-            position.X = GameEnvironment.Screen.X / 2;
-            position.Y = GameEnvironment.Screen.Y / 2;
+
             scale = new Vector2(1.5f, 1.5f);
             LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
             LoadAnimation("img/players/spr_ghost", "idle", false);
+
+            Reset();
         }
 
         public override void Reset()
@@ -48,6 +54,13 @@ namespace BaseProject.GameObjects
             base.Update(gameTime);
         }
 
+        public override void Reset()
+        {
+            position = GameEnvironment.Screen.ToVector2() / 2;
+            trapButtons = new Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
+            System.Diagnostics.Debug.WriteLine("test2");
+            base.Reset();
+        }
         //function to calculate trap distance and assign keys
         public void SetGhostDistance(TileList tiles)
         {
@@ -82,6 +95,8 @@ namespace BaseProject.GameObjects
             }
             
         }
+
+
 
         //function to clear the keys of objects too far away, returns a list of keys that are now available
         private List<Keys> UnassignKeys(SortedDictionary<float,Trap> traplist)
@@ -147,6 +162,7 @@ namespace BaseProject.GameObjects
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
             int keysLeft = keys.Count;
+            System.Diagnostics.Debug.WriteLine(keysLeft);
             while(keysLeft > 0)
             {
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
@@ -220,21 +236,21 @@ namespace BaseProject.GameObjects
         {
 
             velocity = Vector2.Zero;
-            if (inputHelper.IsKeyDown(Keys.J) && position.X > 0)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.left)) && position.X > 0)
             {
                 velocity.X = -speed;
                 sprite.Mirror = false;
             }
-            if (inputHelper.IsKeyDown(Keys.L)  && GlobalPosition.X < GameEnvironment.Screen.X - Sprite.Width)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.right))  && GlobalPosition.X < GameEnvironment.Screen.X - Sprite.Width)
             {
                 velocity.X = speed;
                 sprite.Mirror = true;
             }
-            if (inputHelper.IsKeyDown(Keys.K) && position.Y < GameEnvironment.Screen.Y - Sprite.Height)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.down)) && position.Y < GameEnvironment.Screen.Y - Sprite.Height)
             {
                 velocity.Y = speed;
             }
-            if (inputHelper.IsKeyDown(Keys.I) && position.Y > 0)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.up)) && position.Y > 0)
             {
                 velocity.Y = -speed;
             }

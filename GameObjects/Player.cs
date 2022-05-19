@@ -13,11 +13,12 @@ namespace BaseProject.GameObjects
 {
     public class Player : AnimatedGameObject
     {
+
         public float speed, jumpSpeed;
         public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
         public Vector2 pVelocity;
         public string verticalCollidingSide;
-        public int jumpframes, blockedframes;
+        public int jumpframes, blockedframes, lives, maxLives =3;
         private float timer;
 
         public bool isDashing;
@@ -25,15 +26,18 @@ namespace BaseProject.GameObjects
         public int dashPower;
         public bool isFacingLeft;
         public bool isFacingRight;
+        private GameObjectList livesIcons;
+        InputHandler input;
 
         public Player() : base(Game1.Depth_Player)
         {
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
             LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
             LoadAnimation("img/players/spr_player_jump@2", "jump", true, 0.5f);
-
             PlayAnimation("idle");
             SetOriginToBottomCenter();
+
+            input = GameEnvironment.input;
 
             keyPressed = false;
             pVelocity = velocity;
@@ -50,8 +54,9 @@ namespace BaseProject.GameObjects
             dashDuration = 0;
             dashPower = 15;
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
-
             Reset();
+            createLives();
+            Respawn();
 
 
         }
@@ -67,11 +72,17 @@ namespace BaseProject.GameObjects
 
         public override void Reset()
         {
+            lives = maxLives;
+            Respawn();
             base.Reset();
-            position.X = 1.5f*Tile.tileSize;
+        }
+
+        public void Respawn()
+        {
+            position.X = 1.5f * Tile.tileSize;
             position.Y = GameEnvironment.Screen.Y / 2;
             Velocity = Vector2.Zero;
-            died=false;
+            died = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -127,6 +138,10 @@ namespace BaseProject.GameObjects
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            for(int i=0; i<lives; i++)
+            {
+                livesIcons.Children[i].Draw(gameTime, spriteBatch);
+            }
             base.Draw(gameTime, spriteBatch);
         }
 
@@ -134,7 +149,7 @@ namespace BaseProject.GameObjects
         {
 
             //Player Dash ability
-            if (inputHelper.IsKeyDown(Keys.LeftShift))
+            if (inputHelper.IsKeyDown(input.Player(Buttons.R)))
             {
                 isDashing = true;
                 dashDuration++;
@@ -176,7 +191,9 @@ namespace BaseProject.GameObjects
 
             base.HandleInput(inputHelper);
 
-            if (inputHelper.IsKeyDown(Keys.Left))
+
+
+            if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 velocity.X += -speed;
                 PlayAnimation("run");
@@ -184,7 +201,7 @@ namespace BaseProject.GameObjects
                 isFacingLeft = true;
             }
 
-            else if (inputHelper.IsKeyDown(Keys.Right))
+            else if (inputHelper.IsKeyDown(input.Player(Buttons.right)))
             {
                 velocity.X += speed;
                 isFacingLeft = false;
@@ -196,7 +213,7 @@ namespace BaseProject.GameObjects
                 PlayAnimation("idle");
             }
 
-            if (!inputHelper.IsKeyDown(Keys.Left))
+            if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 isFacingLeft = false;
             }
@@ -209,7 +226,7 @@ namespace BaseProject.GameObjects
                 isJumping = true;
                 jumpKeyPressed = true;
             }
-            else if (!inputHelper.IsKeyDown(Keys.Up))
+            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)))
             {
                 jumpKeyPressed = false;
             }
@@ -308,25 +325,48 @@ namespace BaseProject.GameObjects
         void death()
         {
             //TODO death annimation
+            lives--;
             died = true;
-            PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr = play.tileList.nextLevelNr;
-            Reset();
-            play.ghost.Reset();
+            if(lives <= 0)//checks if the player can respawn
+            {
+                GameEnvironment.GameStateManager.SwitchTo("gameOverState");
+                return;
+            }
+            else
+            {
+            PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
+            play.tileList.nextLevelNr = 0;
+             Respawn();
+                play.ghost.Reset();
+             System.Diagnostics.Debug.WriteLine(lives);
+            }
         }
-
         //method to change level
         void nextLevel()
         {
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr++;
-            play.tileList.LoadNextLevel = true;
-            //play.tileList.Currentlevel = 12;
-
+            play.tileList.nextLevelNr = play.tileList.currentLevel +1;
+            
             Reset();
             play.ghost.Reset();
         }
 
+        //function to create the lives icons
+        void createLives()
+        {
+            livesIcons = new GameObjectList(0, "lives");
+            livesIcons.Parent = Parent;
+            livesIcons.Position = new Vector2(30, GameEnvironment.Screen.Y *1/10);
+
+            //creates an Icon for each live
+            for(int i = 0; i< maxLives; i++)
+            {
+                SpriteGameObject live = new SpriteGameObject("img/players/spr_testplayer");
+                live.Scale = new Vector2(0.5f, 0.5f);
+                live.Position += new Vector2(live.Sprite.Width * i,0);
+                livesIcons.Add(live);
+            }
+        }
         void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);

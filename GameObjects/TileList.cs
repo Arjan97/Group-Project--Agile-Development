@@ -14,10 +14,9 @@ namespace BaseProject.GameObjects
         Vector2 levelSize;
         string colorCode;
         public int nextLevelNr = -1;
-        int maxLevelNr = 1;
-        public bool LoadNextLevel = false;
+        private int currentLevel;
 
-        public TileList()
+        public TileList() : base(-1)
         {
             id = "TileList";
         }
@@ -65,13 +64,12 @@ namespace BaseProject.GameObjects
 
         public void nextLevel(int levelNr)
         {
-            if(levelNr > maxLevelNr)
-            {
-                levelNr = -1;
-            }
             children.Clear();
             LoadLevel(levelNr);
+            currentLevel = levelNr;
         }
+
+        public int CurrentLevel { get { return currentLevel; } }
 
 
         public void LoadLevel(int levelNr)
@@ -190,6 +188,25 @@ namespace BaseProject.GameObjects
             levelSize = new Vector2(level.Width*Tile.tileSize, level.Height*Tile.tileSize);
         }
 
+        void ForceUnassignKeys()
+        {
+            foreach (GameObject obj in Children)
+            {
+               if(obj is Trap)
+                {
+                    ((Trap)obj).AssignedKey = Keys.None;
+
+                    if(obj is Switch)
+                    {
+                        foreach (SwitchObject switchobj in ((Switch)obj).Children)
+                        {
+                            switchobj.AssignedKey = Keys.None;
+                        }
+                    }
+                }
+            }
+        }
+
         private Tile FindTile(int x, int y)
         {
             foreach (GameObject obj in children)
@@ -226,10 +243,9 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            if(LoadNextLevel)
+            if(nextLevelNr > -1)
             {
                 nextLevel(nextLevelNr);
-                LoadNextLevel = false;
             }
             CheckMovingTilesColission(this);
             base.Update(gameTime);
@@ -237,6 +253,14 @@ namespace BaseProject.GameObjects
 
         public Vector2 LevelSize { get { return levelSize; } }
 
+        public override void Reset()
+        {
+            ForceUnassignKeys();
+            base.Reset();
+        }
+
     }
+
+    
     
 }

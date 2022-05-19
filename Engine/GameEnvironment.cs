@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using BaseProject.GameObjects;
 
 public class GameEnvironment : Game
 {
@@ -17,9 +18,11 @@ public class GameEnvironment : Game
     protected static AssetManager assetManager;
     protected static GameSettingsManager gameSettingsManager;
     public static Vector3 cameraPos;
+    public static InputHandler input;
 
     public GameEnvironment()
     {
+        input = new InputHandler();
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         inputHelper = new InputHelper();

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using BaseProject.GameObjects.menuObjects;
+using BaseProject.GameObjects;
 
 namespace BaseProject.GameStates
 {
@@ -11,6 +11,7 @@ namespace BaseProject.GameStates
         Point maxOptions = new Point(0,0);
         protected optionButton[,] options;
         SpriteGameObject arrow;
+        protected InputHandler input = GameEnvironment.input;
 
         public Menu(int x, int y)
         {
@@ -29,11 +30,11 @@ namespace BaseProject.GameStates
             MoveCursor(inputHelper);
             Wrap();
 
-           if( inputHelper.KeyPressed(Keys.Q) || inputHelper.KeyPressed(Keys.NumPad5)){
+           if( inputHelper.KeyPressed(input.P1(Buttons.B)) || inputHelper.KeyPressed(input.P2(Buttons.B))){
                 GoBack();
            }
 
-           if (inputHelper.KeyPressed(Keys.E) || inputHelper.KeyPressed(Keys.NumPad6)){
+           if (inputHelper.KeyPressed(input.P1(Buttons.A)) || inputHelper.KeyPressed(input.P2(Buttons.A))){
                 GoForward(currentOption);
            }
             SkipNull(inputHelper);
@@ -101,10 +102,10 @@ namespace BaseProject.GameStates
         }
         void MoveCursor(InputHelper inputHelper)
         {
-            if (inputHelper.KeyPressed(Keys.W) || inputHelper.KeyPressed(Keys.I)) { currentOption.Y--; }
-            if (inputHelper.KeyPressed(Keys.A) || inputHelper.KeyPressed(Keys.J)) { currentOption.X--; }
-            if (inputHelper.KeyPressed(Keys.S) || inputHelper.KeyPressed(Keys.K)) { currentOption.Y++; }
-            if (inputHelper.KeyPressed(Keys.D) || inputHelper.KeyPressed(Keys.L)) { currentOption.X++; }
+            if (inputHelper.KeyPressed(input.P1(Buttons.up)) || inputHelper.KeyPressed(input.P2(Buttons.up))) { currentOption.Y--; }
+            if (inputHelper.KeyPressed(input.P1(Buttons.left)) || inputHelper.KeyPressed(input.P2(Buttons.left))) { currentOption.X--; }
+            if (inputHelper.KeyPressed(input.P1(Buttons.down)) || inputHelper.KeyPressed(input.P2(Buttons.down))) { currentOption.Y++; }
+            if (inputHelper.KeyPressed(input.P1(Buttons.right)) || inputHelper.KeyPressed(input.P2(Buttons.right))) { currentOption.X++; }
         }
     }
 }
