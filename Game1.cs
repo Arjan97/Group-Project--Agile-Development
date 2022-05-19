@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameStates;
+using BaseProject.GameObjects;
 
 namespace BaseProject
 {
@@ -9,6 +10,8 @@ namespace BaseProject
     {
         public const int Depth_Player = 0; // for the player
         public static int maxLevels = 1;
+
+
         protected override void LoadContent()
         {
             base.LoadContent();

@@ -9,6 +9,8 @@ namespace BaseProject.GameObjects
 {
     public class Ghost : AnimatedGameObject
     {
+        InputHandler input;
+
         static int speed = 500;
         static float PushSpeed = 300f;
         static int PushTime = 50;
@@ -17,14 +19,16 @@ namespace BaseProject.GameObjects
         int CooldownTimer;
         static int maxButtons = 4;
         bool onCooldown = false;
-        Keys[] trapButtons = {Keys.NumPad8, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6};
+        Keys[] trapButtons;
 
 
-       public Ghost(): base ()
+       public Ghost()
         {
+            input = GameEnvironment.input;
+            trapButtons = new Keys[4]{ input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
+
             id = "Ghost";
-            position.X = GameEnvironment.Screen.X / 2;
-            position.Y = GameEnvironment.Screen.Y / 2;
+            position = GameEnvironment.Screen.ToVector2()/2;
             scale = new Vector2(1.5f, 1.5f);
             LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
             LoadAnimation("img/players/spr_ghost", "idle", false);
@@ -209,21 +213,21 @@ namespace BaseProject.GameObjects
         {
 
             velocity = Vector2.Zero;
-            if (inputHelper.IsKeyDown(Keys.J) && position.X > 0)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.left)) && position.X > 0)
             {
                 velocity.X = -speed;
                 sprite.Mirror = false;
             }
-            if (inputHelper.IsKeyDown(Keys.L)  && GlobalPosition.X < GameEnvironment.Screen.X - Sprite.Width)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.right))  && GlobalPosition.X < GameEnvironment.Screen.X - Sprite.Width)
             {
                 velocity.X = speed;
                 sprite.Mirror = true;
             }
-            if (inputHelper.IsKeyDown(Keys.K) && position.Y < GameEnvironment.Screen.Y - Sprite.Height)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.down)) && position.Y < GameEnvironment.Screen.Y - Sprite.Height)
             {
                 velocity.Y = speed;
             }
-            if (inputHelper.IsKeyDown(Keys.I) && position.Y > 0)
+            if (inputHelper.IsKeyDown(input.Ghost(Buttons.up)) && position.Y > 0)
             {
                 velocity.Y = -speed;
             }

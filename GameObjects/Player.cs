@@ -27,15 +27,17 @@ namespace BaseProject.GameObjects
         public bool isFacingLeft;
         public bool isFacingRight;
         private GameObjectList livesIcons;
+        InputHandler input;
 
         public Player() : base(Game1.Depth_Player)
         {
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
             LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
             LoadAnimation("img/players/spr_player_jump@2", "jump", true, 0.5f);
-
             PlayAnimation("idle");
             SetOriginToBottomCenter();
+
+            input = GameEnvironment.input;
 
             keyPressed = false;
             pVelocity = velocity;
@@ -147,7 +149,7 @@ namespace BaseProject.GameObjects
         {
 
             //Player Dash ability
-            if (inputHelper.IsKeyDown(Keys.LeftShift))
+            if (inputHelper.IsKeyDown(input.Player(Buttons.R)))
             {
                 isDashing = true;
                 dashDuration++;
@@ -191,7 +193,7 @@ namespace BaseProject.GameObjects
 
 
 
-            if (inputHelper.IsKeyDown(Keys.Left))
+            if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 velocity.X += -speed;
                 PlayAnimation("run");
@@ -199,7 +201,7 @@ namespace BaseProject.GameObjects
                 isFacingLeft = true;
             }
 
-            else if (inputHelper.IsKeyDown(Keys.Right))
+            else if (inputHelper.IsKeyDown(input.Player(Buttons.right)))
             {
                 velocity.X += speed;
                 isFacingLeft = false;
@@ -211,20 +213,20 @@ namespace BaseProject.GameObjects
                 PlayAnimation("idle");
             }
 
-            if (!inputHelper.IsKeyDown(Keys.Left))
+            if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 isFacingLeft = false;
             }
 
 
-            if (inputHelper.IsKeyDown(Keys.Up) && isGrounded)
+            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) && isGrounded)
             {
                 isColliding = false;
                 keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
             }
-            else if (!inputHelper.IsKeyDown(Keys.Up))
+            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)))
             {
                 jumpKeyPressed = false;
             }

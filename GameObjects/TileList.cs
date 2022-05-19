@@ -62,8 +62,9 @@ namespace BaseProject.GameObjects
 
         }
 
-        public void nextLevel(int levelNr)
+        public void nextLevel(int levelNr, bool p1Ghost = false)
         {
+            GameEnvironment.input.AssignKeys(p1Ghost);
             children.Clear();
             nextLevelNr = -1;
             LoadLevel(levelNr);

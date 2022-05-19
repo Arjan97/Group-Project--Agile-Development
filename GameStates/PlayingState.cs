@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using BaseProject.GameObjects;
-using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
@@ -86,7 +81,7 @@ namespace BaseProject.GameStates
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            if (inputHelper.IsKeyDown(Keys.D0))
+            if (inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D0))
             {
                 photoMode = true;
                 tileList.HideButtons();
@@ -98,7 +93,7 @@ namespace BaseProject.GameStates
                 tileList.ShowButtons();
                 photoMode = false; 
             }
-            ghost.HandlePush(inputHelper.KeyPressed(Keys.P), (SpriteGameObject)Find("push"));
+            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("push"));
             base.HandleInput(inputHelper);
         }
 

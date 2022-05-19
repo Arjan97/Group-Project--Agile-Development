@@ -1,6 +1,7 @@
 ﻿using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using BaseProject.GameObjects;
 
 namespace BaseProject.GameObjects
 {
@@ -8,6 +9,7 @@ namespace BaseProject.GameObjects
     {
         private Keys assignedKey = Keys.None;
         private bool hidden = false;
+        InputHandler input;
         public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 0)
         {
             parent = trap;
@@ -28,6 +30,7 @@ namespace BaseProject.GameObjects
             position.X = x;
             position.Y = y;
             scale = new Vector2(0.5f, 0.5f);
+            input = GameEnvironment.input;
         }
 
         //function to give the button a different key
@@ -35,32 +38,27 @@ namespace BaseProject.GameObjects
         {
             visible = true;
             assignedKey = newKey;
-
-            //switch to update the texture
-            switch (assignedKey)
+            if(assignedKey == input.Ghost(Buttons.Y))
             {
-                case Keys.NumPad4:
-                    sprite.SheetIndex = 0;
-                    break;
-
-                case Keys.NumPad5:
-                    sprite.SheetIndex = 1;
-                    break;
-
-                case Keys.NumPad6:
-                    sprite.SheetIndex = 2;
-                    break;
-
-                case Keys.NumPad8:
-                    sprite.SheetIndex = 3;
-                    break;
-
-                case Keys.None:
-
-                    visible = false;
-                    break;
-
+                sprite.SheetIndex = 0;
+                return;
             }
+            if (assignedKey == input.Ghost(Buttons.B)) 
+            { 
+                sprite.SheetIndex = 1;
+                return;
+            }
+            if (assignedKey == input.Ghost(Buttons.A))
+            {
+                sprite.SheetIndex = 2;
+                return;
+            }
+            if (assignedKey == input.Ghost(Buttons.X))
+            {
+                sprite.SheetIndex = 3;
+                return;
+            }
+            visible = false;
         }
 
         //returns the assigned key
