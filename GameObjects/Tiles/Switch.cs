@@ -23,11 +23,13 @@ namespace BaseProject.GameObjects.Tiles
 
         public void Activate(string choice)
         {
+            
             Activated = true;
 
             //searches chosen trap and activates it
             SwitchObject target = (SwitchObject)Find(choice);
             target.Arm();
+
             foreach (SwitchObject trap in children)
             {
                 trap.button.Visible = false;

@@ -56,14 +56,7 @@ namespace BaseProject.GameObjects
 
         }
 
-        public override void HandleColission(GameObject obj)
-        {
-            if(obj is Spike)
-            {
-
-            }
-            base.HandleColission(obj);
-        }
+       
 
         public override void Reset()
         {
@@ -304,15 +297,23 @@ namespace BaseProject.GameObjects
         void death()
         {
             //TODO death annimation
-            Reset();            
+            Reset();
             died = true;
-            PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
+            PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
         }
 
+        void nextLevel()
+        {
+            System.Diagnostics.Debug.WriteLine("next level");
+            PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
+            play.tileList.nextLevelNr++;
+            Reset();
+        }
         void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
         }
+
     }
 }
