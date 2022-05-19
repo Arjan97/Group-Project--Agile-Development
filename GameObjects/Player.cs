@@ -337,8 +337,8 @@ namespace BaseProject.GameObjects
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
              Respawn();
-                play.ghost.Reset();
-             System.Diagnostics.Debug.WriteLine(lives);
+             play.ghost.Reset();
+             //System.Diagnostics.Debug.WriteLine(lives);
             }
         }
         //method to change level

@@ -37,6 +37,7 @@ namespace BaseProject.GameObjects
             Reset();
         }
 
+        /*
         public override void Reset()
         {
             base.Reset();
@@ -46,6 +47,7 @@ namespace BaseProject.GameObjects
             position.X = play.player.Position.X + 650;
             position.Y = play.player.Position.Y + -150;
         }
+        */
 
         public override void Update(GameTime gameTime)
         {
