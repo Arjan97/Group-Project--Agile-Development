@@ -6,6 +6,13 @@ namespace BaseProject.GameStates
     {
         public  StartScreen()
         {
+            //background of the menu
+            SpriteGameObject background = new SpriteGameObject("img/backgrounds/gameBackground");
+            background.Origin = background.Center;
+            background.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
+            Add(background);
+
+            //title text and sub texts
             SpriteGameObject title = new SpriteGameObject("img/menu/txt/title");
             title.Origin = title.Center;
             title.Position = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y*1/3);
