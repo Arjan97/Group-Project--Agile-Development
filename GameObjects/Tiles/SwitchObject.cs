@@ -8,7 +8,7 @@ namespace BaseProject.GameObjects.Tiles
     internal class SwitchObject : Trap
     {
         bool armed = false;
-        public bool collidedWithPlayer = false;
+        public bool collidedWithPlayer = false; //boolean for collision with player
         public SwitchObject(int x, int y, string id) : base(x, y)
         {
             this.id = id;
@@ -24,14 +24,12 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void Activate()
         {
+            //only activate trap if the player didnt collide with the trap
             if (!collidedWithPlayer)
             {
                 Switch switchtrap = (Switch)parent;
                 switchtrap.Activate(id);
                 Activated = true;
-            } else
-            {
-                
             }
                             
 
@@ -41,16 +39,16 @@ namespace BaseProject.GameObjects.Tiles
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            
             if(collidedWithPlayer)
             {
-                System.Diagnostics.Debug.WriteLine("true");
                 this.button.Hidden = true;
             } else
             {
                 this.button.Hidden = false;
             }
 
-            //collidedWithPlayer = false;
+            
         }
 
         public void Arm() { armed = true; }

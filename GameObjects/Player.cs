@@ -52,7 +52,8 @@ namespace BaseProject.GameObjects
             dashPower = 15;
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
 
-            latestSwitchObject = new SwitchObject(0,0,"blank");
+            latestSwitchObject = new SwitchObject(0,0,"blank"); //latest switchobject to disable the switch trap
+
 
             Reset();
 
@@ -236,28 +237,28 @@ namespace BaseProject.GameObjects
 
               SwitchObject switchTile = (SwitchObject)tile.Parent;
 
-
+                //checking if the current switchtile isnt the same switchtile as latest switchObject
                if(!switchTile.Equals(latestSwitchObject))
                 {
+                    //toggle ability to activate latest switch object
                     latestSwitchObject.collidedWithPlayer = false;
+                    //setting latest switch object to colliding switch object/tile
                     latestSwitchObject = switchTile;
                 }
-
+               //checking if switchtile is armed
                 if (!switchTile.Armed) {
-
+                    //toggle ability to activate latest switch object
                     switchTile.collidedWithPlayer = true;
 
                 } else
                 {
                     death();
                 }
-            } else
-            {
-                
             }
             
             if(!(tile is SwitchTile))
             {
+                //toggle ability to activate latest switch object
                 latestSwitchObject.collidedWithPlayer = false;
             }
 
