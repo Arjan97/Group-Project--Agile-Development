@@ -310,7 +310,7 @@ namespace BaseProject.GameObjects
             //TODO death annimation
             died = true;
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr = 0;
+            play.tileList.nextLevelNr = play.tileList.nextLevelNr;
             Reset();
             play.ghost.Reset();
         }
@@ -320,6 +320,9 @@ namespace BaseProject.GameObjects
         {
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr++;
+            play.tileList.LoadNextLevel = true;
+            //play.tileList.Currentlevel = 12;
+
             Reset();
             play.ghost.Reset();
         }

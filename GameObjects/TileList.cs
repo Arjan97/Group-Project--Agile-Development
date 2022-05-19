@@ -14,6 +14,8 @@ namespace BaseProject.GameObjects
         Vector2 levelSize;
         string colorCode;
         public int nextLevelNr = -1;
+        int maxLevelNr = 1;
+        public bool LoadNextLevel = false;
 
         public TileList()
         {
@@ -63,8 +65,11 @@ namespace BaseProject.GameObjects
 
         public void nextLevel(int levelNr)
         {
+            if(levelNr > maxLevelNr)
+            {
+                levelNr = -1;
+            }
             children.Clear();
-            nextLevelNr = -1;
             LoadLevel(levelNr);
         }
 
@@ -221,9 +226,10 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            if(nextLevelNr > -1)
+            if(LoadNextLevel)
             {
                 nextLevel(nextLevelNr);
+                LoadNextLevel = false;
             }
             CheckMovingTilesColission(this);
             base.Update(gameTime);
