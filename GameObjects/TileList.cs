@@ -62,9 +62,9 @@ namespace BaseProject.GameObjects
 
         }
 
-        public void nextLevel(int levelNr, bool p1Ghost = false)
+        public void nextLevel(int levelNr)
         {
-            GameEnvironment.input.AssignKeys(p1Ghost);
+            
             children.Clear();
             nextLevelNr = -1;
             LoadLevel(levelNr);
@@ -190,6 +190,25 @@ namespace BaseProject.GameObjects
             levelSize = new Vector2(level.Width*Tile.tileSize, level.Height*Tile.tileSize);
         }
 
+        void ForceUnassignKeys()
+        {
+            foreach (GameObject obj in Children)
+            {
+               if(obj is Trap)
+                {
+                    ((Trap)obj).AssignedKey = Keys.None;
+
+                    if(obj is Switch)
+                    {
+                        foreach (SwitchObject switchobj in ((Switch)obj).Children)
+                        {
+                            switchobj.AssignedKey = Keys.None;
+                        }
+                    }
+                }
+            }
+        }
+
         private Tile FindTile(int x, int y)
         {
             foreach (GameObject obj in children)
@@ -236,6 +255,14 @@ namespace BaseProject.GameObjects
 
         public Vector2 LevelSize { get { return levelSize; } }
 
+        public override void Reset()
+        {
+            ForceUnassignKeys();
+            base.Reset();
+        }
+
     }
+
+    
     
 }

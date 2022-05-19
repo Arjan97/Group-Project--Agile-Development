@@ -25,19 +25,25 @@ namespace BaseProject.GameStates
             switch (choise.Y)
             {
                 case 0:
-                    GameEnvironment.GameStateManager.SwitchTo("playingState");
-                    PlayingState playState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
-                    playState.Reset();
+                    ResetLevel();
                     break;
 
                 case 1:
-
+                    input.AssignKeys(!input.IsPlayer1Ghost);
+                    ResetLevel();
                     break;
 
                 case 2:
                     GameEnvironment.GameStateManager.SwitchTo("mainMenuState");
                     break;
             }
+        }
+
+        void ResetLevel()
+        {
+            GameEnvironment.GameStateManager.SwitchTo("playingState");
+            PlayingState playState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
+            playState.Reset();
         }
     }
 }

@@ -50,12 +50,13 @@ namespace BaseProject.GameObjects
             player2Input.Add(Buttons.X, Keys.NumPad8);
             player2Input.Add(Buttons.A, Keys.NumPad6);
             player2Input.Add(Buttons.B, Keys.NumPad5);
-            player2Input.Add(Buttons.L, Keys.LeftControl);
-            player2Input.Add(Buttons.R, Keys.P);
+            player2Input.Add(Buttons.L, Keys.NumPad7);
+            player2Input.Add(Buttons.R, Keys.NumPad9);
             player2Input.Add(Buttons.start, Keys.None);
 
             ghostInput = player1Input;
             playerInput = player2Input;
+            //isPlayer1Ghost = true;
         }
 
         
@@ -77,6 +78,7 @@ namespace BaseProject.GameObjects
                 playerInput = player1Input;
             }
             isPlayer1Ghost = p1Ghost;
+            System.Diagnostics.Debug.WriteLine("test");
         }
 
         public Keys P1(Buttons button)
@@ -97,5 +99,7 @@ namespace BaseProject.GameObjects
         {
             return playerInput[button];
         }
+
+        public bool IsPlayer1Ghost { get { return isPlayer1Ghost; } }
     }
 }

@@ -11,7 +11,7 @@ namespace BaseProject.GameStates
         Point maxOptions = new Point(0,0);
         protected optionButton[,] options;
         SpriteGameObject arrow;
-        InputHandler input = GameEnvironment.input;
+        protected InputHandler input = GameEnvironment.input;
 
         public Menu(int x, int y)
         {

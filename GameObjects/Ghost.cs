@@ -25,13 +25,15 @@ namespace BaseProject.GameObjects
        public Ghost()
         {
             input = GameEnvironment.input;
-            trapButtons = new Keys[4]{ input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
+
 
             id = "Ghost";
-            position = GameEnvironment.Screen.ToVector2()/2;
+
             scale = new Vector2(1.5f, 1.5f);
             LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
             LoadAnimation("img/players/spr_ghost", "idle", false);
+
+            Reset();
         }
 
         public override void Update(GameTime gameTime)
@@ -41,6 +43,13 @@ namespace BaseProject.GameObjects
             base.Update(gameTime);
         }
 
+        public override void Reset()
+        {
+            position = GameEnvironment.Screen.ToVector2() / 2;
+            trapButtons = new Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
+            System.Diagnostics.Debug.WriteLine("test2");
+            base.Reset();
+        }
         //function to calculate trap distance and assign keys
         public void SetGhostDistance(TileList tiles)
         {
@@ -75,6 +84,8 @@ namespace BaseProject.GameObjects
             }
             
         }
+
+
 
         //function to clear the keys of objects too far away, returns a list of keys that are now available
         private List<Keys> UnassignKeys(SortedDictionary<float,Trap> traplist)
@@ -140,6 +151,7 @@ namespace BaseProject.GameObjects
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
             int keysLeft = keys.Count;
+            System.Diagnostics.Debug.WriteLine(keysLeft);
             while(keysLeft > 0)
             {
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
