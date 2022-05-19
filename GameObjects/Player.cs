@@ -191,8 +191,6 @@ namespace BaseProject.GameObjects
 
             base.HandleInput(inputHelper);
 
-
-
             if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 velocity.X += -speed;
@@ -219,7 +217,7 @@ namespace BaseProject.GameObjects
             }
 
 
-            if (inputHelper.IsKeyDown(Keys.Up) /* && isGrounded */)
+            if (inputHelper.IsKeyDown(input.Player(Buttons.up) /* && isGrounded */))
             {
                 isColliding = false;
                 keyPressed = true;
