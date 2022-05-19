@@ -246,6 +246,11 @@ namespace BaseProject.GameObjects
 
                 }
             }
+
+            if(tile is FinishTile)
+            {
+                nextLevel();
+            }
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
 
@@ -303,6 +308,13 @@ namespace BaseProject.GameObjects
             play.tileList.nextLevelNr = 0;
         }
 
+        void nextLevel()
+        {
+            System.Diagnostics.Debug.WriteLine("next level");
+            PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
+            play.tileList.nextLevelNr = 2;
+            Reset();
+        }
         void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
