@@ -9,6 +9,7 @@ namespace BaseProject.GameObjects.Tiles
         public BridgeTile(int x, int y) :  base("img/tiles/spr_bridge", x, y){}
         public override void Activate()
         {
+            //when it activates the trap will dissapear
             visible = false;
             base.Activate();
         }
