@@ -12,15 +12,20 @@ namespace BaseProject.GameStates
         bool photoMode = false;
         bool touchedFinish = false;
         bool headingRight = true;
+        public SpriteGameObject PlayerPush;
 
         public PlayingState()
         {
             Add(player);
             Add(ghost);
             Add(tileList);
-            SpriteGameObject push = new SpriteGameObject("img/players/spr_push", 0, "push");
-            push.Visible = false;
-            Add(push);
+            SpriteGameObject GhostPush = new SpriteGameObject("img/players/spr_push", 0, "GhostPush");
+            GhostPush.Visible = false;
+            Add(GhostPush);
+
+            PlayerPush = new SpriteGameObject("img/players/spr_push", 0, "PlayerPush");
+            PlayerPush.Visible = false;
+            Add(PlayerPush);
 
             GameEnvironment.input.AssignKeys(true);
         }
@@ -32,7 +37,8 @@ namespace BaseProject.GameStates
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
             HandleCamera();
-            player.CheckColission((SpriteGameObject)Find("push"));
+            player.CheckColission((SpriteGameObject)Find("GhostPush"));
+            ghost.CheckColission((SpriteGameObject)Find("PlayerPush"));
         }
 
 
@@ -43,14 +49,16 @@ namespace BaseProject.GameStates
 
         public void LoadLevel(int level)
         {
+            player.getCurrentPlayingState();
             tileList.LoadLevel(level);
         }
 
         public override void Reset()
         {
+
             tileList.nextLevelNr = tileList.CurrentLevel;
             base.Reset();
-            Find("push").Visible = false;
+            Find("GhostPush").Visible = false;
             
         }
 
@@ -96,7 +104,7 @@ namespace BaseProject.GameStates
                 tileList.ShowButtons();
                 photoMode = false; 
             }
-            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("push"));
+            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
             base.HandleInput(inputHelper);
         }
 

@@ -21,6 +21,9 @@ namespace BaseProject.GameObjects
         static int maxButtons = 4;
         bool onCooldown = false;
         Keys[] trapButtons;
+        bool stunned = false;
+        int stunnedTimer = 0;
+        int stunnedTime = 90;
 
 
        public Ghost()
@@ -32,26 +35,28 @@ namespace BaseProject.GameObjects
 
             scale = new Vector2(1.5f, 1.5f);
             LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
+            LoadAnimation("img/players/spr_ghoststun@2x1", "stunned", true, 0.3f);
             LoadAnimation("img/players/spr_ghost", "idle", false);
 
             Reset();
         }
 
-        /*
-        public override void Reset()
-        {
-            base.Reset();
-
-            PlayingState play = (PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
-
-            position.X = play.player.Position.X + 650;
-            position.Y = play.player.Position.Y + -150;
-        }
-        */
+        
 
         public override void Update(GameTime gameTime)
         {
             float bounce = (float)Math.Sin(gameTime.TotalGameTime.Ticks /  10000);
+            if (stunned)
+            {
+                stunnedTimer++;
+                if(stunnedTimer >= stunnedTime)
+                {
+                    stunned = false;
+                    stunnedTimer = 0;
+                    
+                }
+                
+            }
             position.Y += bounce;
             base.Update(gameTime);
         }
@@ -238,6 +243,10 @@ namespace BaseProject.GameObjects
         {
 
             velocity = Vector2.Zero;
+            if(stunned)
+            {
+                return;
+            }
             if (inputHelper.IsKeyDown(input.Ghost(Buttons.left)) && position.X > 0)
             {
                 velocity.X = -speed;
@@ -257,13 +266,24 @@ namespace BaseProject.GameObjects
                 velocity.Y = -speed;
             }
 
+            if(!inputHelper.IsKeyDown(input.Ghost(Buttons.up)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.down)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.right)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.left)))
+            {
+                PlayAnimation("idle");
+            } else
+            {
+                PlayAnimation("fly");
+            }
+
             //check if ghost is traveling diagonally
             if(velocity.Y != 0 && velocity.X != 0)
             {
                 velocity *= 0.75f;
             }
 
-            HandleAnimation(velocity);
+            //HandleAnimation(velocity);
             base.HandleInput(inputHelper);
         }
 
@@ -322,6 +342,12 @@ namespace BaseProject.GameObjects
                 return;
             }
             PlayAnimation("fly");
+        }
+
+        public void getPushed()
+        {
+            stunned = true;
+            PlayAnimation("stunned");
         }
 
     }
