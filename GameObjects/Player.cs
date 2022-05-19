@@ -247,6 +247,7 @@ namespace BaseProject.GameObjects
                 }
             }
 
+            //checking and handling collision with FinishTile
             if(tile is FinishTile)
             {
                 nextLevel();
@@ -308,13 +309,15 @@ namespace BaseProject.GameObjects
             play.tileList.nextLevelNr = 0;
         }
 
+        //method to change level
         void nextLevel()
         {
-            System.Diagnostics.Debug.WriteLine("next level");
+
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 2;
             Reset();
         }
+
         void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
