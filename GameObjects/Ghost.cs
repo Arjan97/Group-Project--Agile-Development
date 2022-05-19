@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
+using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
@@ -28,6 +29,16 @@ namespace BaseProject.GameObjects
             scale = new Vector2(1.5f, 1.5f);
             LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
             LoadAnimation("img/players/spr_ghost", "idle", false);
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+
+            PlayingState play = (PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
+
+            position.X = play.player.Position.X + 650;
+            position.Y = play.player.Position.Y + -150;
         }
 
         public override void Update(GameTime gameTime)

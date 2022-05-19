@@ -308,19 +308,20 @@ namespace BaseProject.GameObjects
         void death()
         {
             //TODO death annimation
-            Reset();            
             died = true;
-            PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
+            PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = 0;
+            Reset();
+            play.ghost.Reset();
         }
 
         //method to change level
         void nextLevel()
         {
-
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr++;
             Reset();
+            play.ghost.Reset();
         }
 
         void SetOriginToBottomCenter()

@@ -11,9 +11,9 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
-        Player player = new Player();
+        public Player player = new Player();
         public TileList tileList = new TileList();
-        Ghost ghost = new Ghost();
+        public Ghost ghost = new Ghost();
         bool photoMode = false;
         bool touchedFinish = false;
         bool headingRight = true;
