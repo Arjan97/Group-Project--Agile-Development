@@ -44,6 +44,7 @@ namespace BaseProject.GameObjects.Tiles
             base.Draw(gameTime, spriteBatch);
             if (button.Visible && !button.Hidden)
             {
+                
                 button.Draw(gameTime, spriteBatch);
             }
         }

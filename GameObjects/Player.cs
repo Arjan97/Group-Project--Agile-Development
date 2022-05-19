@@ -18,6 +18,7 @@ namespace BaseProject.GameObjects
         public Vector2 pVelocity;
         public string verticalCollidingSide;
         public int jumpframes, blockedframes;
+        SwitchObject latestSwitchObject;
         private float timer;
 
         public bool isDashing;
@@ -50,6 +51,8 @@ namespace BaseProject.GameObjects
             dashDuration = 0;
             dashPower = 15;
             isFacingLeft = false; //Checks if the player is facing left, used for the player dash and animation
+
+            latestSwitchObject = new SwitchObject(0,0,"blank");
 
             Reset();
 
@@ -230,12 +233,32 @@ namespace BaseProject.GameObjects
             //checking and handling collision with SwitchTile
             if(tile is SwitchTile)
             {
-              SwitchObject switchTile = (SwitchObject)tile.Parent;
-                if (switchTile.Armed) { 
- 
-                        death();
 
+              SwitchObject switchTile = (SwitchObject)tile.Parent;
+
+
+               if(!switchTile.Equals(latestSwitchObject))
+                {
+                    latestSwitchObject.collidedWithPlayer = false;
+                    latestSwitchObject = switchTile;
                 }
+
+                if (!switchTile.Armed) {
+
+                    switchTile.collidedWithPlayer = true;
+
+                } else
+                {
+                    death();
+                }
+            } else
+            {
+                
+            }
+            
+            if(!(tile is SwitchTile))
+            {
+                latestSwitchObject.collidedWithPlayer = false;
             }
 
 

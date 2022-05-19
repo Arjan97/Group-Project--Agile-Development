@@ -29,7 +29,7 @@ public abstract class GameObject : IGameLoopObject
         position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
         if(this is Player)
         {
-            System.Diagnostics.Debug.WriteLine(true);
+           // System.Diagnostics.Debug.WriteLine(true);
         }
     }
 
