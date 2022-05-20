@@ -29,6 +29,16 @@ namespace BaseProject.GameObjects
         private GameObjectList livesIcons;
         InputHandler input;
 
+        PlayingState currentPlayingState;
+
+        public bool PushCooldown = false; //push to see if Push is on cooldown
+        public int PushCooldownTimer = 0;//int used to track cooldown of the push
+        public int PushCoolDownTime = 300; //int used to set limit to the cooldown of the push
+        public int PushTimer;//int used to track duration of Push
+        public int PushTime = 50;//int used to set limit to the duration of the Push
+        static float PushSpeed = 300f; //float to set the speed of the push
+        public SpriteGameObject PushObject;
+
         public Player() : base(Game1.Depth_Player)
         {
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
@@ -75,6 +85,12 @@ namespace BaseProject.GameObjects
             lives = maxLives;
             Respawn();
             base.Reset();
+        }
+
+        public void getCurrentPlayingState()
+        {
+            currentPlayingState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
+            PushObject = currentPlayingState.PlayerPush;
         }
 
         public void Respawn()
@@ -132,6 +148,31 @@ namespace BaseProject.GameObjects
             }
 
             velocity *= 70f;
+
+            
+            {
+
+            }
+
+            if (PushCooldown)
+            {
+                PushCooldownTimer++;
+                if (PushCooldownTimer > PushCoolDownTime)
+                {
+                    PushCooldown = false;
+                    PushCooldownTimer = 0;
+                }
+            }
+
+            if (PushObject.Visible)
+            {
+                PushTimer++;
+                if (PushTimer > PushTime)
+                {
+                    PushObject.Visible = false;
+                    PushTimer = 0;
+                }
+            }
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
         }
@@ -147,7 +188,29 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            //Player push ability
+            if (inputHelper.IsKeyDown(input.Player(Buttons.Y))){
 
+                if(!PushCooldown)
+                {
+                    PushCooldown = true;
+                    PushObject.Scale = new Vector2(2, 2);
+                    PushObject.Position = position - new Vector2(0, sprite.Height / 2);
+                    PushObject.Visible = true;
+
+                    if(sprite.Mirror)
+                    {
+                        PushObject.Velocity = new Vector2(-PushSpeed, 0);
+                    } else
+                    {
+                        PushObject.Velocity = new Vector2(PushSpeed, 0);
+                    }
+                } else
+                {
+
+                }
+                
+            }
             //Player Dash ability
             if (inputHelper.IsKeyDown(input.Player(Buttons.R)))
             {
@@ -191,8 +254,6 @@ namespace BaseProject.GameObjects
 
             base.HandleInput(inputHelper);
 
-
-
             if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 velocity.X += -speed;
@@ -219,14 +280,14 @@ namespace BaseProject.GameObjects
             }
 
 
-            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) && isGrounded)
+            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
             {
                 isColliding = false;
                 keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
             }
-            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)))
+            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) && !inputHelper.IsKeyDown(input.Player(Buttons.B)))
             {
                 jumpKeyPressed = false;
             }
@@ -255,7 +316,11 @@ namespace BaseProject.GameObjects
                 }
             }
 
-
+            //checking and handling collision with FinishTile
+            if(tile is FinishTile)
+            {
+                nextLevel();
+            }
             
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
 
@@ -331,10 +396,20 @@ namespace BaseProject.GameObjects
             else
             {
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr = 0;
+            play.tileList.nextLevelNr = play.tileList.currentLevel;
              Respawn();
-             System.Diagnostics.Debug.WriteLine(lives);
+             play.ghost.Reset();
+             //System.Diagnostics.Debug.WriteLine(lives);
             }
+        }
+        //method to change level
+        void nextLevel()
+        {
+            PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
+            play.tileList.nextLevelNr = play.tileList.currentLevel +1;
+            
+            Reset();
+            play.ghost.Reset();
         }
 
         //function to create the lives icons

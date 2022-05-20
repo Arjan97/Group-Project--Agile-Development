@@ -23,6 +23,7 @@ namespace BaseProject.GameStates
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
                 PlayingState playState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
                 playState.LoadLevel(GameEnvironment.Random.Next(Game1.maxLevels));
+                
             }
             if(choise.X == 1)
             {

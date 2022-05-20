@@ -6,12 +6,14 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
-        Player player = new Player();
+        public Player player = new Player();
         public TileList tileList = new TileList();
-        Ghost ghost = new Ghost();
+        public Ghost ghost = new Ghost();
         bool photoMode = false;
         bool paused = false;
+        bool touchedFinish = false;
         bool headingRight = true;
+        public SpriteGameObject PlayerPush;
         InputHandler input;
 
         public PlayingState()
@@ -31,6 +33,13 @@ namespace BaseProject.GameStates
             SpriteGameObject push = new SpriteGameObject("img/players/spr_push", 0, "push");
             push.Visible = false;
             Add(push);
+            SpriteGameObject GhostPush = new SpriteGameObject("img/players/spr_push", 0, "GhostPush");
+            GhostPush.Visible = false;
+            Add(GhostPush);
+
+            PlayerPush = new SpriteGameObject("img/players/spr_push", 0, "PlayerPush");
+            PlayerPush.Visible = false;
+            Add(PlayerPush);
 
             input = GameEnvironment.input;
             input.AssignKeys(true);
@@ -44,19 +53,22 @@ namespace BaseProject.GameStates
             tileList.CheckColission(player);
             ghost.SetGhostDistance(tileList);
             HandleCamera();
-            player.CheckColission((SpriteGameObject)Find("push"));
+            player.CheckColission((SpriteGameObject)Find("GhostPush"));
+            ghost.CheckColission((SpriteGameObject)Find("PlayerPush"));
         }
 
         public void LoadLevel(int level)
         {
+            player.getCurrentPlayingState();
             tileList.LoadLevel(level);
         }
 
         public override void Reset()
         {
+
             tileList.nextLevelNr = tileList.CurrentLevel;
             base.Reset();
-            Find("push").Visible = false;
+            Find("GhostPush").Visible = false;
             
         }
 
@@ -109,6 +121,11 @@ namespace BaseProject.GameStates
                 base.HandleInput(inputHelper);
             ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("push"));
             base.HandleInput(inputHelper);
+            if (!ghost.stunned)
+            {
+                ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
+            }
+                base.HandleInput(inputHelper);
         }
 
         //function that shows the text

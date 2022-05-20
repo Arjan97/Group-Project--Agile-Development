@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects;
+using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
@@ -10,11 +11,14 @@ namespace BaseProject.GameObjects
         private Keys assignedKey = Keys.None;
         private bool hidden = false;
         InputHandler input;
+        PlayingState currentPlayingState;
+
         public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 0)
         {
             parent = trap;
             Initialize(position.X, position.Y);
             this.id = id;
+            currentPlayingState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
         }
         public Button(float x, float y) : base("img/buttons@2x2") 
         {
@@ -69,6 +73,11 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            Ghost ghost = currentPlayingState.ghost;
+            if(ghost.stunned)
+            {
+                return;
+            }
             if (inputHelper.KeyPressed(assignedKey))
             {
                 if (parent != null)

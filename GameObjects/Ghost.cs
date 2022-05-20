@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
+using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
@@ -20,6 +21,9 @@ namespace BaseProject.GameObjects
         static int maxButtons = 4;
         bool onCooldown = false;
         Keys[] trapButtons;
+        public bool stunned = false;
+        int stunnedTimer = 0;
+        int stunnedTime = 90;
 
 
        public Ghost()
@@ -31,14 +35,28 @@ namespace BaseProject.GameObjects
 
             scale = new Vector2(1.5f, 1.5f);
             LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
+            LoadAnimation("img/players/spr_ghoststun@2x1", "stunned", true, 0.3f);
             LoadAnimation("img/players/spr_ghost", "idle", false);
 
             Reset();
         }
 
+        
+
         public override void Update(GameTime gameTime)
         {
             float bounce = (float)Math.Sin(gameTime.TotalGameTime.Ticks /  10000);
+            if (stunned)
+            {
+                stunnedTimer++;
+                if(stunnedTimer >= stunnedTime)
+                {
+                    stunned = false;
+                    stunnedTimer = 0;
+                    
+                }
+                
+            }
             position.Y += bounce;
             base.Update(gameTime);
         }
@@ -47,7 +65,6 @@ namespace BaseProject.GameObjects
         {
             position = GameEnvironment.Screen.ToVector2() / 2;
             trapButtons = new Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
-            System.Diagnostics.Debug.WriteLine("test2");
             base.Reset();
         }
         //function to calculate trap distance and assign keys
@@ -84,8 +101,6 @@ namespace BaseProject.GameObjects
             }
             
         }
-
-
 
         //function to clear the keys of objects too far away, returns a list of keys that are now available
         private List<Keys> UnassignKeys(SortedDictionary<float,Trap> traplist)
@@ -150,8 +165,12 @@ namespace BaseProject.GameObjects
         //function that gives the keys to the traps
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
+            if(stunned)
+            {
+                System.Diagnostics.Debug.Write("stunned");
+                return;
+            }
             int keysLeft = keys.Count;
-            System.Diagnostics.Debug.WriteLine(keysLeft);
             while(keysLeft > 0)
             {
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
@@ -225,6 +244,10 @@ namespace BaseProject.GameObjects
         {
 
             velocity = Vector2.Zero;
+            if(stunned)
+            {
+                return;
+            }
             if (inputHelper.IsKeyDown(input.Ghost(Buttons.left)) && position.X > 0)
             {
                 velocity.X = -speed;
@@ -244,13 +267,24 @@ namespace BaseProject.GameObjects
                 velocity.Y = -speed;
             }
 
+            if(!inputHelper.IsKeyDown(input.Ghost(Buttons.up)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.down)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.right)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.left)))
+            {
+                PlayAnimation("idle");
+            } else
+            {
+                PlayAnimation("fly");
+            }
+
             //check if ghost is traveling diagonally
             if(velocity.Y != 0 && velocity.X != 0)
             {
                 velocity *= 0.75f;
             }
 
-            HandleAnimation(velocity);
+            //HandleAnimation(velocity);
             base.HandleInput(inputHelper);
         }
 
@@ -309,6 +343,12 @@ namespace BaseProject.GameObjects
                 return;
             }
             PlayAnimation("fly");
+        }
+
+        public void getPushed()
+        {
+            stunned = true;
+            PlayAnimation("stunned");
         }
 
     }

@@ -14,7 +14,7 @@ namespace BaseProject.GameObjects
         Vector2 levelSize;
         string colorCode;
         public int nextLevelNr = -1;
-        private int currentLevel;
+        public int currentLevel;
 
         public TileList() : base(-1)
         {
@@ -64,9 +64,7 @@ namespace BaseProject.GameObjects
 
         public void nextLevel(int levelNr)
         {
-            
             children.Clear();
-            nextLevelNr = -1;
             LoadLevel(levelNr);
             currentLevel = levelNr;
         }
@@ -248,6 +246,8 @@ namespace BaseProject.GameObjects
             if(nextLevelNr > -1)
             {
                 nextLevel(nextLevelNr);
+                nextLevelNr = -1;
+                
             }
             CheckMovingTilesColission(this);
             base.Update(gameTime);
