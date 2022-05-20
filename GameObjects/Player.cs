@@ -39,11 +39,17 @@ namespace BaseProject.GameObjects
         static float PushSpeed = 300f; //float to set the speed of the push
         public SpriteGameObject PushObject;
 
+        public int DeathAnimationTimer;
+        public int DeathAnimationDuration = 16;
+        public bool DeathAnimation = false;
+
         public Player() : base(Game1.Depth_Player)
         {
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
             LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
             LoadAnimation("img/players/spr_player_jump@2", "jump", true, 0.5f);
+            LoadAnimation("img/players/spr_player_death@5", "death", true, 0.25f);
+            LoadAnimation("img/players/spr_player_dead", "dead", false);
             PlayAnimation("idle");
             SetOriginToBottomCenter();
 
@@ -173,6 +179,26 @@ namespace BaseProject.GameObjects
                     PushTimer = 0;
                 }
             }
+
+            if(DeathAnimation)
+            {
+
+                if (DeathAnimationTimer < 1)
+                {
+
+                    PlayAnimation("death");
+                }
+                else if(DeathAnimationTimer > 70 && DeathAnimationTimer < 180)
+                {
+                    PlayAnimation("dead");
+                } else if(DeathAnimationTimer > 120)
+                {
+                    DeathAnimation = false;
+                    death();
+                }
+
+                DeathAnimationTimer++;
+            }
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
         }
@@ -188,8 +214,10 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            //Player push ability
-            if (inputHelper.IsKeyDown(input.Player(Buttons.Y))){
+            if (DeathAnimation) return;
+
+                //Player push ability
+                if (inputHelper.IsKeyDown(input.Player(Buttons.Y))){
 
                 if(!PushCooldown)
                 {
@@ -253,7 +281,6 @@ namespace BaseProject.GameObjects
             }
 
             base.HandleInput(inputHelper);
-
             if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 velocity.X += -speed;
@@ -298,20 +325,21 @@ namespace BaseProject.GameObjects
 
         public void HandleColission(Tile tile)
         {
+            Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
             //checking and handling collision with SpikeTile
-            if (tile is SpikeTile || tile is SpikeRoofTile)
+            if ((tile is SpikeTile || tile is SpikeRoofTile))
             {
-               
-                death();
+
+                DeathAnimation = true;
 
             }
             //checking and handling collision with SwitchTile
             if(tile is SwitchTile)
             {
               SwitchObject switchTile = (SwitchObject)tile.Parent;
-                if (switchTile.Armed) { 
- 
-                        death();
+                if (switchTile.Armed) {
+
+                    DeathAnimation = true;
 
                 }
             }
@@ -322,10 +350,10 @@ namespace BaseProject.GameObjects
                 nextLevel();
             }
             
-            Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
+            
 
             //checking if its a vertical collision
-            if (Math.Abs(intersection.X) > Math.Abs(intersection.Y))
+            if (Math.Abs(intersection.X) > Math.Abs(intersection.Y)) 
             {
                
                 //collision bottom side player and top side tile
@@ -347,17 +375,21 @@ namespace BaseProject.GameObjects
             }
             else
             {
-                //collision right side player and left side tile
-                if (intersection.X < 0)
+                if (!DeathAnimation)
                 {
-                    isColliding = true;
-                    position.X -= Math.Abs(intersection.X) -1;
-                }
-                //collision left side player and right side tile
-                else
-                {
-                    isColliding = true;
-                    position.X += Math.Abs(intersection.X) +1;
+                    //collision right side player and left side tile
+                    if (intersection.X < 0)
+                    {
+                        isColliding = true;
+                        position.X -= Math.Abs(intersection.X) - 1;
+                    }
+                    //collision left side player and right side tile
+                    else
+                    {
+                        isColliding = true;
+                        position.X += Math.Abs(intersection.X) + 1;
+                    }
+
                 }
 
                 //blocking movement when player keeps colliding with wall.
@@ -385,7 +417,28 @@ namespace BaseProject.GameObjects
         //function to handle the death of a player
         void death()
         {
+            // System.Diagnostics.Debug.WriteLine("death");
             //TODO death annimation
+            /**
+            if(isGrounded)
+            {
+                System.Diagnostics.Debug.WriteLine("isgrounded death");
+                PlayDeathAnimation();
+            }
+
+            if (DeathAnimation)
+            {
+                if(DeathAnimationTimer > 120)
+                {
+                    DeathAnimation = false;
+                    isGrounded = false;
+                    death();
+                }
+                return;
+            }
+            */
+
+            System.Diagnostics.Debug.WriteLine("death");
             lives--;
             died = true;
             if(lives <= 0)//checks if the player can respawn
@@ -432,5 +485,7 @@ namespace BaseProject.GameObjects
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
         }
+
+
     }
 }

@@ -63,18 +63,6 @@
 /processorParam:TextureFormat=Color
 /build:img/levels/spr_level1.png
 
-#begin img/levels/spr_level1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:img/levels/spr_level1.png
-
 #begin img/levels/spr_level2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -170,6 +158,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/players/spr_player.png
+
+#begin img/players/spr_player_dead.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_dead.png
+
+#begin img/players/spr_player_death@5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_death@5.png
 
 #begin img/players/spr_player_idle@8.png
 /importer:TextureImporter
