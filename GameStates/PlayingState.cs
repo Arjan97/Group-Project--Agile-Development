@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using BaseProject.GameObjects;
-using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
@@ -21,9 +16,13 @@ namespace BaseProject.GameStates
         public PlayingState()
         {
             Add(player);
-            Add(tileList);
             Add(ghost);
-            Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
+            Add(tileList);
+            SpriteGameObject push = new SpriteGameObject("img/players/spr_push", 0, "push");
+            push.Visible = false;
+            Add(push);
+
+            GameEnvironment.input.AssignKeys(true);
         }
 
         public override void Update(GameTime gameTime)
@@ -45,6 +44,14 @@ namespace BaseProject.GameStates
         public void LoadLevel(int level)
         {
             tileList.LoadLevel(level);
+        }
+
+        public override void Reset()
+        {
+            tileList.nextLevelNr = tileList.CurrentLevel;
+            base.Reset();
+            Find("push").Visible = false;
+            
         }
 
         //function that moves the camera
@@ -77,7 +84,7 @@ namespace BaseProject.GameStates
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            if (inputHelper.IsKeyDown(Keys.D0))
+            if (inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D0))
             {
                 photoMode = true;
                 tileList.HideButtons();
@@ -89,7 +96,7 @@ namespace BaseProject.GameStates
                 tileList.ShowButtons();
                 photoMode = false; 
             }
-            ghost.HandlePush(inputHelper.KeyPressed(Keys.P), (SpriteGameObject)Find("push"));
+            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("push"));
             base.HandleInput(inputHelper);
         }
 
