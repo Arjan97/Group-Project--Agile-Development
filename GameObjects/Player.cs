@@ -130,6 +130,7 @@ namespace BaseProject.GameObjects
                 if (dashDuration <= 10)
                 {
                     velocity.X += dashPower;
+                    GameEnvironment.AssetManager.PlaySound("sounds/dash");
                 }
             }
 
@@ -142,6 +143,7 @@ namespace BaseProject.GameObjects
                 if (dashDuration <= 10)
                 {
                     velocity.X += -dashPower;
+                    GameEnvironment.AssetManager.PlaySound("sounds/dash");
                 }
             }
             //checks if the player is dashing, then a cooldown is issued

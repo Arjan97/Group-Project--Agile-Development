@@ -4,6 +4,7 @@ namespace BaseProject.GameStates
 {
     internal class StartScreen : GameObjectList
     {
+
         public  StartScreen()
         {
             //background of the menu
@@ -21,6 +22,13 @@ namespace BaseProject.GameStates
             sub.Position = new Vector2((GameEnvironment.Screen.X - (sub.Text.Length * 12)) / 2, GameEnvironment.Screen.Y*2/3);
             Add(title);
             Add(sub);
+
+            playMusic();
+        }
+        //plays music
+        public void playMusic()
+        {
+            GameEnvironment.AssetManager.PlayMusic("sounds/menusongmono", true);
         }
 
         public override void HandleInput(InputHelper inputHelper)

@@ -6,6 +6,8 @@ using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using BaseProject.GameObjects.Background;
+using Microsoft.Xna.Framework.Media;
 
 namespace BaseProject.GameStates
 {
@@ -15,8 +17,8 @@ namespace BaseProject.GameStates
         public TileList tileList = new TileList();
         Ghost ghost = new Ghost();
         bool photoMode = false;
-
         bool headingRight = true;
+        private List<ScrollingBackground> _scrollingBackgrounds;
 
         public PlayingState()
         {
@@ -24,7 +26,58 @@ namespace BaseProject.GameStates
             Add(tileList);
             Add(ghost);
             Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
+            stopMusic();
+            playMusic();
         }
+
+        public void stopMusic()
+        {
+            MediaPlayer.Stop();
+        }
+        public void playMusic()
+        {
+            GameEnvironment.AssetManager.PlayMusic("sounds/gamesong", true);
+        }
+
+        /* 
+        public void movingBackground()
+        {
+            _scrollingBackgrounds = new List<ScrollingBackground>()
+      {
+        new ScrollingBackground(Content.Load<Texture2D>("img/backgrounds/background_1"), player, 60f)
+        {
+          Layer = 0.99f,
+        },
+        new ScrollingBackground(Content.Load<Texture2D>("img/backgrounds/background_2"), player, 60f)
+        {
+          Layer = 0.9f,
+        },
+        new ScrollingBackground(Content.Load<Texture2D>("img/backgrounds/background_3"), player, 40f)
+        {
+          Layer = 0.8f,
+        },
+        new ScrollingBackground(Content.Load<Texture2D>("img/backgrounds/background_4"), player, 30f)
+        {
+          Layer = 0.79f,
+        },
+        new ScrollingBackground(Content.Load<Texture2D>("img/backgrounds/background_5"), player, 25f, true)
+        {
+          Layer = 0.78f,
+        } 
+        new ScrollingBackground(Content.Load<Texture2D>("ScrollingBackgrounds/Hills_Back"), player, 0f)
+        {
+          Layer = 0.77f,
+        },
+        new ScrollingBackground(Content.Load<Texture2D>("ScrollingBackgrounds/Clouds_Slow"), player, 10f, true)
+        {
+          Layer = 0.7f,
+        },
+        new ScrollingBackground(Content.Load<Texture2D>("ScrollingBackgrounds/Sky"), player, 0f)
+        {
+          Layer = 0.1f,
+        }, 
+      }; 
+        } */
 
         public override void Update(GameTime gameTime)
         {
@@ -38,6 +91,7 @@ namespace BaseProject.GameStates
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            //movingBackground();
             base.Draw(gameTime, spriteBatch);
         }
 
