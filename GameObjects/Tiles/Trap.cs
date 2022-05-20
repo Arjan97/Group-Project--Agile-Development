@@ -15,7 +15,7 @@ namespace BaseProject.GameObjects.Tiles
         public Vector2 buttonPosition;
         public Button button;
 
-       internal bool Activated = false;
+       internal bool activated = false;
         public Trap(int x, int y)
         {
         }
@@ -35,7 +35,7 @@ namespace BaseProject.GameObjects.Tiles
             {
                 tile.Activate();
             }
-            Activated = true;
+            activated = true;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -70,6 +70,11 @@ namespace BaseProject.GameObjects.Tiles
         public bool buttonVisibility
         {
             set { button.Hidden = !value; }
+        }
+
+        public bool Activated
+        {
+            get { return activated; }
         }
     }
 }

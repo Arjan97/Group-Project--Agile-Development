@@ -11,7 +11,6 @@ namespace BaseProject.GameStates
         public Ghost ghost = new Ghost();
         bool photoMode = false;
         bool paused = false;
-        bool touchedFinish = false;
         bool headingRight = true;
         public SpriteGameObject PlayerPush;
         InputHandler input;

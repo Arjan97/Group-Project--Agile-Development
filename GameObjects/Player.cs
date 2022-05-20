@@ -274,7 +274,7 @@ namespace BaseProject.GameObjects
             }
 
 
-            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
+            if (inputHelper.IsKeyDown(input.Player(Buttons.B))   && isGrounded )
             {
                 isColliding = false;
                 keyPressed = true;

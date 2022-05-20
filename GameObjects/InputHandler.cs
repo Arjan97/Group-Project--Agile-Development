@@ -40,7 +40,7 @@ namespace BaseProject.GameObjects
             player1Input.Add(Buttons.B, Keys.Q);
             player1Input.Add(Buttons.L, Keys.LeftControl);
             player1Input.Add(Buttons.R, Keys.LeftShift);
-            player1Input.Add(Buttons.start, Keys.None);
+            player1Input.Add(Buttons.start, Keys.T);
 
             player2Input.Add(Buttons.left, Keys.J);
             player2Input.Add(Buttons.up, Keys.I);
@@ -52,7 +52,7 @@ namespace BaseProject.GameObjects
             player2Input.Add(Buttons.B, Keys.NumPad5);
             player2Input.Add(Buttons.L, Keys.NumPad7);
             player2Input.Add(Buttons.R, Keys.NumPad9);
-            player2Input.Add(Buttons.start, Keys.None);
+            player2Input.Add(Buttons.start, Keys.O);
 
             ghostInput = player1Input;
             playerInput = player2Input;
