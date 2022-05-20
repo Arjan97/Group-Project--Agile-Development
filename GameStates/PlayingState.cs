@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using BaseProject.GameObjects;
-using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
@@ -17,13 +12,14 @@ namespace BaseProject.GameStates
         bool photoMode = false;
         bool paused = false;
         bool headingRight = true;
+        InputHandler input;
 
         public PlayingState()
         {
             Add(player);
-            Add(tileList);
             Add(ghost);
-            Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
+            Add(tileList);
+
 
             //creates text that shows up when screen pauses
             TextGameObject pause = new TextGameObject("font/Arial40",0,"pauseText");
@@ -31,6 +27,13 @@ namespace BaseProject.GameStates
             pause.Text = "Game Paused";
             pause.Position = new Vector2(GameEnvironment.Screen.X/2-pause.Text.Length*20, GameEnvironment.Screen.Y/2);
             Add(pause);
+
+            SpriteGameObject push = new SpriteGameObject("img/players/spr_push", 0, "push");
+            push.Visible = false;
+            Add(push);
+
+            input = GameEnvironment.input;
+            input.AssignKeys(true);
         }
 
         public override void Update(GameTime gameTime)
@@ -47,6 +50,14 @@ namespace BaseProject.GameStates
         public void LoadLevel(int level)
         {
             tileList.LoadLevel(level);
+        }
+
+        public override void Reset()
+        {
+            tileList.nextLevelNr = tileList.CurrentLevel;
+            base.Reset();
+            Find("push").Visible = false;
+            
         }
 
         //function that moves the camera
@@ -79,8 +90,8 @@ namespace BaseProject.GameStates
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            if (inputHelper.KeyPressed(Keys.T)) HandlePause();
-            if (inputHelper.IsKeyDown(Keys.D0))
+            if (inputHelper.KeyPressed(input.P1(Buttons.start)) || inputHelper.KeyPressed(input.P2(Buttons.start))) HandlePause();
+            if (inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D0))
             {
                 photoMode = true;
                 tileList.HideButtons();
@@ -94,8 +105,10 @@ namespace BaseProject.GameStates
             }
             if(paused)
                 return;
-            ghost.HandlePush(inputHelper.KeyPressed(Keys.P), (SpriteGameObject)Find("push"));
+            ghost.HandlePush(inputHelper.KeyPressed(input.Ghost(Buttons.L)), (SpriteGameObject)Find("push"));
                 base.HandleInput(inputHelper);
+            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("push"));
+            base.HandleInput(inputHelper);
         }
 
         //function that shows the text

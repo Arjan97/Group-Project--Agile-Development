@@ -75,6 +75,18 @@
 /processorParam:TextureFormat=Color
 /build:img/menu/spr_selectIcon.png
 
+#begin img/menu/txt/Title.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/menu/txt/Title.png
+
 #begin img/players/spr_ghost.png
 /importer:TextureImporter
 /processor:TextureProcessor
