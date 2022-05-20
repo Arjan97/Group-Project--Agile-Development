@@ -10,15 +10,29 @@ namespace BaseProject.GameStates
         public TileList tileList = new TileList();
         public Ghost ghost = new Ghost();
         bool photoMode = false;
+        bool paused = false;
         bool touchedFinish = false;
         bool headingRight = true;
         public SpriteGameObject PlayerPush;
+        InputHandler input;
 
         public PlayingState()
         {
             Add(player);
             Add(ghost);
             Add(tileList);
+
+
+            //creates text that shows up when screen pauses
+            TextGameObject pause = new TextGameObject("font/Arial40",0,"pauseText");
+            pause.Visible = false;
+            pause.Text = "Game Paused";
+            pause.Position = new Vector2(GameEnvironment.Screen.X/2-pause.Text.Length*20, GameEnvironment.Screen.Y/2);
+            Add(pause);
+
+            SpriteGameObject push = new SpriteGameObject("img/players/spr_push", 0, "push");
+            push.Visible = false;
+            Add(push);
             SpriteGameObject GhostPush = new SpriteGameObject("img/players/spr_push", 0, "GhostPush");
             GhostPush.Visible = false;
             Add(GhostPush);
@@ -27,11 +41,13 @@ namespace BaseProject.GameStates
             PlayerPush.Visible = false;
             Add(PlayerPush);
 
-            GameEnvironment.input.AssignKeys(true);
+            input = GameEnvironment.input;
+            input.AssignKeys(true);
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (paused) { return; }
             base.Update(gameTime);
             player.isGrounded = false;
             tileList.CheckColission(player);
@@ -39,12 +55,6 @@ namespace BaseProject.GameStates
             HandleCamera();
             player.CheckColission((SpriteGameObject)Find("GhostPush"));
             ghost.CheckColission((SpriteGameObject)Find("PlayerPush"));
-        }
-
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            base.Draw(gameTime, spriteBatch);
         }
 
         public void LoadLevel(int level)
@@ -72,7 +82,7 @@ namespace BaseProject.GameStates
                 player.died = false;
             }
             //check if player turns around
-            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
+            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
                 headingRight = !headingRight;
             }
@@ -92,6 +102,7 @@ namespace BaseProject.GameStates
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            if (inputHelper.KeyPressed(input.P1(Buttons.start)) || inputHelper.KeyPressed(input.P2(Buttons.start))) HandlePause();
             if (inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D0))
             {
                 photoMode = true;
@@ -104,6 +115,12 @@ namespace BaseProject.GameStates
                 tileList.ShowButtons();
                 photoMode = false; 
             }
+            if(paused)
+                return;
+            ghost.HandlePush(inputHelper.KeyPressed(input.Ghost(Buttons.L)), (SpriteGameObject)Find("push"));
+                base.HandleInput(inputHelper);
+            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("push"));
+            base.HandleInput(inputHelper);
             if (!ghost.stunned)
             {
                 ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
@@ -111,5 +128,11 @@ namespace BaseProject.GameStates
                 base.HandleInput(inputHelper);
         }
 
-    }     
+        //function that shows the text
+        void HandlePause()
+        {
+            paused = !paused;
+            Find("pauseText").Visible = paused;
+        }
+    } 
 }

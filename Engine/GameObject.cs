@@ -27,9 +27,6 @@ public abstract class GameObject : IGameLoopObject
     public virtual void Update(GameTime gameTime)
     {
         position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if(this is Player)
-        {
-        }
     }
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)

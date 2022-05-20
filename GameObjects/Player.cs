@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 using BaseProject.GameObjects.Tiles;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
@@ -61,7 +56,7 @@ namespace BaseProject.GameObjects
             isColliding = false;
             died = false;
             jumpSpeed = 100f;
-            speed = 5f;
+            speed = 1.5f;
             jumpframes = 0;
             timer = 0;
 

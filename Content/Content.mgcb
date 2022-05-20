@@ -20,12 +20,12 @@
 /processorParam:TextureFormat=Compressed
 /build:font/Arial12.spritefont
 
-#begin font/File.spritefont
+#begin font/Arial40.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:font/File.spritefont
+/build:font/Arial40.spritefont
 
 #begin img/levels/icons/spr_iconLevel0.png
 /importer:TextureImporter
