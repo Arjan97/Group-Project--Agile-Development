@@ -93,7 +93,6 @@ namespace BaseProject.GameObjects
             position.X = 1.5f * Tile.tileSize;
             position.Y = GameEnvironment.Screen.Y / 2;
             Velocity = Vector2.Zero;
-            died = false;
         }
 
         public override void Update(GameTime gameTime)

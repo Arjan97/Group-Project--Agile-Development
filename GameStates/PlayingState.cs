@@ -65,7 +65,7 @@ namespace BaseProject.GameStates
 
         public override void Reset()
         {
-
+            position = Vector2.Zero;
             tileList.nextLevelNr = tileList.CurrentLevel;
             base.Reset();
             Find("GhostPush").Visible = false;
