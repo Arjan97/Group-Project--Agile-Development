@@ -396,7 +396,7 @@ namespace BaseProject.GameObjects
             else
             {
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr = 0;
+            play.tileList.nextLevelNr = play.tileList.currentLevel;
              Respawn();
              play.ghost.Reset();
              //System.Diagnostics.Debug.WriteLine(lives);
@@ -431,11 +431,6 @@ namespace BaseProject.GameObjects
         void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
-        }
-
-        void HandlePush()
-        {
-
         }
     }
 }

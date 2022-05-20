@@ -102,8 +102,6 @@ namespace BaseProject.GameObjects
             
         }
 
-
-
         //function to clear the keys of objects too far away, returns a list of keys that are now available
         private List<Keys> UnassignKeys(SortedDictionary<float,Trap> traplist)
         {
