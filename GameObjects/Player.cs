@@ -177,23 +177,24 @@ namespace BaseProject.GameObjects
 
             if(DeathAnimation)
             {
-
                 if (DeathAnimationTimer < 1)
                 {
-
                     PlayAnimation("death");
                 }
                 else if(DeathAnimationTimer > 70 && DeathAnimationTimer < 180)
                 {
                     PlayAnimation("dead");
-                } else if(DeathAnimationTimer > 120)
+                } else if(DeathAnimationTimer == 180)
                 {
                     DeathAnimation = false;
+                    died = true;
+                    //DeathAnimationTimer = 0;
                     death();
                 }
 
                 DeathAnimationTimer++;
             }
+            
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
         }
@@ -209,10 +210,11 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            
             if (DeathAnimation) return;
 
-                //Player push ability
-                if (inputHelper.IsKeyDown(input.Player(Buttons.Y))){
+            //Player push ability
+            if (inputHelper.IsKeyDown(input.Player(Buttons.Y))){
 
                 if(!PushCooldown)
                 {
@@ -274,8 +276,9 @@ namespace BaseProject.GameObjects
                 PlayAnimation("idle");
                 return;
             }
-
+            System.Diagnostics.Debug.WriteLine(blockMovement);
             base.HandleInput(inputHelper);
+
             if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
                 velocity.X += -speed;
@@ -335,7 +338,6 @@ namespace BaseProject.GameObjects
                 if (switchTile.Armed) {
 
                     DeathAnimation = true;
-
                 }
             }
 
@@ -412,28 +414,7 @@ namespace BaseProject.GameObjects
         //function to handle the death of a player
         void death()
         {
-            // System.Diagnostics.Debug.WriteLine("death");
-            //TODO death annimation
-            /**
-            if(isGrounded)
-            {
-                System.Diagnostics.Debug.WriteLine("isgrounded death");
-                PlayDeathAnimation();
-            }
-
-            if (DeathAnimation)
-            {
-                if(DeathAnimationTimer > 120)
-                {
-                    DeathAnimation = false;
-                    isGrounded = false;
-                    death();
-                }
-                return;
-            }
-            */
-
-            System.Diagnostics.Debug.WriteLine("death");
+            //System.Diagnostics.Debug.WriteLine("death");
             lives--;
             died = true;
             if(lives <= 0)//checks if the player can respawn
@@ -445,9 +426,11 @@ namespace BaseProject.GameObjects
             {
             PlayingState play =(PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
             play.tileList.nextLevelNr = play.tileList.currentLevel;
-             Respawn();
+             
              play.ghost.Reset();
-             //System.Diagnostics.Debug.WriteLine(lives);
+                DeathAnimationTimer = 0;
+                //Respawn();
+                //System.Diagnostics.Debug.WriteLine(lives);
             }
         }
         //method to change level

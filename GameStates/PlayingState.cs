@@ -75,8 +75,10 @@ namespace BaseProject.GameStates
         //function that moves the camera
         public void HandleCamera()
         {
+
             if(player.died == true)
             {
+                player.Respawn();
                 position.X = 30;
                 ghost.Position = GameEnvironment.Screen.ToVector2()/2;
                 player.died = false;
