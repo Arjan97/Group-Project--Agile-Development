@@ -85,13 +85,19 @@ public abstract class GameObject : IGameLoopObject
                 return;
             }
         //checks if player collides with push projectile
-        if(one is Player && ((SpriteGameObject)other).id == "push")
+        if(one is Player && ((SpriteGameObject)other).id == "GhostPush")
         {
             ((Player)one).getPushed(((SpriteGameObject)other).velocity.X);
             return;
         }
-            //rest colission
-            other.HandleColission(one);
+
+        if (one is Ghost && ((SpriteGameObject)other).id == "PlayerPush")
+        {
+            ((Ghost)one).getPushed();
+            return;
+        }
+        //rest colission
+        other.HandleColission(one);
             one.HandleColission(other);
         }
 

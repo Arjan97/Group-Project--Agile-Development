@@ -6,6 +6,11 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class FinishTile : Tile
     {
-        public FinishTile(int x, int y) : base("img/tiles/spr_spikebottom", x, y) { }
+        public FinishTile(int x, int y) : base("img/tiles/spr_finishTile", x, y) { }
+
+        public void onCollision()
+        {
+            System.Diagnostics.Debug.WriteLine("finishline");
+        }
     }
 }
