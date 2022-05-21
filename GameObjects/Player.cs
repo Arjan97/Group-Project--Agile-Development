@@ -130,7 +130,7 @@ namespace BaseProject.GameObjects
                 if (dashDuration <= 10)
                 {
                     velocity.X += dashPower;
-                    GameEnvironment.AssetManager.PlaySound("sounds/dash");
+                    GameEnvironment.AssetManager.PlaySound("sounds/dash"); //plays sound effect
                 }
             }
 

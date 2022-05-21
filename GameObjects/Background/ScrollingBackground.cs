@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BaseProject.GameObjects.Background
 {
-    public class ScrollingBackground : SpriteGameObject
+    public class ScrollingBackground : GameObject
     {
         private bool _constantSpeed;
 
@@ -33,14 +33,14 @@ namespace BaseProject.GameObjects.Background
                     sprite.Layer = _layer;
             }
         }
-
+        
         public ScrollingBackground(Texture2D texture, Player player, float scrollingSpeed, bool constantSpeed = false)
           : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, constantSpeed)
         {
 
-        }
+        } 
 
-        public ScrollingBackground(List<Texture2D> textures, Player player, float scrollingSpeed, bool constantSpeed = false) : base("")
+        public ScrollingBackground(List<Texture2D> textures, Player player, float scrollingSpeed, bool constantSpeed = false)
         {
             _player = player;
 
@@ -57,6 +57,7 @@ namespace BaseProject.GameObjects.Background
             }
             _scrollingSpeed = scrollingSpeed;
             _constantSpeed = constantSpeed;
+            System.Diagnostics.Debug.WriteLine("lijstje gemaakt?");
         }
 
         public override void Update(GameTime gameTime)
