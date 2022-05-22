@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,6 +28,7 @@ namespace BaseProject.GameObjects.Tiles
             switchtrap.Activate(id);
             Activated = true;
         }
+        
 
         public void Arm() { armed = true; }
 
