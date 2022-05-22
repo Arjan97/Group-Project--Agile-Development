@@ -100,6 +100,7 @@ namespace BaseProject.GameObjects
             position.Y = GameEnvironment.Screen.Y / 2;
             Velocity = Vector2.Zero;
             died = false;
+            DeathAnimationTimer = 0;
         }
 
         public override void Update(GameTime gameTime)
@@ -175,10 +176,11 @@ namespace BaseProject.GameObjects
                 }
             }
 
-            if(DeathAnimation)
+            if (DeathAnimation)
             {
                 if (DeathAnimationTimer < 1)
                 {
+                    blockMovement = true;
                     PlayAnimation("death");
                 }
                 else if(DeathAnimationTimer > 70 && DeathAnimationTimer < 180)
@@ -187,8 +189,7 @@ namespace BaseProject.GameObjects
                 } else if(DeathAnimationTimer == 180)
                 {
                     DeathAnimation = false;
-                    died = true;
-                    //DeathAnimationTimer = 0;
+                    blockMovement = false;
                     death();
                 }
 
@@ -210,114 +211,120 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            
-            if (DeathAnimation) return;
-
-            //Player push ability
-            if (inputHelper.IsKeyDown(input.Player(Buttons.Y))){
-
-                if(!PushCooldown)
-                {
-                    PushCooldown = true;
-                    PushObject.Scale = new Vector2(2, 2);
-                    PushObject.Position = position - new Vector2(0, sprite.Height / 2);
-                    PushObject.Visible = true;
-
-                    if(sprite.Mirror)
-                    {
-                        PushObject.Velocity = new Vector2(-PushSpeed, 0);
-                    } else
-                    {
-                        PushObject.Velocity = new Vector2(PushSpeed, 0);
-                    }
-                } else
-                {
-
-                }
-                
-            }
-            //Player Dash ability
-            if (inputHelper.IsKeyDown(input.Player(Buttons.R)))
-            {
-                isDashing = true;
-                dashDuration++;
-
-                if (dashDuration <= 10 && !isFacingLeft)
-                {
-                    velocity.X += dashPower;
-
-                }
-                else if (dashDuration <= 10 && isFacingLeft)
-                {
-                    velocity.X += -dashPower;
-                }
-            }
-            //Checks if the player is dashing, then a cooldown is issued
-            if (isDashing)
-            {
-                timer++;
-                if (timer >= 200)
-                {
-                    dashDuration = 0;
-                    timer = 0;
-                    isDashing = false;
-                }
-            }
-
             //code to block all movement except the dash
             if (blockMovement)
             {
-                if(blockedframes == 15)
+                if (blockedframes == 15)
                 {
-                    blockMovement = false;
+                   if(!DeathAnimation) blockMovement = false;
                     blockedframes = 0;
                 }
                 //possible 'stunned' animation
-                PlayAnimation("idle");
+                if (!DeathAnimation) PlayAnimation("idle");
                 return;
             }
-            System.Diagnostics.Debug.WriteLine(blockMovement);
-            base.HandleInput(inputHelper);
 
-            if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
-            {
-                velocity.X += -speed;
-                PlayAnimation("run");
-                facingLeft = true;
-                isFacingLeft = true;
-            }
+            //Player push ability
+            if (inputHelper.IsKeyDown(input.Player(Buttons.Y)))
+                {
 
-            else if (inputHelper.IsKeyDown(input.Player(Buttons.right)))
-            {
-                velocity.X += speed;
-                isFacingLeft = false;
-                facingLeft = false;
-                PlayAnimation("run");
-                
-            } else
-            {
-                PlayAnimation("idle");
-            }
+                    if (!PushCooldown)
+                    {
+                        PushCooldown = true;
+                        PushObject.Scale = new Vector2(2, 2);
+                        PushObject.Position = position - new Vector2(0, sprite.Height / 2);
+                        PushObject.Visible = true;
 
-            if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
-            {
-                isFacingLeft = false;
-            }
+                        if (sprite.Mirror)
+                        {
+                            PushObject.Velocity = new Vector2(-PushSpeed, 0);
+                        }
+                        else
+                        {
+                            PushObject.Velocity = new Vector2(PushSpeed, 0);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+                //Player Dash ability
+                if (inputHelper.IsKeyDown(input.Player(Buttons.R)))
+                {
+                    isDashing = true;
+                    dashDuration++;
+
+                    if (dashDuration <= 10 && !isFacingLeft)
+                    {
+                        velocity.X += dashPower;
+
+                    }
+                    else if (dashDuration <= 10 && isFacingLeft)
+                    {
+                        velocity.X += -dashPower;
+                    }
+                }
+                //Checks if the player is dashing, then a cooldown is issued
+                if (isDashing)
+                {
+                    timer++;
+                    if (timer >= 200)
+                    {
+                        dashDuration = 0;
+                        timer = 0;
+                        isDashing = false;
+                    }
+                }
 
 
-            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
-            {
-                isColliding = false;
-                keyPressed = true;
-                isJumping = true;
-                jumpKeyPressed = true;
-            }
-            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) && !inputHelper.IsKeyDown(input.Player(Buttons.B)))
-            {
-                jumpKeyPressed = false;
-            }
+                base.HandleInput(inputHelper);
 
-            sprite.Mirror = facingLeft;
+
+                if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
+                {
+
+                    velocity.X += -speed;
+                    PlayAnimation("run");
+                    facingLeft = true;
+                    isFacingLeft = true;
+                }
+
+                else if (inputHelper.IsKeyDown(input.Player(Buttons.right)))
+                {
+                    velocity.X += speed;
+                    isFacingLeft = false;
+                    facingLeft = false;
+                    PlayAnimation("run");
+
+                }
+                else
+                {
+                    PlayAnimation("idle");
+                }
+
+                if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
+                {
+                    isFacingLeft = false;
+                }
+
+
+                if (inputHelper.IsKeyDown(input.Player(Buttons.up)) || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
+                {
+                    isColliding = false;
+                    keyPressed = true;
+                    isJumping = true;
+                    jumpKeyPressed = true;
+                }
+                else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) && !inputHelper.IsKeyDown(input.Player(Buttons.B)))
+                {
+                    jumpKeyPressed = false;
+                }
+
+                sprite.Mirror = facingLeft;
+
+            
 
         }
 
@@ -414,7 +421,6 @@ namespace BaseProject.GameObjects
         //function to handle the death of a player
         void death()
         {
-            //System.Diagnostics.Debug.WriteLine("death");
             lives--;
             died = true;
             if(lives <= 0)//checks if the player can respawn
@@ -428,9 +434,8 @@ namespace BaseProject.GameObjects
             play.tileList.nextLevelNr = play.tileList.currentLevel;
              
              play.ghost.Reset();
-                DeathAnimationTimer = 0;
-                //Respawn();
-                //System.Diagnostics.Debug.WriteLine(lives);
+            // DeathAnimationTimer = 0;
+            //Respawn();
             }
         }
         //method to change level
