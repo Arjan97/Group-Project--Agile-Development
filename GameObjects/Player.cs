@@ -8,45 +8,68 @@ namespace BaseProject.GameObjects
 {
     public class Player : AnimatedGameObject
     {
+       //variables used for the collision
+        public bool isColliding; //boolean used to track if the player is colliding
+        public string verticalCollidingSide; //string to set left or right for vertical collision
 
-        public float speed, jumpSpeed;
-        public bool isFalling, isColliding, keyPressed, isGrounded, isJumping, jumpKeyPressed, died, blockMovement, facingLeft;
-        public Vector2 pVelocity;
-        public string verticalCollidingSide;
-        public int jumpframes, blockedframes, lives, maxLives = 3;
-        private float timer;
+        //variables used for movement
+        public bool isFalling; //boolean used to track if the player is falling
+        public bool isJumping; //boolean used to track if the player is jumping
+        public bool isGrounded; //boolean used to track if the player is touching the ground
+        public bool isDashing; //boolean used to track if player is dashing
+        public bool isFacingLeft; //boolean to check if the player is looking to the left
+        private float dashDuration; //float used for the duration of the dash
+        public float jumpSpeed; //float used to set jumping speed
+        public float speed; //float used to set movement speed
+        public int dashPower; //int used for the power of the dash
+        public int jumpframes; //int to track the amount of frames the player has been jumping
+        public Vector2 pVelocity; //player velocity
 
-        public bool isDashing;
-        private float dashDuration;
-        public int dashPower;
-        public bool isFacingLeft;
-        public bool isFacingRight;
-        private GameObjectList livesIcons;
-        InputHandler input;
+        //variables used for input
+        public bool jumpKeyPressed; //boolean used to track if the jump key is pressed
+        public bool keyPressed; //boolean used to track if key is pressed
+        InputHandler input; //input handler
 
-        PlayingState currentPlayingState;
+        //variables used to block players movement
+        public bool blockMovement; //boolean to used to toggle blocked movement 
+        public int blockedframes; //int to track the amount of blocked frames
+        
+        //variables used for lives
+        public int maxLives; //int to update the max amount of lives a player can have
+        public int lives = 3; //int used to track the players lives
+        public bool died; //boolean used to track if the player is dead
+        private GameObjectList livesIcons; //icons to display lives
 
+        private float timer; //Angelina? wat doet deze timer?
+
+        PlayingState currentPlayingState;//current playinstate
+
+        //variables used for the players push/stun
         public bool PushCooldown = false; //push to see if Push is on cooldown
         public int PushCooldownTimer = 0;//int used to track cooldown of the push
         public int PushCoolDownTime = 300; //int used to set limit to the cooldown of the push
         public int PushTimer;//int used to track duration of Push
         public int PushTime = 65;//int used to set limit to the duration of the Push
         static float PushSpeed = 450f; //float to set the speed of the push
-        public SpriteGameObject PushObject;
+        public SpriteGameObject PushObject;//sprite game object of the push
 
-        public int DeathAnimationTimer;
-        public int DeathAnimationDuration = 16;
-        public bool DeathAnimation = false;
+        //variables used for the animations
+        public string currentAnimation = "idle"; //string used for current animation
+        public string newAnimation = "idle"; //string used to change animation
 
-        public string currentAnimation = "idle";
-        public string newAnimation = "idle";
+        //variables for the death animation timer
+        public int DeathAnimationTimer;//int used to track death animation
+        public int DeathAnimationDuration = 16; //int used to set duration of death animation
+        public bool DeathAnimation = false;//boolean to activate death animation
 
-        public int AttackAnimationTimer;
-        public int AttackAnimationDuration = 34;
-        public bool AttackAnimation;
+        //variables for the attack animation timer
+        public int AttackAnimationTimer;//int used to track attack animation
+        public int AttackAnimationDuration = 34; //int used to set duration of attack animation
+        public bool AttackAnimation; //boolean to activate attack animation
 
         public Player() : base(Game1.Depth_Player)
         {
+            //loading in the animations
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
             LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
             LoadAnimation("img/players/spr_player_jump@2", "jump", true, 0.5f);
@@ -80,6 +103,11 @@ namespace BaseProject.GameObjects
 
         }
 
+        /*
+         * Method used to Handle Collision
+         * @params GameObject obj
+         * @return void
+         */
         public override void HandleColission(GameObject obj)
         {
             if (obj is Spike)
@@ -89,19 +117,32 @@ namespace BaseProject.GameObjects
             base.HandleColission(obj);
         }
 
+        /*
+         * Method used to Reset the player
+         * @return void
+         */
         public override void Reset()
         {
+            //resetting lives
             lives = maxLives;
             Respawn();
             base.Reset();
         }
 
+        /*
+         * Method used to get the current playing state
+         * @return void
+         */
         public void getCurrentPlayingState()
         {
             currentPlayingState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
             PushObject = currentPlayingState.PlayerPush;
         }
 
+        /*
+         * Method to respawn the player
+         * @return void
+         */
         public void Respawn()
         {
             position.X = 1.5f * Tile.tileSize;
@@ -111,6 +152,11 @@ namespace BaseProject.GameObjects
             DeathAnimationTimer = 0;
         }
 
+        /*
+         * Method to update player
+         * @params GameTime gameTime
+         * @return void
+         */
         public override void Update(GameTime gameTime)
         {
 
@@ -137,8 +183,8 @@ namespace BaseProject.GameObjects
                 {
                     velocity.Y -= 6;
                 }
+
                 newAnimation = "jump";
-                //                PlayAnimation("jump");
                 jumpframes++;
             }
             else
@@ -153,6 +199,7 @@ namespace BaseProject.GameObjects
                 velocity.Y += 4.5f * i;
             }
 
+            //checking if movement is blocked
             if (blockMovement)
             {
                 blockedframes++;
@@ -160,11 +207,7 @@ namespace BaseProject.GameObjects
 
             velocity *= 70f;
 
-
-            {
-
-            }
-
+            //checking if the push ability is on cooldown
             if (PushCooldown)
             {
                 PushCooldownTimer++;
@@ -175,14 +218,10 @@ namespace BaseProject.GameObjects
                 }
             }
 
+            //checkinf if push object is visible/active
             if (PushObject.Visible)
             {
                 PushTimer++;
-                if (PushTimer < 4)
-                {
-
-                    //                    PlayAnimation("attack");
-                }
                 if (PushTimer > PushTime)
                 {
                     PushObject.Visible = false;
@@ -190,13 +229,13 @@ namespace BaseProject.GameObjects
                 }
             }
 
+            //checking if deathanimation is triggered
             if (DeathAnimation)
             {
                 if (DeathAnimationTimer < 1)
                 {
                     blockMovement = true;
                     newAnimation = "death";
-                    //PlayAnimation("death");
                 }
                 else if (DeathAnimationTimer > 70 && DeathAnimationTimer < 180)
                 {
@@ -212,11 +251,18 @@ namespace BaseProject.GameObjects
 
                 DeathAnimationTimer++;
             }
+
             AnimationHandler();
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
         }
 
+        /*
+         * Method to draw the player
+         * @params GameTime gameTime
+         * @params SpriteBatch spriteBatch
+         * @return void
+         */
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             for (int i = 0; i < lives; i++)
@@ -226,6 +272,11 @@ namespace BaseProject.GameObjects
             base.Draw(gameTime, spriteBatch);
         }
 
+        /*
+         * Method to Handle player Input
+         * @params InputHelper inputHelper
+         * @return void
+         */
         public override void HandleInput(InputHelper inputHelper)
         {
             //code to block all movement except the dash
@@ -297,30 +348,25 @@ namespace BaseProject.GameObjects
 
             base.HandleInput(inputHelper);
 
-
+            //player moving left
             if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
             {
-
                 velocity.X += -speed;
                 newAnimation = "run";
-                //PlayAnimation("run");
-                facingLeft = true;
                 isFacingLeft = true;
             }
-
+            //player moving right
             else if (inputHelper.IsKeyDown(input.Player(Buttons.right)))
             {
                 velocity.X += speed;
                 isFacingLeft = false;
-                facingLeft = false;
                 newAnimation = "run";
-                //                PlayAnimation("run");
-
+                
             }
             else
             {
+                //setting idle animation if player isnt moving
                 newAnimation = "idle";
-                //                PlayAnimation("idle");
             }
 
             if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
@@ -328,25 +374,27 @@ namespace BaseProject.GameObjects
                 isFacingLeft = false;
             }
 
-
-            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
+            //player jumping
+            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) /* && isGrounded */ || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
             {
                 isColliding = false;
                 keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
             }
-            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) && !inputHelper.IsKeyDown(input.Player(Buttons.B)))
+            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) || !inputHelper.IsKeyDown(input.Player(Buttons.B)))
             {
                 jumpKeyPressed = false;
             }
-
-            sprite.Mirror = facingLeft;
-
-
-
+            //mirroring sprite
+            sprite.Mirror = isFacingLeft;
         }
 
+        /*
+         * Method to Handle Collision
+         * @params Tile tile
+         * @return void
+         */
         public void HandleColission(Tile tile)
         {
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
@@ -424,7 +472,11 @@ namespace BaseProject.GameObjects
             }
         }
 
-        //function thats moves the player, gets called when colliding with push projectile
+        /*
+         * Method to move player if colliding with push object of the ghost
+         * @params float speed
+         * @return void
+         */
         public void getPushed(float speed)
         {
             //checks if the push projectile is moving left or right
@@ -438,7 +490,10 @@ namespace BaseProject.GameObjects
             }
         }
 
-        //function to handle the death of a player
+        /*
+         * Method to handle players Death
+         * @return void
+         */
         void death()
         {
             lives--;
@@ -454,11 +509,13 @@ namespace BaseProject.GameObjects
                 play.tileList.nextLevelNr = play.tileList.currentLevel;
 
                 play.ghost.Reset();
-                // DeathAnimationTimer = 0;
-                //Respawn();
             }
         }
-        //method to change level
+
+        /*
+         * Method to change level
+         * @return void
+         */
         void nextLevel()
         {
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
@@ -468,7 +525,10 @@ namespace BaseProject.GameObjects
             play.ghost.Reset();
         }
 
-        //function to create the lives icons
+        /*
+         * Method to create lives icons
+         * @return void
+         */
         void createLives()
         {
             livesIcons = new GameObjectList(0, "lives");
@@ -484,11 +544,20 @@ namespace BaseProject.GameObjects
                 livesIcons.Add(live);
             }
         }
+
+        /*
+         * Method to set Origin for animations
+         * @return void
+         */
         void SetOriginToBottomCenter()
         {
             Origin = new Vector2(sprite.Width / 2, sprite.Height);
         }
 
+        /*
+         * Method to handle all the animations
+         * @return void
+         */
         public void AnimationHandler()
         {
             if (AttackAnimation)
@@ -505,6 +574,7 @@ namespace BaseProject.GameObjects
                     PushObject.Visible = true;
                     PushCooldown = true;
                     PushObject.Scale = new Vector2(2, 2);
+                    PushObject.Mirror = this.Mirror;
                     PushObject.Position = position - new Vector2(0, sprite.Height / 2);
                 }
 
@@ -521,7 +591,6 @@ namespace BaseProject.GameObjects
                 }
             }
         }
-
 
     }
 }
