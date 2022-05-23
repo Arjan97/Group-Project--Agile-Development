@@ -25,7 +25,7 @@ namespace BaseProject.GameObjects
         public bool stunned = false;
         int stunnedTimer = 0;
         int stunnedTime = 90;
-
+        
 
        public Ghost()
         {

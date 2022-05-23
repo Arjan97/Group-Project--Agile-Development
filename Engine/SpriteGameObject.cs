@@ -1,4 +1,5 @@
-﻿using BaseProject.GameObjects;
+﻿using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -27,6 +28,7 @@ public class SpriteGameObject : GameObject
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+
         if (!visible || sprite == null)
         {
             return;
