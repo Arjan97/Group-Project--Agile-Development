@@ -69,7 +69,7 @@ namespace BaseProject.GameStates
             tileList.nextLevelNr = tileList.CurrentLevel;
             base.Reset();
             Find("GhostPush").Visible = false;
-            
+            Find("pauseText").Visible = false;
         }
 
         //function that moves the camera
