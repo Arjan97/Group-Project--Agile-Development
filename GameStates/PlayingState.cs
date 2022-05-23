@@ -1,3 +1,4 @@
+using BaseProject.GameComponents;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

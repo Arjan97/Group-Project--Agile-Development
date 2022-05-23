@@ -1,8 +1,7 @@
-﻿
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace BaseProject.GameObjects
+namespace BaseProject.GameComponents
 {
     public enum Buttons
     {
@@ -28,9 +27,9 @@ namespace BaseProject.GameObjects
         Dictionary<Buttons, Keys> player1Input = new Dictionary<Buttons, Keys>();
         Dictionary<Buttons, Keys> player2Input = new Dictionary<Buttons, Keys>();
         Dictionary<Buttons, Keys> empty = new Dictionary<Buttons, Keys>();
-        public InputHandler() 
+        public InputHandler()
         {
-            player1Input.Add(Buttons.left,Keys.A);
+            player1Input.Add(Buttons.left, Keys.A);
             player1Input.Add(Buttons.up, Keys.W);
             player1Input.Add(Buttons.right, Keys.D);
             player1Input.Add(Buttons.down, Keys.S);
@@ -59,12 +58,12 @@ namespace BaseProject.GameObjects
             //isPlayer1Ghost = true;
         }
 
-        
+
 
         public void AssignKeys(bool p1Ghost)
         {
             //checks if the controls needs to be switched
-            if (isPlayer1Ghost == p1Ghost && ghostInput.Count >1)
+            if (isPlayer1Ghost == p1Ghost && ghostInput.Count > 1)
                 return;
 
             if (p1Ghost)

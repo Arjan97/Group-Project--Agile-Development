@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using BaseProject.GameObjects.Tiles;
 using BaseProject.GameStates;
+using BaseProject.GameComponents;
 
 namespace BaseProject.GameObjects
 {

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+using Input = Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
 using BaseProject.GameStates;
+using BaseProject.GameComponents;
 
 namespace BaseProject.GameObjects
 {
@@ -20,7 +21,7 @@ namespace BaseProject.GameObjects
         int CooldownTimer;
         static int maxButtons = 4;
         bool onCooldown = false;
-        Keys[] trapButtons;
+        Input.Keys[] trapButtons;
         public bool stunned = false;
         int stunnedTimer = 0;
         int stunnedTime = 90;
@@ -64,7 +65,7 @@ namespace BaseProject.GameObjects
         public override void Reset()
         {
             position = GameEnvironment.Screen.ToVector2() / 2;
-            trapButtons = new Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
+            trapButtons = new Input.Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
             base.Reset();
         }
         //function to calculate trap distance and assign keys
@@ -93,7 +94,7 @@ namespace BaseProject.GameObjects
                 }
             }
 
-           List<Keys> freeKeys = UnassignKeys(trapsList);
+           List<Input.Keys> freeKeys = UnassignKeys(trapsList);
 
             if(freeKeys.Count > 0)
             {
@@ -103,10 +104,10 @@ namespace BaseProject.GameObjects
         }
 
         //function to clear the keys of objects too far away, returns a list of keys that are now available
-        private List<Keys> UnassignKeys(SortedDictionary<float,Trap> traplist)
+        private List<Input.Keys> UnassignKeys(SortedDictionary<float,Trap> traplist)
         {
             //creates a list of available keys
-            List<Keys> keys = new List<Keys>(trapButtons);
+            List<Input.Keys> keys = new List<Input.Keys>(trapButtons);
             int buttonCounter = 0;
 
             
@@ -124,26 +125,26 @@ namespace BaseProject.GameObjects
                 if (buttonCounter <= maxButtons)
                 {
                     //deletes already assigned buttons from the list
-                    if(trap.Value.AssignedKey != Keys.None)
+                    if(trap.Value.AssignedKey != Input.Keys.None)
                     {
                         keys.Remove(trap.Value.AssignedKey);
                     }
                     if(trap.Value is Switch)
                     {
                         Switch switchTrap = (Switch)trap.Value;
-                        if (switchTrap.AssignedKey != Keys.None)
+                        if (switchTrap.AssignedKey != Input.Keys.None)
                         {
                             keys.Remove(trap.Value.AssignedKey);
                         }
 
-                        if (switchTrap.AssignedSecondKey != Keys.None)
+                        if (switchTrap.AssignedSecondKey != Input.Keys.None)
                         {
                             keys.Remove(switchTrap.AssignedSecondKey);
                         }
                     }
                     else
                     {
-                        if (trap.Value.AssignedKey != Keys.None)
+                        if (trap.Value.AssignedKey != Input.Keys.None)
                         {
                             keys.Remove(trap.Value.AssignedKey);
                         }
@@ -151,11 +152,11 @@ namespace BaseProject.GameObjects
                 }
                 else //clears all traps that are out of reach
                 {
-                    trap.Value.AssignedKey = Keys.None;
+                    trap.Value.AssignedKey = Input.Keys.None;
                     if(trap.Value is Switch)
                     {
                         Switch switchTrap = (Switch)trap.Value;
-                        switchTrap.AssignedSecondKey = Keys.None;
+                        switchTrap.AssignedSecondKey = Input.Keys.None;
                     }
                 }
             }
@@ -163,7 +164,7 @@ namespace BaseProject.GameObjects
         }
 
         //function that gives the keys to the traps
-        private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
+        private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Input.Keys> keys)
         {
             if(stunned)
             {
@@ -184,7 +185,7 @@ namespace BaseProject.GameObjects
                             Switch switchTrap = (Switch)trap.Value;
 
                             //check if both traps dont have keys
-                            if (switchTrap.AssignedKey == Keys.None && switchTrap.AssignedSecondKey == Keys.None)
+                            if (switchTrap.AssignedKey == Input.Keys.None && switchTrap.AssignedSecondKey == Input.Keys.None)
                             {
                                 //if there are enough keys left the keys will be assigned
                                 if (keysLeft >= 2)
@@ -197,7 +198,7 @@ namespace BaseProject.GameObjects
                                 keysLeft -= 2;
                                 break;
                             }
-                            if (switchTrap.AssignedSecondKey == Keys.None)
+                            if (switchTrap.AssignedSecondKey == Input.Keys.None)
                             {
                                 switchTrap.AssignedSecondKey = keys[pos];
                                 keys.Remove(keys[pos]);
@@ -205,7 +206,7 @@ namespace BaseProject.GameObjects
                                 break;
                             }
 
-                            if (switchTrap.AssignedKey == Keys.None)
+                            if (switchTrap.AssignedKey == Input.Keys.None)
                             {
                             switchTrap.AssignedKey = keys[pos];
                             keys.Remove(keys[pos]);
@@ -214,7 +215,7 @@ namespace BaseProject.GameObjects
                             }
                         }
                     //default function to assign keys 
-                    if (trap.Value.AssignedKey == Keys.None)
+                    if (trap.Value.AssignedKey == Input.Keys.None)
                     {
                         trap.Value.AssignedKey = keys[pos];
                         keys.Remove(keys[pos]);

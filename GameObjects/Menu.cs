@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BaseProject.GameObjects.menuObjects;
-using BaseProject.GameObjects;
+using BaseProject.GameComponents;
 
 namespace BaseProject.GameStates
 {

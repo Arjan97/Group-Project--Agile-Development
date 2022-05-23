@@ -1,14 +1,13 @@
 ﻿using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using BaseProject.GameObjects;
 using BaseProject.GameStates;
+using BaseProject.GameComponents;
 
 namespace BaseProject.GameObjects
 {
     internal class Button : SpriteGameObject
     {
-        private Keys assignedKey = Keys.None;
+        private Microsoft.Xna.Framework.Input.Keys assignedKey = Microsoft.Xna.Framework.Input.Keys.None;
         private bool hidden = false;
         InputHandler input;
         PlayingState currentPlayingState;
@@ -38,7 +37,7 @@ namespace BaseProject.GameObjects
         }
 
         //function to give the button a different key
-        public void AssignKey(Keys newKey)
+        public void AssignKey(Microsoft.Xna.Framework.Input.Keys newKey)
         {
             visible = true;
             assignedKey = newKey;
@@ -66,7 +65,7 @@ namespace BaseProject.GameObjects
         }
 
         //returns the assigned key
-        public Keys Key
+        public Microsoft.Xna.Framework.Input.Keys Key
         {
             get => assignedKey;
         }
@@ -86,7 +85,7 @@ namespace BaseProject.GameObjects
                     //activates the object the button is assigned to
                     parentTrap.Activate();
                     visible = false;
-                    assignedKey = Keys.None;
+                    assignedKey = Microsoft.Xna.Framework.Input.Keys.None;
                 }
                 base.HandleInput(inputHelper);
             }
