@@ -8,7 +8,7 @@ namespace BaseProject.GameObjects
 {
     public class Player : AnimatedGameObject
     {
-       //variables used for the collision
+        //variables used for the collision
         public bool isColliding; //boolean used to track if the player is colliding
         public string verticalCollidingSide; //string to set left or right for vertical collision
 
@@ -33,7 +33,7 @@ namespace BaseProject.GameObjects
         //variables used to block players movement
         public bool blockMovement; //boolean to used to toggle blocked movement 
         public int blockedframes; //int to track the amount of blocked frames
-        
+
         //variables used for lives
         public int maxLives; //int to update the max amount of lives a player can have
         public int lives = 3; //int used to track the players lives
@@ -361,7 +361,7 @@ namespace BaseProject.GameObjects
                 velocity.X += speed;
                 isFacingLeft = false;
                 newAnimation = "run";
-                
+
             }
             else
             {
