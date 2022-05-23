@@ -29,15 +29,12 @@ namespace BaseProject.GameStates
             pause.Text = "Game Paused";
             pause.Position = new Vector2(GameEnvironment.Screen.X/2-pause.Text.Length*20, GameEnvironment.Screen.Y/2);
             Add(pause);
-
-            SpriteGameObject push = new SpriteGameObject("img/players/spr_push", 0, "push");
-            push.Visible = false;
-            Add(push);
+;
             SpriteGameObject GhostPush = new SpriteGameObject("img/players/spr_push", 0, "GhostPush");
             GhostPush.Visible = false;
             Add(GhostPush);
 
-            PlayerPush = new SpriteGameObject("img/players/spr_push", 0, "PlayerPush");
+            PlayerPush = new SpriteGameObject("img/players/spr_player_push", 0, "PlayerPush");
             PlayerPush.Visible = false;
             Add(PlayerPush);
 
@@ -119,9 +116,9 @@ namespace BaseProject.GameStates
             }
             if(paused)
                 return;
-            ghost.HandlePush(inputHelper.KeyPressed(input.Ghost(Buttons.L)), (SpriteGameObject)Find("push"));
+            ghost.HandlePush(inputHelper.KeyPressed(input.Ghost(Buttons.L)), (SpriteGameObject)Find("GhostPush"));
                 base.HandleInput(inputHelper);
-            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("push"));
+            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
             base.HandleInput(inputHelper);
             if (!ghost.stunned)
             {
