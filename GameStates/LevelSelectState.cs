@@ -1,5 +1,4 @@
-﻿
-using BaseProject.GameObjects.menuObjects;
+﻿using BaseProject.GameObjects.menuObjects;
 using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameStates
@@ -88,7 +87,7 @@ namespace BaseProject.GameStates
             if(options[choise.X, choise.Y] is LevelOptionButton)
             {
                 LevelOptionButton levelchoise = (LevelOptionButton)options[choise.X, choise.Y];
-                if(levelchoise.HasLevel) return;
+                if(!levelchoise.HasLevel) return;
             }
 
             //loads selected level

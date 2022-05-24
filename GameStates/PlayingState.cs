@@ -1,6 +1,5 @@
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameStates
 {
