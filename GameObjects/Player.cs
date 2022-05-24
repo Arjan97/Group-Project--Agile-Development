@@ -45,7 +45,7 @@ namespace BaseProject.GameObjects
         PlayingState currentPlayingState;//current playinstate
 
         //variables used for the players push/stun
-        public bool PushCooldown = false; //push to see if Push is on cooldown
+        public bool PushCooldown = false; //bool to see if Push is on cooldown
         public int PushCooldownTimer = 0;//int used to track cooldown of the push
         public int PushCoolDownTime = 300; //int used to set limit to the cooldown of the push
         public int PushTimer;//int used to track duration of Push

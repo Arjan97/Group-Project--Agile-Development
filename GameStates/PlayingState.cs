@@ -48,7 +48,7 @@ namespace BaseProject.GameStates
             base.Update(gameTime);
             player.isGrounded = false;
             tileList.CheckColission(player);
-            ghost.SetGhostDistance(tileList);
+            ghost.SetGhostTraps(tileList);
             HandleCamera();
             player.CheckColission((SpriteGameObject)Find("GhostPush"));
             ghost.CheckColission((SpriteGameObject)Find("PlayerPush"));
