@@ -7,12 +7,22 @@ namespace BaseProject.GameStates
 {
     internal class Menu : GameObjectList
     {
-        protected Point currentOption = new Point(0,0);
-        Point maxOptions = new Point(0,0);
-        protected optionButton[,] options;
-        SpriteGameObject arrow;
-        protected InputHandler input = GameEnvironment.input;
+        //variables used to select options
+        protected Point currentOption = new Point(0,0);//a point that stores the coördinates of the option the player currently is on
+        Point maxOptions = new Point(0,0);//point that stores how many steps the player can move to the X and Y
 
+        //variables that store the objects
+        protected optionButton[,] options;//a double array that stores all the options
+        SpriteGameObject arrow;//sprite of the arrow selector
+
+
+        protected InputHandler input = GameEnvironment.input;//inputhandler that handles the movement thru menus
+
+        /// <summary>
+        /// consturctor that creates a menu grid
+        /// </summary>
+        /// <param name="x">number of colums</param>
+        /// <param name="y">number of rows</param>
         public Menu(int x, int y)
         {
             if (!(x > 0 && y > 0)) return;//check if the menu has options to cycle thru
@@ -51,7 +61,9 @@ namespace BaseProject.GameStates
             base.Update(gameTime);
         }
 
-        //function to place the selection arrow at the right option
+        /// <summary>
+        /// function that moves the arrow across the options
+        /// </summary>
         void PositionArrow()
         {
             optionButton currentOption = options[this.currentOption.X, this.currentOption.Y];
@@ -66,11 +78,23 @@ namespace BaseProject.GameStates
             }
             base.Draw(gameTime, spriteBatch);
         }
+
+        /// <summary>
+        /// function to go back to the previous screen
+        /// </summary>
         protected virtual void GoBack() { }
+
+        /// <summary>
+        /// function to activate the selected option
+        /// </summary>
+        /// <param name="choise">point consisting the x and y of the choise</param>
         protected virtual void GoForward(Point choise) { }
 
 
-        //function that skips selections that dont have options
+        /// <summary>
+        /// function that skips options in the menu that are empty
+        /// </summary>
+        /// <param name="inputHelper">the player input</param>
         void SkipNull(InputHelper inputHelper)
         {
             while (options[currentOption.X, currentOption.Y] == null)
@@ -80,7 +104,9 @@ namespace BaseProject.GameStates
             }
         }
 
-        //function that moves the cursor from one edge of the options to the other
+        /// <summary>
+        /// function that moves the cursor to one side of the screen to the other when the player wants to go off screen
+        /// </summary>
         void Wrap()
         {
             if(currentOption.X > maxOptions.X)
@@ -100,6 +126,10 @@ namespace BaseProject.GameStates
                 currentOption.Y = maxOptions.Y;
             }
         }
+        /// <summary>
+        /// moves the cursor acros the options
+        /// </summary>
+        /// <param name="inputHelper">the player input</param>
         void MoveCursor(InputHelper inputHelper)
         {
             if (inputHelper.KeyPressed(input.P1(Buttons.up)) || inputHelper.KeyPressed(input.P2(Buttons.up))) { currentOption.Y--; }
