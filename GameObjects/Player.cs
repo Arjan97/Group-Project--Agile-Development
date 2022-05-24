@@ -109,6 +109,12 @@ namespace BaseProject.GameObjects
          * @params GameObject obj
          * @return void
          */
+
+        /// <summary>
+        /// Method used to Handle Colission between two objects
+        /// </summary>
+        /// <param name="obj">the gameObject it collides with</param>
+        /// <returns>void</returns>
         public override void HandleColission(GameObject obj)
         {
             if (obj is Spike)
@@ -140,10 +146,12 @@ namespace BaseProject.GameObjects
             PushObject = currentPlayingState.PlayerPush;
         }
 
-        /*
-         * Method to respawn the player
-         * @return void
-         */
+
+
+        /// <summary>
+        /// Method to respawn the player  
+        /// </summary>
+        /// <returns>void</returns>
         public void Respawn()
         {
             position.X = 1.5f * Tile.tileSize;

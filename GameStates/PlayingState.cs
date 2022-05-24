@@ -24,6 +24,7 @@ namespace BaseProject.GameStates
             Add(tileList);
 
 
+
             //creates text that shows up when screen pauses
             TextGameObject pause = new TextGameObject("font/Arial40",0,"pauseText");
             pause.Visible = false;
