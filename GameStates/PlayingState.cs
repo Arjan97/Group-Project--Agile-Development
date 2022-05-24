@@ -96,7 +96,7 @@ namespace BaseProject.GameStates
             {
                 position.X += 5f;
             }
-            ghost.StayOnScreen(position);
+            ghost.StayOnScreen();
         }
 
         public override void HandleInput(InputHelper inputHelper)
