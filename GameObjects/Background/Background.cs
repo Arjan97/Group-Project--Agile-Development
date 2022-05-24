@@ -11,18 +11,18 @@ namespace BaseProject.GameObjects.Background
     internal class Background : GameObject
     {
         
-    protected float _layer { get; set; }
+    //protected float _layer { get; set; }
 
         protected Texture2D _texture;
 
-        public float Layer
+        /*public float Layer
         {
             get { return _layer; }
             set
             {
                 _layer = value;
             }
-        }
+        } */
 
         public Vector2 Position;
 

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BaseProject.GameObjects.Background
 {
-    public class ScrollingBackground : GameObject
+    public class ScrollingBackground : GameObjectList
     {
         private bool _constantSpeed;
 
-        private float _layer;
+       // private float _layer;
 
         private float _scrollingSpeed;
 
@@ -22,7 +22,7 @@ namespace BaseProject.GameObjects.Background
 
         private float _speed;
 
-        public float Layer
+        /* public float Layer
         {
             get { return _layer; }
             set
@@ -32,13 +32,14 @@ namespace BaseProject.GameObjects.Background
                 foreach (var sprite in _sprites)
                     sprite.Layer = _layer;
             }
-        }
+        } */
         
         public ScrollingBackground(Texture2D texture, Player player, float scrollingSpeed, bool constantSpeed = false)
           : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, constantSpeed)
         {
-
+            Layer = -5;
         } 
+
 
         public ScrollingBackground(List<Texture2D> textures, Player player, float scrollingSpeed, bool constantSpeed = false)
         {

@@ -28,7 +28,12 @@ namespace BaseProject.GameStates
             Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
             stopMusic();
             playMusic();
-            movingBackground();
+            //movingBackground();
+            Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_1"), player, 60f));
+            Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_2"), player, 60f));
+            Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_3"), player, 60f));
+            Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_4"), player, 60f));
+            Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_5"), player, 60f));
         }
 
         public void stopMusic()
@@ -47,23 +52,23 @@ namespace BaseProject.GameStates
       {
         new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_1"), player, 60f)
         {
-          Layer = 0.99f,
+          Layer = -5,
         }, 
         new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_2"), player, 60f)
         {
-          Layer = 0.9f,
+          Layer = -5,
         },
         new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_3"), player, 40f)
         {
-          Layer = 0.8f,
+          Layer = -5,
         },
         new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_4"), player, 30f)
         {
-          Layer = 0.79f,
+          Layer = -5,
         },
         new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_5"), player, 25f, true)
         {
-          Layer = 0.78f,
+          Layer = -5,
         }
             }; System.Diagnostics.Debug.WriteLine("jaja geladen");
         } 
