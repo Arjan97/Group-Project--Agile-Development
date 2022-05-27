@@ -1,26 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
-using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
     public class Ghost : AnimatedGameObject
     {
-        InputHandler input;
+        InputHandler input;//this makes sure the ghost listens to the right input
 
-        static int speed = 500;
-        static float PushSpeed = 300f;
-        static int PushTime = 50;
-        int PushTimer;
-        static int CooldownTime = 300;
-        int CooldownTimer;
-        static int maxButtons = 4;
-        bool onCooldown = false;
-        Keys[] trapButtons;
+        static int speed = 500;//int that sets the ghost its speed
+
+        //variables used for the push ability
+        static int PushTime = 50;//int used to set the time the push is active
+        int PushTimer;//timer that is used to time the push active time
+        static float PushSpeed = 300f;//float that sets the pushObjects speed
+
+        //variables for the push cooldown
+        static int CooldownTime = 300;//int used to set the time between pushes
+        int CooldownTimer;//timer that is used to disable the push for a certain time
+        bool onCooldown = false;//bool that says if the ghost is on cooldown
+
+        //variables that are used for the input to activate the traps
+        static int maxButtons = 4;//number of the amount of traps a ghost can activate at once
+        Keys[] trapButtons;//array that stores the keys the ghost can press to activate a trap
+
+        //variables used for the ghost stun
+        public bool stunned = false;//bool that keeps track if the ghost is stunned
+        int stunnedTimer = 0;//timer that tracks how long the ghost is stunned
+        int stunnedTime = 90;//max stun stime
 
 
        public Ghost()
@@ -32,37 +41,52 @@ namespace BaseProject.GameObjects
 
             scale = new Vector2(1.5f, 1.5f);
             LoadAnimation("img/players/spr_ghostfly@2x1","fly", true, 0.3f);
+            LoadAnimation("img/players/spr_ghoststun@2x1", "stunned", true, 0.3f);
             LoadAnimation("img/players/spr_ghost", "idle", false);
 
             Reset();
         }
 
-        public override void Reset()
-        {
-            base.Reset();
-
-            PlayingState play = (PlayingState) GameEnvironment.GameStateManager.GetGameState("playingState");
-
-            position.X = play.player.Position.X + 650;
-            position.Y = play.player.Position.Y + -150;
-        }
+        
 
         public override void Update(GameTime gameTime)
         {
+            if (stunned)
+            {
+                stunnedTimer++;
+                if(stunnedTimer >= stunnedTime)
+                {
+                    stunned = false;
+                    stunnedTimer = 0;
+                    
+                }
+                
+            }
+            //adds a small bounce effect for the ghost
             float bounce = (float)Math.Sin(gameTime.TotalGameTime.Ticks /  10000);
             position.Y += bounce;
+
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// repositions the ghost and updates which keys the ghost has to listen to
+        /// </summary>
+        /// <returns>void</returns>
         public override void Reset()
         {
             position = GameEnvironment.Screen.ToVector2() / 2;
             trapButtons = new Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
-            System.Diagnostics.Debug.WriteLine("test2");
             base.Reset();
         }
-        //function to calculate trap distance and assign keys
-        public void SetGhostDistance(TileList tiles)
+        
+
+        /// <summary>
+        /// function that assings the traps to the keys
+        /// </summary>
+        /// <param name="tiles">list of tiles where the traps will be searched in</param>
+        /// <returns>void</returns>
+        public void SetGhostTraps(TileList tiles)
         {
             //dictionary is used to store all the traps together with their distance
             SortedDictionary<float, Trap> trapsList = new SortedDictionary<float, Trap>();
@@ -96,9 +120,11 @@ namespace BaseProject.GameObjects
             
         }
 
-
-
-        //function to clear the keys of objects too far away, returns a list of keys that are now available
+        /// <summary>
+        /// function to clear the keys of objects too far away, returns a list of keys that are now available
+        /// </summary>
+        /// <param name="traplist">dictionary of all the traps and their distance sorted by distance</param>
+        /// <returns>list of keys that have no trap assigned</returns>
         private List<Keys> UnassignKeys(SortedDictionary<float,Trap> traplist)
         {
             //creates a list of available keys
@@ -158,11 +184,19 @@ namespace BaseProject.GameObjects
              return keys;
         }
 
-        //function that gives the keys to the traps
+        /// <summary>
+        /// function that gives the left over keys to the closest traps
+        /// </summary>
+        /// <param name="traplist">sorted dictionary of traps with their distance, sorted by distance</param>
+        /// <param name="keys">list of keys that don't have a trap assingned</param>
+        /// <returns>void</returns>
         private void AssignKeys(SortedDictionary<float, Trap> traplist, List<Keys> keys)
         {
+            if(stunned)
+            {
+                return;
+            }
             int keysLeft = keys.Count;
-            System.Diagnostics.Debug.WriteLine(keysLeft);
             while(keysLeft > 0)
             {
                 //loops thru all the traps till it finds one that doesn't have a key assigned yet
@@ -219,8 +253,10 @@ namespace BaseProject.GameObjects
             }
         }
 
-        //function so ghost won't leave screen
-        public void StayOnScreen(Vector2 camPos)
+        /// <summary>
+        /// function that makes sure the ghost is not of screen
+        /// </summary>
+        public void StayOnScreen()
         {
             if(GlobalPosition.X < 0)
             {
@@ -236,6 +272,13 @@ namespace BaseProject.GameObjects
         {
 
             velocity = Vector2.Zero;
+
+            //disables movement when stunned
+            if(stunned)
+            {
+                return;
+            }
+
             if (inputHelper.IsKeyDown(input.Ghost(Buttons.left)) && position.X > 0)
             {
                 velocity.X = -speed;
@@ -255,17 +298,32 @@ namespace BaseProject.GameObjects
                 velocity.Y = -speed;
             }
 
+            //plays idle animation when no keys are pressed
+            if(!inputHelper.IsKeyDown(input.Ghost(Buttons.up)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.down)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.right)) && 
+               !inputHelper.IsKeyDown(input.Ghost(Buttons.left)))
+            {
+                PlayAnimation("idle");
+            } else
+            {
+                PlayAnimation("fly");
+            }
+
             //check if ghost is traveling diagonally
             if(velocity.Y != 0 && velocity.X != 0)
             {
                 velocity *= 0.75f;
             }
 
-            HandleAnimation(velocity);
             base.HandleInput(inputHelper);
         }
 
-       //despawns the push entity after a certain time
+       /// <summary>
+       /// function that spawns the push when button is pressed and despawns the push after it is expired
+       /// </summary>
+       /// <param name="activated">bool if the button is pressed</param>
+       /// <param name="push">the push object</param>
         public void HandlePush(bool activated, SpriteGameObject push)
         {
             
@@ -312,14 +370,14 @@ namespace BaseProject.GameObjects
             }
 
         }
-        private void HandleAnimation(Vector2 velocity)
+
+        /// <summary>
+        /// function that gets called when colliding with the player their push projectile and handles the stun
+        /// </summary>
+        public void GetStunned()
         {
-            if(velocity == Vector2.Zero)
-            {
-                PlayAnimation("idle");
-                return;
-            }
-            PlayAnimation("fly");
+            stunned = true;
+            PlayAnimation("stunned");
         }
 
     }

@@ -20,12 +20,12 @@
 /processorParam:TextureFormat=Compressed
 /build:font/Arial12.spritefont
 
-#begin font/File.spritefont
+#begin font/Arial40.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:font/File.spritefont
+/build:font/Arial40.spritefont
 
 #begin img/levels/icons/spr_iconLevel0.png
 /importer:TextureImporter
@@ -62,6 +62,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/levels/spr_level1.png
+
+#begin img/levels/spr_level2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/levels/spr_level2.png
 
 #begin img/menu/spr_optionBackground.png
 /importer:TextureImporter
@@ -123,6 +135,18 @@
 /processorParam:TextureFormat=Color
 /build:img/players/spr_ghostfly@2x1.png
 
+#begin img/players/spr_ghoststun@2x1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_ghoststun@2x1.png
+
 #begin img/players/spr_player.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -134,6 +158,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/players/spr_player.png
+
+#begin img/players/spr_player_attack@2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_attack@2.png
+
+#begin img/players/spr_player_dead.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_dead.png
+
+#begin img/players/spr_player_death@5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_death@5.png
 
 #begin img/players/spr_player_idle@8.png
 /importer:TextureImporter
@@ -158,6 +218,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/players/spr_player_jump@2.png
+
+#begin img/players/spr_player_push.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_push.png
 
 #begin img/players/spr_player_run@4.png
 /importer:TextureImporter
