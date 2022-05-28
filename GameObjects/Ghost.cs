@@ -65,6 +65,7 @@ namespace BaseProject.GameObjects
         {
             position = GameEnvironment.Screen.ToVector2() / 2;
             trapButtons = new Keys[4] { input.Ghost(Buttons.X), input.Ghost(Buttons.Y), input.Ghost(Buttons.A), input.Ghost(Buttons.B) };
+
             base.Reset();
         }
         //function to calculate trap distance and assign keys
@@ -228,16 +229,20 @@ namespace BaseProject.GameObjects
         }
 
         //function so ghost won't leave screen
-        public void StayOnScreen(Vector2 camPos)
+        public void StayOnScreen(Vector2 camPos, Boolean playerOnScreen)
         {
-            if(GlobalPosition.X < 0)
+            if(playerOnScreen)
             {
-                position.X+=5;
+                if (GlobalPosition.X < 0)
+                {
+                    position.X += 5;
+                }
+                if (GlobalPosition.X > GameEnvironment.Screen.X)
+                {
+                    position.X -= 5;
+                }
             }
-            if(GlobalPosition.X > GameEnvironment.Screen.X)
-            {
-                position.X -=5;
-            }
+            
         }
 
         public override void HandleInput(InputHelper inputHelper)

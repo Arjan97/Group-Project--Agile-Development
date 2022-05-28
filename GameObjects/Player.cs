@@ -35,7 +35,7 @@ namespace BaseProject.GameObjects
         public int blockedframes; //int to track the amount of blocked frames
 
         //variables used for lives
-        public int maxLives; //int to update the max amount of lives a player can have
+        public int maxLives = 3; //int to update the max amount of lives a player can have
         public int lives = 3; //int used to track the players lives
         public bool died; //boolean used to track if the player is dead
         private GameObjectList livesIcons; //icons to display lives
@@ -66,6 +66,9 @@ namespace BaseProject.GameObjects
         public int AttackAnimationTimer;//int used to track attack animation
         public int AttackAnimationDuration = 34; //int used to set duration of attack animation
         public bool AttackAnimation; //boolean to activate attack animation
+
+        public bool finished; //boolean used to check if the player has finished
+        public bool onscreen;//boolean used to check if the player is still on screen
 
         public Player() : base(Game1.Depth_Player)
         {
@@ -255,6 +258,7 @@ namespace BaseProject.GameObjects
             AnimationHandler();
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
+            playerOnScreen();
         }
 
         /*
@@ -419,6 +423,7 @@ namespace BaseProject.GameObjects
             //checking and handling collision with FinishTile
             if (tile is FinishTile)
             {
+                finished = true;
                 nextLevel();
             }
 
@@ -519,10 +524,11 @@ namespace BaseProject.GameObjects
         void nextLevel()
         {
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr = play.tileList.currentLevel + 1;
-
             Reset();
             play.ghost.Reset();
+            //died = true;
+            GameEnvironment.GameStateManager.SwitchTo("playerWinState");
+
         }
 
         /*
@@ -589,6 +595,21 @@ namespace BaseProject.GameObjects
                 {
                     AttackAnimation = true;
                 }
+            }
+        }
+
+        /*
+         * Method to check if player is on screen
+         * @return void
+         */
+        public void playerOnScreen()
+        {
+            if (GlobalPosition.X < 0 || GlobalPosition.X > GameEnvironment.Screen.X)
+            {
+                onscreen = false;
+            } else
+            {
+                onscreen = true;
             }
         }
 

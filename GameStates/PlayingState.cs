@@ -72,16 +72,24 @@ namespace BaseProject.GameStates
         //function that moves the camera
         public void HandleCamera()
         {
-
-            if(player.died == true)
+            if (player.died == true)
             {
                 player.Respawn();
                 position.X = 30;
                 ghost.Position = GameEnvironment.Screen.ToVector2()/2;
                 player.died = false;
             }
+
+            if (player.finished)
+            {
+                player.Respawn();
+                ghost.Position = GameEnvironment.Screen.ToVector2() / 2;
+                player.finished = false;
+            }
+
+
             //check if player turns around
-            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
+            if ((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
                 headingRight = !headingRight;
             }
@@ -96,7 +104,7 @@ namespace BaseProject.GameStates
             {
                 position.X += 5f;
             }
-            ghost.StayOnScreen(position);
+            ghost.StayOnScreen(position, player.onscreen);
         }
 
         public override void HandleInput(InputHelper inputHelper)
