@@ -40,6 +40,9 @@ namespace BaseProject.GameStates
 
             input = GameEnvironment.input;
             input.AssignKeys(true);
+
+            position.X = -3700;
+            headingRight = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -85,6 +88,7 @@ namespace BaseProject.GameStates
                 player.Respawn();
                 ghost.Position = GameEnvironment.Screen.ToVector2() / 2;
                 player.finished = false;
+                headingRight = false;
             }
 
 
