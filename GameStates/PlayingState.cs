@@ -5,14 +5,7 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
-        public Player player = new Player();
-        public TileList tileList = new TileList();
-        public Ghost ghost = new Ghost();
-        bool photoMode = false;
-        bool paused = false;
-        bool headingRight = true;
-        public SpriteGameObject PlayerPush;
-        InputHandler input;
+
         //different objects in the playingstate
         public Player player = new Player();//the runner player
         public TileList tileList = new TileList();//a list of all the tiles in the level
