@@ -284,7 +284,7 @@ namespace BaseProject.GameObjects
         public override void HandleInput(InputHelper inputHelper)
         {
             //code to block all movement except the dash
-            if (blockMovement)
+            if (blockMovement || !onscreen)
             {
                 if (blockedframes == 15)
                 {
