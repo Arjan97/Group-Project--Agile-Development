@@ -1,29 +1,29 @@
-﻿
-using BaseProject.GameObjects.menuObjects;
+﻿using BaseProject.GameObjects.menuObjects;
 using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameStates
 {
     internal class LevelSelectState : Menu
     {
-        static int maxCollums = 4;
-        static int maxRows = 3;
-        int currentPage = 0;
-        int nPages = Game1.maxLevels / maxCollums * maxRows - 1;
+        static int maxCollums = 4;//the amount of collums each page
+        static int maxRows = 3;//the amount of rows each page
+        int currentPage = 0;//int that keeps track on which page the player is on
+        int nPages = Game1.maxLevels / maxCollums * maxRows - 1;//number of pages
+
         public LevelSelectState() : base(maxCollums, maxRows)
         {
-            loadPage(0);
+            LoadPage(currentPage);
             if (Game1.maxLevels % maxCollums * maxRows - 1 != 0)  nPages++; 
         }
 
-        //function to load the options on the screen
-        public void loadPage(int pageNr)
+        /// <summary>
+        /// loads a page of levels
+        /// </summary>
+        /// <param name="pageNr">the page number</param>
+        void LoadPage(int pageNr)
         {
             int nLevels = maxCollums * maxRows - 1;
            
-            //adds extra page for left over levels
- 
-
             //creates the level options
             for (int y = 0; y < maxRows-1; y++)
             {
@@ -38,6 +38,7 @@ namespace BaseProject.GameStates
                     }
                     else
                     {
+                        //creates empty level option
                         options[x, y] = new LevelOptionButton(x, y);
                     }
                 }
@@ -59,29 +60,34 @@ namespace BaseProject.GameStates
 
         }
 
-        //function that sends player back to main menu
+        /// <summary>
+        /// function to go back to the main menu
+        /// </summary>
         protected override void GoBack()
         {
             GameEnvironment.GameStateManager.SwitchTo("mainMenuState");
         }
-
+        /// <summary>
+        /// function that loads the selected level or next page
+        /// </summary>
+        /// <param name="choise">coördinates of the choise</param>
         protected override void GoForward(Point choise)
         {
             if(choise.X == 3 && choise.Y == 2)
             {
-                loadPage(currentPage++);
+                LoadPage(currentPage++);
                 return;
             }
             if(choise.X == 0 && choise.Y == 2)
             {
-                loadPage(currentPage--);
+                LoadPage(currentPage--);
                 return;
             }
             //check if the choisen option has a level assigned
             if(options[choise.X, choise.Y] is LevelOptionButton)
             {
                 LevelOptionButton levelchoise = (LevelOptionButton)options[choise.X, choise.Y];
-                if(levelchoise.HasLevel) return;
+                if(!levelchoise.HasLevel) return;
             }
 
             //loads selected level
