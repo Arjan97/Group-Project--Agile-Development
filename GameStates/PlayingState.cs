@@ -16,6 +16,9 @@ namespace BaseProject.GameStates
         public SpriteGameObject PlayerPush;
         InputHandler input;
 
+        public int cameraStartPoint = -3700;
+        private int cameraSpeed = 1;
+
         public PlayingState()
         {
             Add(player);
@@ -41,7 +44,7 @@ namespace BaseProject.GameStates
             input = GameEnvironment.input;
             input.AssignKeys(true);
 
-            position.X = -3700;
+            position.X = cameraStartPoint;
             headingRight = false;
         }
 
@@ -93,6 +96,23 @@ namespace BaseProject.GameStates
 
 
             //check if player turns around
+            if(player.onscreen)
+            {
+                /*
+                System.Diagnostics.Debug.WriteLine(player.Position.X - GameEnvironment.Screen.X);
+                if(player.GlobalPosition.X < GameEnvironment.Screen.X && !headingRight)
+                {
+                    position.X += 30;
+                    headingRight = true;
+                }
+                */
+
+                cameraSpeed = 1;
+            } else
+            {
+                cameraSpeed = 4;
+            }
+
             if ((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
                 headingRight = !headingRight;
@@ -101,13 +121,14 @@ namespace BaseProject.GameStates
             //if player moves to the right and passes 3/8 of screen, move camera, unless player is at the edge of the screen
             if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X < tileList.LevelSize.X)
             {
-                position.X -= 5f;
+                position.X -= 5f * cameraSpeed;
             }
             //if player moves to the left and passes 5/8 of screen, move camera, unless player is at the beginning of the screen
             else if (!headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 5 / 8 && position.X <= 0)
             {
-                position.X += 5f;
+                position.X += 5f * cameraSpeed;
             }
+
             ghost.StayOnScreen(position, player.onscreen);
         }
 
