@@ -37,7 +37,11 @@ namespace BaseProject.GameObjects.Tiles
             }
 
         }
-
+        public override void Update(GameTime gameTime)
+        {
+           
+            base.Update(gameTime);
+        }
         public override void HandleInput(InputHelper inputHelper)
         {
             

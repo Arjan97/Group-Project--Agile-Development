@@ -12,10 +12,9 @@ namespace BaseProject.GameObjects.Tiles
         public SwitchObject(int x, int y, string id) : base(x, y)
         {
             this.id = id;
-
-         Add(new SwitchTile(x, y));
+            Add(new SwitchTile(x, y));
         }
-
+   
         public override void CreateButton()
         {
             base.CreateButton();
