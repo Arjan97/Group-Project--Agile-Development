@@ -19,9 +19,9 @@ namespace BaseProject.GameObjects.Tiles
             visible = false;
             base.Activate();
             Random r = GameEnvironment.Random;
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 15; i++)
             {
-                particles.SpawnParticles(new Vector2(-0.5f*sprite.Width + i*sprite.Width/5, 0.5f*sprite.Width), new Vector2(0, -100));
+                particles.SpawnParticles(new Vector2(-0.5f*sprite.Width + i*sprite.Width/5, 0.5f*sprite.Width -(float)(sprite.Width*r.NextDouble())), new Vector2(0, 0), new Vector2(r.Next(1,20),r.Next(1,20)));
             }
         }
 
@@ -34,7 +34,6 @@ namespace BaseProject.GameObjects.Tiles
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             particles.Draw(gameTime, spriteBatch);
-            System.Diagnostics.Debug.WriteLine("hallo");
             base.Draw(gameTime, spriteBatch);
         }
     }

@@ -23,10 +23,10 @@ namespace BaseProject.GameComponents
         /// <param name="position">the position relative to the particlemachine parent</param>
         /// <param name="velocity">the velocity of the particle</param>
         /// <returns>void</returns>
-        public void SpawnParticles(Vector2 position, Vector2 velocity)
+        public void SpawnParticles(Vector2 position, Vector2 velocity, Vector2 acceleration)
         {
             
-            Add((GameObject)Activator.CreateInstance(particleType, "img/particle/particle", position, velocity, new Vector2(0,10), 50));
+            Add((GameObject)Activator.CreateInstance(particleType, "img/particle/particle", position, velocity, acceleration, 50));
         }
 
 

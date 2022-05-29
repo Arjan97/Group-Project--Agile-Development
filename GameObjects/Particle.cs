@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace BaseProject.GameObjects
@@ -17,6 +18,8 @@ namespace BaseProject.GameObjects
             maxTime = lifeTime;
         }
 
+
+
         public override void Update(GameTime gameTime)
         {
             velocity += acceleration;
@@ -24,8 +27,11 @@ namespace BaseProject.GameObjects
             lifeTime--;
 
             //converts the lifetime into opacity
-            int opacity = lifeTime / maxTime * 255;
-            shade = new Color(shade.R, shade.G, shade.B, opacity);
+            int opacity = lifeTime * 255 / maxTime;
+            //System.Diagnostics.Debug.WriteLine(opacity);
+            Color newColor = new Color(Shade, opacity);
+            Shade = newColor;
+
         }
 
 
