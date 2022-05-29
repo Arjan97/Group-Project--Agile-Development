@@ -45,16 +45,16 @@ namespace BaseProject.GameStates
             GameEnvironment.AssetManager.PlayMusic("sounds/gamesong", true);
         }
 
-        
+        /*
         public void movingBackground()
         {
             _scrollingBackgrounds = new List<ScrollingBackground>()
       {
-        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_1"), player, 60f)
+        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_5"), player, 60f)
         {
           Layer = -5,
         }, 
-        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_2"), player, 60f)
+        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_4"), player, 60f)
         {
           Layer = -5,
         },
@@ -62,16 +62,16 @@ namespace BaseProject.GameStates
         {
           Layer = -5,
         },
-        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_4"), player, 30f)
+        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_2"), player, 30f)
         {
           Layer = -5,
         },
-        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_5"), player, 25f, true)
+        new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_1"), player, 25f, true)
         {
           Layer = -5,
         }
             }; System.Diagnostics.Debug.WriteLine("jaja geladen");
-        } 
+        }  */
 
         public override void Update(GameTime gameTime)
         {

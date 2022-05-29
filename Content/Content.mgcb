@@ -39,6 +39,30 @@
 /processorParam:TextureFormat=Color
 /build:img/backgrounds/background_1.png
 
+#begin img/backgrounds/background_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/backgrounds/background_1.png
+
+#begin img/backgrounds/background_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/backgrounds/background_2.png
+
 #begin img/backgrounds/background_2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -63,6 +87,18 @@
 /processorParam:TextureFormat=Color
 /build:img/backgrounds/background_3.png
 
+#begin img/backgrounds/background_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/backgrounds/background_3.png
+
 #begin img/backgrounds/background_4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -74,6 +110,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/backgrounds/background_4.png
+
+#begin img/backgrounds/background_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/backgrounds/background_4.png
+
+#begin img/backgrounds/background_5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/backgrounds/background_5.png
 
 #begin img/backgrounds/background_5.png
 /importer:TextureImporter
@@ -350,12 +410,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/tiles/spr_switchbricks.png
-
-#begin sounds/dash.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/dash.wav
 
 #begin sounds/dash.wav
 /importer:WavImporter
