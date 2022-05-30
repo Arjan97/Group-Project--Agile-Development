@@ -9,7 +9,7 @@ namespace BaseProject.GameObjects.Particles
         int lifeTime;//the amount of frames the particle stays alive 
         int maxTime;//the max amount of frames the particle stays alive, used for scale
         Vector2 acceleration;//increasement of the velocity each frame
-        public Particle(string assetName, Vector2 position, Vector2 velocity, Vector2 acceleration, int lifeTime = 50) : base(assetName, -2)
+        public Particle(string assetName, Vector2 position, Vector2 velocity, Vector2 acceleration, int lifeTime = 50) : base(assetName, -3)
         {
             this.position = position;
             this.velocity = velocity;

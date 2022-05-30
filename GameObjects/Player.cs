@@ -4,6 +4,7 @@ using System;
 using BaseProject.GameObjects.Tiles;
 using BaseProject.GameStates;
 using BaseProject.GameComponents;
+using BaseProject.GameObjects.Particles;
 
 namespace BaseProject.GameObjects
 {
@@ -68,6 +69,12 @@ namespace BaseProject.GameObjects
         public int AttackAnimationDuration = 34; //int used to set duration of attack animation
         public bool AttackAnimation; //boolean to activate attack animation
 
+        ParticleMachine particles = new ParticleMachine(ParticleType.MovementParticle);
+        Vector2 particleAccelaration = new Vector2(0, 0);
+        Vector2 particleVelocity = new Vector2(0, 0);
+        public int particleTimer;
+        public int particleTimerInterval = 3;
+
         public Player() : base(Game1.Depth_Player)
         {
             //loading in the animations
@@ -79,6 +86,8 @@ namespace BaseProject.GameObjects
             LoadAnimation("img/players/spr_player_attack@2", "attack", true, 0.2f);
             PlayAnimation("idle");
             SetOriginToBottomCenter();
+
+            particles.Parent = this;
 
             input = GameEnvironment.input;
 
@@ -170,6 +179,7 @@ namespace BaseProject.GameObjects
         {
 
             float i = 1;
+            particleTimer++;
 
             //dying when falling of the map
             if (position.Y > GameEnvironment.Screen.Y)
@@ -262,6 +272,7 @@ namespace BaseProject.GameObjects
             }
 
             AnimationHandler();
+            particles.Update(gameTime);
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
         }
@@ -278,6 +289,7 @@ namespace BaseProject.GameObjects
             {
                 livesIcons.Children[i].Draw(gameTime, spriteBatch);
             }
+            particles.Draw(gameTime, spriteBatch);
             base.Draw(gameTime, spriteBatch);
         }
 
@@ -376,6 +388,27 @@ namespace BaseProject.GameObjects
             {
                 //setting idle animation if player isnt moving
                 newAnimation = "idle";
+            }
+
+            if (inputHelper.IsKeyDown(input.Player(Buttons.left)) && particleTimer > particleTimerInterval && isGrounded || inputHelper.IsKeyDown(input.Player(Buttons.right)) && particleTimer > particleTimerInterval && isGrounded)
+            {
+                particleTimer = 0;
+                particleAccelaration.Y = GameEnvironment.Random.Next(0, 10);
+                particleAccelaration.X = GameEnvironment.Random.Next(20, 30);
+                particleVelocity = velocity;
+                particleVelocity.Y = 0;
+                particleVelocity.X = (particleVelocity.X /2) * -1;
+                particleAccelaration.Y *= -1;
+                if (velocity.X > 0)
+                {
+                    particleAccelaration.X *= -1;
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    //System.Diagnostics.Debug.WriteLine("particle acc: " + particleAccelaration.X);
+                    particles.SpawnParticles(Vector2.Zero , particleVelocity, particleAccelaration, 20, "img/particle/MovementParticle");
+                }
             }
 
             if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
