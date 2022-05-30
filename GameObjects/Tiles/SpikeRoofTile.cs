@@ -27,15 +27,21 @@ namespace BaseProject.GameObjects.Tiles
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// fucntion that gives the rotation to the spike
+        /// </summary>
         void HandleAnimation()
         {
+            //when the trap is activated the rotation gets reset
             if (((Trap)parent).Activated)
             {
                 radians = 0;
                 return;
             }
+            //timer to start rotating
             if(timer <= 0)
             {
+
                 if(timer <= -20)
                 {
                     timer = GameEnvironment.Random.Next(30, 360);
@@ -49,6 +55,7 @@ namespace BaseProject.GameObjects.Tiles
                     radians += 0.05f * direction;
                     return;
                 }
+
                 radians -= 0.05f* direction;
             }
         }
