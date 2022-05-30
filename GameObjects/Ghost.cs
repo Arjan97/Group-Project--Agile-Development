@@ -257,7 +257,7 @@ namespace BaseProject.GameObjects
         /// <summary>
         /// function that makes sure the ghost is not of screen
         /// </summary>
-        public void StayOnScreen(Vector2 camPos)
+        public void StayOnScreen(Vector2 camPos, Boolean playerOnScreen)
         {
             if(playerOnScreen)
             {

@@ -245,11 +245,14 @@ namespace BaseProject.GameObjects
                     newAnimation = "dead";
                     //PlayAnimation("dead");
                 }
-                else if (DeathAnimationTimer == 180)
+                else if (DeathAnimationTimer > 180)
                 {
+                    newAnimation = "idle";
                     DeathAnimation = false;
                     blockMovement = false;
+                    
                     death();
+                    DeathAnimationTimer = -1;
                 }
 
                 DeathAnimationTimer++;
@@ -514,7 +517,6 @@ namespace BaseProject.GameObjects
                 play.tileList.nextLevelNr = play.tileList.currentLevel;
 
                 play.ghost.Reset();
-                PlayAnimation("idle");
             }
         }
 
