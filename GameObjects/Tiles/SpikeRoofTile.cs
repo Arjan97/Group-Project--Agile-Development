@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using BaseProject.GameComponents;
 using BaseProject.GameObjects.Particles;
 
 namespace BaseProject.GameObjects.Tiles
@@ -46,6 +45,7 @@ namespace BaseProject.GameObjects.Tiles
                 return;
             }
 
+            //when particleTimer reaches 0 a particle will be spawned
             if(particleTimer <= 0)
             {
                 particles.SpawnParticles(new Vector2(0, sprite.Height/2), new Vector2(0, 0), new Vector2(2, 2), new Vector2(25, 0), 300, "img/particle/spr_particle_spike");
@@ -85,7 +85,7 @@ namespace BaseProject.GameObjects.Tiles
         }
 
         /// <summary>
-        /// function to activate the trap
+        /// function to activate the trap and drops the spikes
         /// </summary>
         public override void Activate()
         {

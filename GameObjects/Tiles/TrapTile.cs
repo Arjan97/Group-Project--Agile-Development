@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.GameObjects.Tiles
 {
@@ -8,6 +6,10 @@ namespace BaseProject.GameObjects.Tiles
     {
         public TrapTile(String assetName, int x, int y) : base(assetName, x, y) { }
 
+
+        /// <summary>
+        /// function that handles the activation of the trap
+        /// </summary>
         public virtual void Activate() { }
     }
 }

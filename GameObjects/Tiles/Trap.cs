@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseProject.GameObjects.Tiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,17 +6,22 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Trap : GameObjectList
     {
-        public int tileSize = Tile.tileSize;
-        public float ghostDistance;
-        public Vector2 buttonPosition;
-        public Button button;
+        public int tileSize = Tile.tileSize;//the height/width of a tile
 
-       internal bool activated = false;
+        //variables used for trap activation
+        public float ghostDistance;//the distance between the ghost and this trap, used to keep track which trap is closest
+        public Vector2 buttonPosition;//the position of a button
+        public Button button;//the buttton that activates the trap
+
+       internal bool activated = false;//bool that keeps track if the trap is already activated
         public Trap(int x, int y)
         {
         }
 
 
+        /// <summary>
+        /// function that creates a button for the trap
+        /// </summary>
         public virtual void CreateButton()
         {
             int length = children.Count;
@@ -29,6 +30,9 @@ namespace BaseProject.GameObjects.Tiles
         }
 
         
+        /// <summary>
+        /// function that activates each tile in the trap
+        /// </summary>
         public virtual void Activate()
         {
             foreach (TrapTile tile in Children)
@@ -48,7 +52,9 @@ namespace BaseProject.GameObjects.Tiles
             }
         }
 
-        //function to get or change the key for the button
+        /// <summary>
+        /// function to get or change the key for the button
+        /// </summary>
         public virtual Keys AssignedKey
         {
             get { return button.Key; }

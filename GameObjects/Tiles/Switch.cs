@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BaseProject.GameObjects.Tiles
 {
@@ -11,10 +7,13 @@ namespace BaseProject.GameObjects.Tiles
     {
         public Switch(int x, int y) : base(x, y)
         {
-            Add(new SwitchObject(x, y, "1"));
-            
+            Add(new SwitchObject(x, y, "1"));   
         }
 
+
+        /// <summary>
+        /// creates a trap button and sets it on the first chiildTrap
+        /// </summary>
         public override void CreateButton()
         {
             base.CreateButton();
@@ -22,6 +21,11 @@ namespace BaseProject.GameObjects.Tiles
             buttonPosition = ((SwitchObject)Children[0]).ButtonPosition;
         }
 
+
+        /// <summary>
+        /// Arms one of the switchtraps so it will kill the player and disables the other
+        /// </summary>
+        /// <param name="choice">the id of the trap that needs to be armed</param>
         public void Activate(string choice)
         {
             
@@ -37,18 +41,11 @@ namespace BaseProject.GameObjects.Tiles
             }
 
         }
-        public override void Update(GameTime gameTime)
-        {
-           
-            base.Update(gameTime);
-        }
-        public override void HandleInput(InputHelper inputHelper)
-        {
-            
-            base.HandleInput(inputHelper);
-        }
 
 
+        /// <summary>
+        /// returns or assigns the key of the first switchtrap
+        /// </summary>
         public override Keys AssignedKey { 
             get {
                 SwitchObject switchobject = (SwitchObject)Find("1");
@@ -61,6 +58,9 @@ namespace BaseProject.GameObjects.Tiles
             }
         }
 
+        /// <summary>
+        /// returns or assigns the key of the second switchtrap
+        /// </summary>
         public Keys AssignedSecondKey
         {
             get
