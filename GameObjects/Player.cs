@@ -529,8 +529,8 @@ namespace BaseProject.GameObjects
             Reset();
             play.ghost.Reset();
             //died = true;
-            PlayerWinState winstate = (PlayerWinState)GameEnvironment.GameStateManager.GetGameState("playerwinState");
-            if (input.IsPlayer1Ghost)
+            PlayerWinState winstate = (PlayerWinState)GameEnvironment.GameStateManager.GetGameState("playerWinState");
+            if (!input.IsPlayer1Ghost)
             {
                 winstate.text = "player 1 wins!";
             }

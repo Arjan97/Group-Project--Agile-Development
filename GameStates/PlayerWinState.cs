@@ -23,12 +23,7 @@ namespace BaseProject.GameStates
             base.GoForward(choise);
         }
 
-        void ResetLevel()
-        {
-            GameEnvironment.GameStateManager.SwitchTo("playingState");
-            PlayingState playState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
-            playState.Reset();
-        }
+
 
         void NextLevel()
         {
