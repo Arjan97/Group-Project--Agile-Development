@@ -6,19 +6,19 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class SpikeRoofTile : TrapTile
     {
-        public bool PlayerHit = false;
+        public bool PlayerHit = false;//check if player collides with this spike
 
-        private float radians;
-        int timer, particleTimer;
-        int direction;
-
-        ParticleMachine particles = new ParticleMachine(ParticleType.WhirlParticle);
+        //variables used for particles and animation
+        int direction;//direction of the animation
+        int timer, particleTimer;//timers for particles and animation
+        private float radians;//radians used to rotate sprite
+        ParticleMachine particles = new ParticleMachine(ParticleType.WhirlParticle);//particlemachine to handle the particles
 
         public SpikeRoofTile(int x, int y) : base("img/tiles/spr_spikeroof", x, y) 
         {
             timer = GameEnvironment.Random.Next(30, 360);
             particleTimer = GameEnvironment.Random.Next(100, 600);
-            direction = GameEnvironment.Random.Next(-1,1);
+            direction = GameEnvironment.Random.Next(-1, 1);
             particles.Parent = this;
         }
 
@@ -26,7 +26,9 @@ namespace BaseProject.GameObjects.Tiles
         {
             timer--;
             particleTimer--;
+
             HandleAnimation();
+
             particles.Update(gameTime);
             base.Update(gameTime);
         }
@@ -70,6 +72,8 @@ namespace BaseProject.GameObjects.Tiles
             }
         }
 
+
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             particles.Draw(gameTime, spriteBatch);
@@ -79,6 +83,9 @@ namespace BaseProject.GameObjects.Tiles
             spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, Color.White, radians - MathHelper.ToRadians(0), Origin, scale, SpriteEffects.None, 0);
         }
 
+        /// <summary>
+        /// function to activate the trap
+        /// </summary>
         public override void Activate()
         {
             //when the trap is activated the tiles will drop
@@ -86,6 +93,11 @@ namespace BaseProject.GameObjects.Tiles
             velocity.Y += 200;
             base.Activate();
         }
+
+        /// <summary>
+        /// function that checks if the spike needs to despawn when it hits the ground
+        /// </summary>
+        /// <param name="tile"other tiles it collides with></param>
         public override void HandleColission(GameObject tile)
         {   
             //when the spiketile collides with another tile it will turn invisible
@@ -94,11 +106,5 @@ namespace BaseProject.GameObjects.Tiles
                  visible = false;
             }
         }
-
-        public override void CheckColission(SpriteGameObject obj)
-        {   
-            base.CheckColission(obj);
-        }
-
     }
 }
