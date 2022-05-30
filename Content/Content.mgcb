@@ -159,7 +159,7 @@
 /processorParam:TextureFormat=Color
 /build:img/menu/txt/Title.png
 
-#begin img/particle/MovementParticle.png
+#begin img/particle/spr_particle_spike.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -169,19 +169,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:img/particle/MovementParticle.png
-
-#begin img/particle/particle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:img/particle/particle.png
+/build:img/particle/spr_particle_spike.png
 
 #begin img/players/spr_ghost.png
 /importer:TextureImporter
