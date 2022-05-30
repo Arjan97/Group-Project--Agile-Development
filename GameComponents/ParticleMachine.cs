@@ -2,12 +2,13 @@
 using System;
 using BaseProject.GameObjects.Particles;
 
-namespace BaseProject.GameComponents
+namespace BaseProject.GameObjects.Particles
 {
     public enum ParticleType
     {
         Particle,
         WhirlParticle,
+        MovementParticle,
     }
     public class ParticleMachine : GameObjectList
     {
@@ -49,6 +50,9 @@ namespace BaseProject.GameComponents
 
                 case ParticleType.Particle:
                     Add(new Particle(texture, position, velocity, acceleration, lifeTime));
+                    break;
+                case ParticleType.MovementParticle:
+                     Add(new MovementParticle(texture, position, velocity, acceleration, lifeTime));
                     break;
             }
         }
