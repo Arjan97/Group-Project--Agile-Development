@@ -1,69 +1,76 @@
 ﻿using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using BaseProject.GameStates;
 
 namespace BaseProject.GameObjects
 {
     internal class Button : SpriteGameObject
     {
-        private Keys assignedKey = Keys.None;
         private bool hidden = false;
-        public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 0)
+        PlayingState currentPlayingState;
+
+        //variables used for input
+        InputHandler input; //InputHandler that handles the different players their input
+        private Keys assignedKey = Keys.None;//key which the button listens to
+
+        public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 0, id)
         {
             parent = trap;
-            Initialize(position.X, position.Y);
-            this.id = id;
-        }
-        public Button(float x, float y) : base("img/buttons@2x2") 
-        {
-            Initialize(x, y);
+            Initialize(position);
+            currentPlayingState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
         }
 
 
 
 
 
-        private void Initialize(float x, float y)
+        /// <summary>
+        /// initialises the button
+        /// </summary>
+        /// <param name="position">the position of the button relative to the parent</param>
+        /// <returns>void</returns>
+        private void Initialize(Vector2 position)
         {
-            position.X = x;
-            position.Y = y;
+            this.position = position;
             scale = new Vector2(0.5f, 0.5f);
+            input = GameEnvironment.input;
         }
 
-        //function to give the button a different key
+        /// <summary>
+        /// changes which key the button has to listen to and updates the sprite
+        /// </summary>
+        /// <param name="newKey">new key the button has to listen to</param>
+        /// <returns>void</returns>
         public void AssignKey(Keys newKey)
         {
             visible = true;
             assignedKey = newKey;
-
-            //switch to update the texture
-            switch (assignedKey)
+            if(assignedKey == input.Ghost(Buttons.Y))
             {
-                case Keys.NumPad4:
-                    sprite.SheetIndex = 0;
-                    break;
-
-                case Keys.NumPad5:
-                    sprite.SheetIndex = 1;
-                    break;
-
-                case Keys.NumPad6:
-                    sprite.SheetIndex = 2;
-                    break;
-
-                case Keys.NumPad8:
-                    sprite.SheetIndex = 3;
-                    break;
-
-                case Keys.None:
-
-                    visible = false;
-                    break;
-
+                sprite.SheetIndex = 0;
+                return;
             }
+            if (assignedKey == input.Ghost(Buttons.B)) 
+            { 
+                sprite.SheetIndex = 1;
+                return;
+            }
+            if (assignedKey == input.Ghost(Buttons.A))
+            {
+                sprite.SheetIndex = 2;
+                return;
+            }
+            if (assignedKey == input.Ghost(Buttons.X))
+            {
+                sprite.SheetIndex = 3;
+                return;
+            }
+            //hides the button if the key is invalid or none
+            visible = false;
         }
 
-        //returns the assigned key
+        /// <returns>the assigned key</returns>
         public Keys Key
         {
             get => assignedKey;
@@ -71,15 +78,24 @@ namespace BaseProject.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            //disables the activation when the ghost is stunned
+            Ghost ghost = currentPlayingState.ghost;
+            if(ghost.stunned)
+            {
+                return;
+            }
+
+
             if (inputHelper.KeyPressed(assignedKey))
             {
                 if (parent != null)
                 {
-                    Trap parentTrap = (Trap)parent;
                     //activates the object the button is assigned to
+                    Trap parentTrap = (Trap)parent;
                     parentTrap.Activate();
-                    visible = false;
-                    assignedKey = Keys.None;
+
+                    visible = false;//hides the button
+                    assignedKey = Keys.None;//gives the key that's assigned free to use for other traps
                 }
                 base.HandleInput(inputHelper);
             }

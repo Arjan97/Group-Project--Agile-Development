@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
 
 namespace BaseProject.GameStates
 {
@@ -8,7 +6,14 @@ namespace BaseProject.GameStates
     {
         public  StartScreen()
         {
-            Add(new SpriteGameObject("img/players/spr_player"/*placeholder for background img*/));
+            SpriteGameObject title = new SpriteGameObject("img/menu/txt/title");
+            title.Origin = title.Center;
+            title.Position = new Vector2(GameEnvironment.Screen.X/2, GameEnvironment.Screen.Y*1/3);
+            TextGameObject sub = new TextGameObject("font/Arial12");
+            sub.Text = "PRESS ANY KEY TO START";
+            sub.Position = new Vector2((GameEnvironment.Screen.X - (sub.Text.Length * 12)) / 2, GameEnvironment.Screen.Y*2/3);
+            Add(title);
+            Add(sub);
         }
 
         public override void HandleInput(InputHelper inputHelper)

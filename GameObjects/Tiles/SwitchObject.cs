@@ -25,7 +25,7 @@ namespace BaseProject.GameObjects.Tiles
         {
             Switch switchtrap = (Switch)parent;
             switchtrap.Activate(id);
-            Activated = true;
+            activated = true;
         }
         
 

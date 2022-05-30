@@ -1,63 +1,109 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using BaseProject.GameObjects;
-using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
-        Player player = new Player();
-        public TileList tileList = new TileList();
-        Ghost ghost = new Ghost();
-        bool photoMode = false;
 
-        bool headingRight = true;
+        //different objects in the playingstate
+        public Player player = new Player();//the runner player
+        public TileList tileList = new TileList();//a list of all the tiles in the level
+        public Ghost ghost = new Ghost();//the ghost player
+        public SpriteGameObject PlayerPush;//the player attack projectile
+
+        //bools to keep track on special gamestates
+        bool photoMode = false;//check if photomode is active
+        bool paused = false;//check if the player has paused the game
+
+        bool headingRight = true;//bool used for the camera
+
+        InputHandler input;//handles the input of different keys
 
         public PlayingState()
         {
+            //adds objects to the objectlist
             Add(player);
-            Add(tileList);
             Add(ghost);
-            Add(new SpriteGameObject("img/players/spr_push", 0, "push"));
+            Add(tileList);
+
+
+            //creates text that shows up when screen pauses
+            TextGameObject pause = new TextGameObject("font/Arial40",0,"pauseText");
+            pause.Visible = false;
+            pause.Text = "Game Paused";
+            pause.Position = new Vector2(GameEnvironment.Screen.X/2-pause.Text.Length*20, GameEnvironment.Screen.Y/2);
+            Add(pause);
+
+            //creates ghostpush object
+            SpriteGameObject GhostPush = new SpriteGameObject("img/players/spr_push", 0, "GhostPush");
+            GhostPush.Visible = false;
+            Add(GhostPush);
+
+            //initializes playerpush object
+            PlayerPush = new SpriteGameObject("img/players/spr_player_push", 0, "PlayerPush");
+            PlayerPush.Visible = false;
+            Add(PlayerPush);
+
+
+            //initializes the inputhandler
+            input = GameEnvironment.input;
+            input.AssignKeys(true);
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (paused) { return; }//skips the update when the game is paused
+
             base.Update(gameTime);
             player.isGrounded = false;
-            tileList.CheckColission(player);
-            ghost.SetGhostDistance(tileList);
-            HandleCamera();
-            player.CheckColission((SpriteGameObject)Find("push"));
+            tileList.CheckColission(player);//handles the player to tiles colission
+            ghost.SetGhostTraps(tileList);//asigns buttons for the gost to traps
+            HandleCamera();//repositions camera
+
+            //projectiles colision check
+            player.CheckColission((SpriteGameObject)Find("GhostPush"));
+            ghost.CheckColission((SpriteGameObject)Find("PlayerPush"));
         }
-
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            base.Draw(gameTime, spriteBatch);
-        }
-
+        /// <summary>
+        /// wtf doet dit??? @coen??
+        /// </summary>
+        /// <param name="level">the id of the next level</param>
         public void LoadLevel(int level)
         {
+            player.getCurrentPlayingState();
             tileList.LoadLevel(level);
         }
 
-        //function that moves the camera
+        /// <summary>
+        /// resets the playingstate
+        /// </summary>
+        public override void Reset()
+        {
+            position = Vector2.Zero;//repositions camera
+            tileList.nextLevelNr = tileList.CurrentLevel;//reloads the tiles
+            base.Reset();
+
+            //hides objects that needs to start hidden
+            Find("GhostPush").Visible = false;
+            Find("pauseText").Visible = false;
+        }
+
+        /// <summary>
+        /// function that moves the camera according to the player
+        /// </summary>
         public void HandleCamera()
         {
+
             if(player.died == true)
             {
+                player.Respawn();
                 position.X = 30;
                 ghost.Position = GameEnvironment.Screen.ToVector2()/2;
                 player.died = false;
             }
             //check if player turns around
-            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
+            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
                 headingRight = !headingRight;
             }
@@ -72,26 +118,49 @@ namespace BaseProject.GameStates
             {
                 position.X += 5f;
             }
-            ghost.StayOnScreen(position);
+            ghost.StayOnScreen();
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            if (inputHelper.IsKeyDown(Keys.D0))
+
+            if (inputHelper.KeyPressed(input.P1(Buttons.start)) || inputHelper.KeyPressed(input.P2(Buttons.start))) HandlePause();
+
+            //activates photo mode
+            if (inputHelper.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D0))
             {
                 photoMode = true;
                 tileList.HideButtons();
                 ghost.Visible = false;
             }
-            else if(photoMode)
+            else if(photoMode)//deactivates photo mode
             {
                 ghost.Visible = true;
                 tileList.ShowButtons();
                 photoMode = false; 
             }
-            ghost.HandlePush(inputHelper.KeyPressed(Keys.P), (SpriteGameObject)Find("push"));
+
+            if(paused)
+                return;
+
+            ghost.HandlePush(inputHelper.KeyPressed(input.Ghost(Buttons.L)), (SpriteGameObject)Find("GhostPush"));
+                base.HandleInput(inputHelper);
+            ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
             base.HandleInput(inputHelper);
+            if (!ghost.stunned)
+            {
+                ghost.HandlePush(inputHelper.KeyPressed(GameEnvironment.input.Ghost(Buttons.R)), (SpriteGameObject)Find("GhostPush"));
+            }
+                base.HandleInput(inputHelper);
         }
 
-    }     
+        /// <summary>
+        /// function that makes the pause text visible
+        /// </summary>
+        void HandlePause()
+        {
+            paused = !paused;
+            Find("pauseText").Visible = paused;
+        }
+    } 
 }
