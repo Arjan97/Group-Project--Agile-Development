@@ -1,12 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using BaseProject.GameObjects.menuObjects;
-
+using System;
 namespace BaseProject.GameStates
 {
     internal class MainMenuState : Menu
     {
-        public MainMenuState() : base(3,1)
+        Game1 game;
+        public MainMenuState(Game1 game) : base(3,1)
         {
+            this.game = game;
             //loads the menu options
             options[0, 0] = new optionButton(GameEnvironment.Screen.X / 3, 500, "random level");
             options[1, 0] = new optionButton(GameEnvironment.Screen.X / 2, 500, "level select");
@@ -35,6 +37,10 @@ namespace BaseProject.GameStates
             if(choise.X == 1)
             {
                 GameEnvironment.GameStateManager.SwitchTo("levelSelectState");
+            }
+            if(choise.X == 2)
+            {
+                game.Exit();
             }
         }
     }
