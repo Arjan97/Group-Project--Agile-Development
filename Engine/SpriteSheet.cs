@@ -45,7 +45,7 @@ public class SpriteSheet
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, Vector2 scale)
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 origin, Vector2 scale, Color Shade)
     {
         int columnIndex = sheetIndex % sheetColumns;
         int rowIndex = sheetIndex / sheetColumns % sheetRows;
@@ -55,7 +55,7 @@ public class SpriteSheet
         {
             spriteEffects = SpriteEffects.FlipHorizontally;
         }
-        spriteBatch.Draw(sprite, position, spritePart, Color.White,
+        spriteBatch.Draw(sprite, position, spritePart, Shade,
             0.0f, origin, scale, spriteEffects, 0.0f);
     }
 
