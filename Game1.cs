@@ -9,9 +9,7 @@ namespace BaseProject
     public class Game1 : GameEnvironment
     {
         public const int Depth_Player = 0; // for the player
-        public static int maxLevels = 1;//number of levels in the game
-
-
+        public static int maxLevels = 3;
         protected override void LoadContent()
         {
             base.LoadContent();

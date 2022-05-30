@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,10 +12,9 @@ namespace BaseProject.GameObjects.Tiles
         public SwitchObject(int x, int y, string id) : base(x, y)
         {
             this.id = id;
-
-         Add(new SwitchTile(x, y));
+            Add(new SwitchTile(x, y));
         }
-
+   
         public override void CreateButton()
         {
             base.CreateButton();
@@ -27,6 +27,7 @@ namespace BaseProject.GameObjects.Tiles
             switchtrap.Activate(id);
             activated = true;
         }
+        
 
         public void Arm() { armed = true; }
 
