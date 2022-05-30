@@ -318,10 +318,6 @@ namespace BaseProject.GameObjects
                         PushObject.Velocity = new Vector2(PushSpeed, 0);
                     }
                 }
-                else
-                {
-
-                }
 
             }
             //Player Dash ability
@@ -530,6 +526,15 @@ namespace BaseProject.GameObjects
             Reset();
             play.ghost.Reset();
             //died = true;
+            PlayerWinState winstate = (PlayerWinState)GameEnvironment.GameStateManager.GetGameState("playerwinState");
+            if (input.IsPlayer1Ghost)
+            {
+                winstate.text = "player 1 wins!";
+            }
+            else
+            {
+                winstate.text = "player 2 wins!";
+            }
             GameEnvironment.GameStateManager.SwitchTo("playerWinState");
 
         }

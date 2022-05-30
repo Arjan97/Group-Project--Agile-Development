@@ -5,18 +5,18 @@ namespace BaseProject.GameStates
 {
     internal class GameOverState : Menu
     {
+        protected TextGameObject gameOver;
         public GameOverState() : base(1,3)
         {
             Point screen = GameEnvironment.Screen;
 
             //creates the game over text
-            TextGameObject gameOver = new TextGameObject("font/Arial12");
-            gameOver.Text = "Game Over";
-            gameOver.Position = new Vector2(screen.X / 2, screen.Y * 1 / 3);
+            gameOver = new TextGameObject("font/Arial40");
+            gameOver.Text = "Player 1 Wins!";
+            gameOver.Position = new Vector2(screen.X / 2 - 7*12, screen.Y * 1 / 3);
             Add(gameOver);
 
             //assigns buttons to the grid
-            options[0, 0] = new optionButton(screen.X / 2, screen.Y * 0.5f, "play again");
             options[0,1] = new optionButton(screen.X / 2, screen.Y * 4/6, "switch");
             options[0, 2] = new optionButton(screen.X / 2, screen.Y * 5 / 6, "main menu");
         }
@@ -29,9 +29,6 @@ namespace BaseProject.GameStates
         {
             switch (choise.Y)
             {
-                case 0:
-                    ResetLevel();
-                    break;
 
                 case 1:
                     input.AssignKeys(!input.IsPlayer1Ghost);
@@ -47,11 +44,20 @@ namespace BaseProject.GameStates
         /// <summary>
         /// switches to and resets the playstate
         /// </summary>
-        void ResetLevel()
+       protected void ResetLevel()
         {
             GameEnvironment.GameStateManager.SwitchTo("playingState");
             PlayingState playState = (PlayingState)GameEnvironment.GameStateManager.CurrentGameState;
             playState.Reset();
+
+            if (input.IsPlayer1Ghost)
+            {
+                gameOver.Text = "player 1 wins!";
+            }
+            else
+            {
+                gameOver.Text = "player 2 wins!";
+            }
         }
     }
 }

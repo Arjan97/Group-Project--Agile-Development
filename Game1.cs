@@ -21,7 +21,7 @@ namespace BaseProject
             gameStateManager.AddGameState("mainMenuState", new MainMenuState(this));
             gameStateManager.AddGameState("levelSelectState", new LevelSelectState());
             GameStateManager.AddGameState("playingState", new PlayingState());
-            GameStateManager.AddGameState("gameOverState", new GameOverState());
+            GameStateManager.AddGameState("gameOverState", new GhostWinState());
             GameStateManager.AddGameState("playerWinState", new PlayerWinState());
             GameStateManager.SwitchTo("startScreen");
         }
