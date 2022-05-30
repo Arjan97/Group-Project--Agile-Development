@@ -1,20 +1,30 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using BaseProject.GameObjects;
+using BaseProject.GameObjects.Particles;
 
 namespace BaseProject.GameComponents
 {
+    public enum ParticleType
+    {
+        Particle,
+        WhirlParticle,
+    }
     public class ParticleMachine : GameObjectList
     {
-        Type particleType;//saves a type to use this machine for different particle types
+        ParticleType particleType;//saves a type to use this machine for different particle types
 
         /// <summary>
         /// constructs a particle machine
         /// </summary>
         /// <param name="type">The type of particles it needs to spawn</param>
-        public ParticleMachine(Type type)
+        public ParticleMachine(ParticleType type)
         {
             particleType = type;
+        }
+
+        public void SpawnParticles(Vector2 position, Vector2 velocity, Vector2 acceleration, Vector2 Effect, int lifeTime = 50, string texture = "img/particle/particle")
+        {
+            SpawnParticles(position,velocity,acceleration,lifeTime,texture,Effect.X,Effect.Y);
         }
 
         /// <summary>
@@ -23,10 +33,24 @@ namespace BaseProject.GameComponents
         /// <param name="position">the position relative to the particlemachine parent</param>
         /// <param name="velocity">the velocity of the particle</param>
         /// <returns>void</returns>
-        public void SpawnParticles(Vector2 position, Vector2 velocity, Vector2 acceleration)
+        public void SpawnParticles(Vector2 position, Vector2 velocity, Vector2 acceleration, int lifeTime = 50, string texture = "img/particle/particle", float effectX = 0, float effectY = 0)
         {
-            
-            Add((GameObject)Activator.CreateInstance(particleType, "img/particle/particle", position, velocity, acceleration, 50));
+            Vector2 Effect = Vector2.Zero;
+            if(effectX != 0 || effectY != 0)
+            {
+                Effect = new Vector2(effectX, effectY);
+            }
+
+            switch (particleType)
+            {
+                case ParticleType.WhirlParticle:
+                    Add(new WhirlParticle(texture, position, velocity, acceleration, Effect));
+                    break;
+
+                case ParticleType.Particle:
+                    Add(new Particle(texture, position, velocity, acceleration, lifeTime));
+                    break;
+            }
         }
 
 

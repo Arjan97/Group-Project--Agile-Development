@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace BaseProject.GameObjects
+namespace BaseProject.GameObjects.Particles
 {
     internal class Particle : SpriteGameObject
     {

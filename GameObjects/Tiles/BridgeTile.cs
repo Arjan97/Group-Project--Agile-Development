@@ -1,4 +1,5 @@
 ﻿using BaseProject.GameComponents;
+using BaseProject.GameObjects.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,7 +9,7 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class BridgeTile : TrapTile
     {
-        ParticleMachine particles = new ParticleMachine(typeof(Particle));
+        ParticleMachine particles = new ParticleMachine(ParticleType.Particle);
         public BridgeTile(int x, int y) :  base("img/tiles/spr_bridge", x, y)
         {
             particles.Parent = this;
