@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using BaseProject.GameComponents;
 
 namespace BaseProject.GameObjects.Tiles
 {
@@ -12,18 +9,25 @@ namespace BaseProject.GameObjects.Tiles
         public bool PlayerHit = false;
 
         private float radians;
-        int timer;
+        int timer, particleTimer;
         int direction;
+
+        ParticleMachine particles = new ParticleMachine(ParticleType.WhirlParticle);
+
         public SpikeRoofTile(int x, int y) : base("img/tiles/spr_spikeroof", x, y) 
         {
             timer = GameEnvironment.Random.Next(30, 360);
+            particleTimer = GameEnvironment.Random.Next(100, 600);
             direction = GameEnvironment.Random.Next(-1,1);
+            particles.Parent = this;
         }
 
         public override void Update(GameTime gameTime)
         {
             timer--;
+            particleTimer--;
             HandleAnimation();
+            particles.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -37,6 +41,12 @@ namespace BaseProject.GameObjects.Tiles
             {
                 radians = 0;
                 return;
+            }
+
+            if(particleTimer <= 0)
+            {
+                particles.SpawnParticles(new Vector2(0, sprite.Height/2), new Vector2(0, 0), new Vector2(2, 2), new Vector2(25, 0), 300, "img/particle/spr_particle_spike");
+                particleTimer = GameEnvironment.Random.Next(100, 600);
             }
             //timer to start rotating
             if(timer <= 0)
@@ -62,6 +72,7 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            particles.Draw(gameTime, spriteBatch);
             if (!visible || sprite == null)
                 return;
 

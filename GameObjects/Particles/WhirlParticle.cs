@@ -12,7 +12,15 @@ namespace BaseProject.GameObjects.Particles
 
         public override void Update(GameTime gameTime)
         {
+            if((velocity.X >= whirleffect.X || velocity.X <= -whirleffect.X)&&whirleffect.X != 0)
+            {
+                velocity.X = -velocity.X;
+            }
 
+            if ((velocity.Y >= whirleffect.Y || velocity.Y <= -whirleffect.Y)&& whirleffect.Y != 0)
+            {
+                velocity.Y = -velocity.Y;
+            }
             base.Update(gameTime);
         }
     }

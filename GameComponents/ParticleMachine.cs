@@ -44,7 +44,7 @@ namespace BaseProject.GameComponents
             switch (particleType)
             {
                 case ParticleType.WhirlParticle:
-                    Add(new WhirlParticle(texture, position, velocity, acceleration, Effect));
+                    Add(new WhirlParticle(texture, position, velocity, acceleration, Effect, lifeTime));
                     break;
 
                 case ParticleType.Particle:
