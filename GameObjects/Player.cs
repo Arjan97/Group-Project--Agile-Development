@@ -68,6 +68,9 @@ namespace BaseProject.GameObjects
         public int AttackAnimationDuration = 34; //int used to set duration of attack animation
         public bool AttackAnimation; //boolean to activate attack animation
 
+        public bool finished; //boolean used to check if the player has finished
+        public bool onscreen;//boolean used to check if the player is still on screen
+
         public Player() : base(Game1.Depth_Player)
         {
             //loading in the animations
@@ -239,8 +242,11 @@ namespace BaseProject.GameObjects
             }
 
             //checking if deathanimation is triggered
+            System.Diagnostics.Debug.WriteLine(DeathAnimation);
             if (DeathAnimation)
             {
+                System.Diagnostics.Debug.WriteLine(DeathAnimationTimer);
+
                 if (DeathAnimationTimer < 1)
                 {
                     blockMovement = true;
@@ -251,11 +257,13 @@ namespace BaseProject.GameObjects
                     newAnimation = "dead";
                     //PlayAnimation("dead");
                 }
-                else if (DeathAnimationTimer == 180)
+                else if (DeathAnimationTimer > 180)
                 {
+                    newAnimation = "idle";
                     DeathAnimation = false;
                     blockMovement = false;
                     death();
+
                 }
 
                 DeathAnimationTimer++;
@@ -264,6 +272,7 @@ namespace BaseProject.GameObjects
             AnimationHandler();
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
+            playerOnScreen();
         }
 
         /*
@@ -289,7 +298,7 @@ namespace BaseProject.GameObjects
         public override void HandleInput(InputHelper inputHelper)
         {
             //code to block all movement except the dash
-            if (blockMovement)
+            if (blockMovement || !onscreen)
             {
                 if (blockedframes == 15)
                 {
@@ -408,7 +417,7 @@ namespace BaseProject.GameObjects
         {
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
             //checking and handling collision with SpikeTile
-            if ((tile is SpikeTile || tile is SpikeRoofTile))
+            if ((tile is SpikeTile && DeathAnimationTimer < 180 || tile is SpikeRoofTile && DeathAnimationTimer < 180))
             {
 
                 DeathAnimation = true;
@@ -428,6 +437,7 @@ namespace BaseProject.GameObjects
             //checking and handling collision with FinishTile
             if (tile is FinishTile)
             {
+                finished = true;
                 nextLevel();
             }
 
@@ -516,9 +526,9 @@ namespace BaseProject.GameObjects
             {
                 PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
                 play.tileList.nextLevelNr = play.tileList.currentLevel;
+                DeathAnimation = false;
 
                 play.ghost.Reset();
-                PlayAnimation("idle");
             }
         }
 
@@ -529,10 +539,11 @@ namespace BaseProject.GameObjects
         void nextLevel()
         {
             PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr = play.tileList.currentLevel + 1;
-
             Reset();
             play.ghost.Reset();
+            //died = true;
+            GameEnvironment.GameStateManager.SwitchTo("playerWinState");
+
         }
 
         /*
@@ -599,6 +610,21 @@ namespace BaseProject.GameObjects
                 {
                     AttackAnimation = true;
                 }
+            }
+        }
+
+        /*
+         * Method to check if player is on screen
+         * @return void
+         */
+        public void playerOnScreen()
+        {
+            if (GlobalPosition.X < 0 || GlobalPosition.X > GameEnvironment.Screen.X)
+            {
+                onscreen = false;
+            } else
+            {
+                onscreen = true;
             }
         }
 

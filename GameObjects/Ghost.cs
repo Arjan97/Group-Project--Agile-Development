@@ -257,16 +257,20 @@ namespace BaseProject.GameObjects
         /// <summary>
         /// function that makes sure the ghost is not of screen
         /// </summary>
-        public void StayOnScreen()
+        public void StayOnScreen(Vector2 camPos, Boolean playerOnScreen)
         {
-            if(GlobalPosition.X < 0)
+            if(playerOnScreen)
             {
-                position.X+=5;
+                if (GlobalPosition.X < 0)
+                {
+                    position.X += 5;
+                }
+                if (GlobalPosition.X > GameEnvironment.Screen.X)
+                {
+                    position.X -= 5;
+                }
             }
-            if(GlobalPosition.X > GameEnvironment.Screen.X)
-            {
-                position.X -=5;
-            }
+            
         }
 
         public override void HandleInput(InputHelper inputHelper)

@@ -10,7 +10,6 @@ namespace BaseProject.GameObjects.Tiles
 
         public void onCollision()
         {
-            System.Diagnostics.Debug.WriteLine("finishline");
         }
     }
 }
