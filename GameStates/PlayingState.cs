@@ -14,6 +14,7 @@ namespace BaseProject.GameStates
         //bools to keep track on special gamestates
         bool photoMode = false;//check if photomode is active
         bool paused = false;//check if the player has paused the game
+        bool showingLevel = true;
 
         bool headingRight = true;//bool used for the camera
 
@@ -113,21 +114,20 @@ namespace BaseProject.GameStates
                 ghost.Position = GameEnvironment.Screen.ToVector2() / 2;
                 player.finished = false;
                 headingRight = false;
+                showingLevel = true;
             }
 
 
             //check if player turns around
             if(player.onscreen)
             {
-                /*
-                if(player.GlobalPosition.X < GameEnvironment.Screen.X && !headingRight)
-                {
-                    position.X += 30;
-                    headingRight = true;
-                }
-                */
-
                 cameraSpeed = 1;
+                if (showingLevel)
+                {
+                    headingRight = true;
+                    showingLevel = false;
+                    position.X = 0;
+                }
             } else
             {
                 cameraSpeed = 4;
