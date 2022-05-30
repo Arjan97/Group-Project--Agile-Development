@@ -63,6 +63,18 @@
 /processorParam:TextureFormat=Color
 /build:img/levels/icons/spr_iconLevel2.png
 
+#begin img/levels/spr_level)-1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/levels/spr_level)-1.png
+
 #begin img/levels/spr_level0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -74,6 +86,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/levels/spr_level0.png
+
+#begin img/levels/spr_level0_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/levels/spr_level0_3.png
 
 #begin img/levels/spr_level1.png
 /importer:TextureImporter
@@ -219,6 +243,30 @@
 /processorParam:TextureFormat=Color
 /build:img/players/spr_player_death@5.png
 
+#begin img/players/spr_player_idle@3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_idle@3.png
+
+#begin img/players/spr_player_idle@8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_idle@8.png
+
 #begin img/players/spr_player_jump@2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -230,18 +278,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/players/spr_player_jump@2.png
-
-#begin img/players/spr_player_run@4.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:img/players/spr_player_run@4.png
 
 #begin img/players/spr_player_push.png
 /importer:TextureImporter
@@ -255,6 +291,18 @@
 /processorParam:TextureFormat=Color
 /build:img/players/spr_player_push.png
 
+#begin img/players/spr_player_push2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/players/spr_player_push2.png
+
 #begin img/players/spr_player_run@4.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -265,7 +313,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:img/players/spr_push.png
+/build:img/players/spr_player_run@4.png
 
 #begin img/players/spr_push.png
 /importer:TextureImporter
@@ -302,6 +350,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/spr_buttons@2x2.png
+
+#begin img/spr_switchbrickson.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/spr_switchbrickson.png
 
 #begin img/tiles/spr_bridge.png
 /importer:TextureImporter

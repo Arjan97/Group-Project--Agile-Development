@@ -545,13 +545,6 @@ namespace BaseProject.GameObjects
             }
         }
 
-        void nextLevel()
-        {
-            System.Diagnostics.Debug.WriteLine("next level");
-            PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
-            play.tileList.nextLevelNr++;
-            Reset();
-        }
         /*
          * Method to set Origin for animations
          * @return void

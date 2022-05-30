@@ -25,7 +25,7 @@ namespace BaseProject.GameObjects.Tiles
         public void Activate(string choice)
         {
             
-            Activated = true;
+            activated = true;
 
             //searches chosen trap and activates it
             SwitchObject target = (SwitchObject)Find(choice);
