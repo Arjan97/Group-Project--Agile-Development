@@ -93,7 +93,7 @@ public abstract class GameObject : IGameLoopObject
 
         if (one is Ghost && ((SpriteGameObject)other).id == "PlayerPush")
         {
-            ((Ghost)one).getPushed();
+            ((Ghost)one).GetStunned();
             return;
         }
         //rest colission
