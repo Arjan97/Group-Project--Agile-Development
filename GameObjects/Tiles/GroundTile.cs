@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BaseProject.GameObjects.Tiles
+﻿namespace BaseProject.GameObjects.Tiles
 {
     internal class GroundTile : Tile
     {
