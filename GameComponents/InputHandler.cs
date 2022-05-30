@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace BaseProject.GameObjects
+namespace BaseProject.GameComponents
 {
     //an enum for all the buttons on a controller
     public enum Buttons
@@ -68,7 +68,7 @@ namespace BaseProject.GameObjects
         public void AssignKeys(bool p1Ghost)
         {
             //checks if the controls needs to be switched
-            if (isPlayer1Ghost == p1Ghost && ghostInput.Count >1)
+            if (isPlayer1Ghost == p1Ghost && ghostInput.Count > 1)
                 return;
 
             if (p1Ghost)

@@ -1,3 +1,4 @@
+using BaseProject.GameComponents;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 
@@ -29,6 +30,7 @@ namespace BaseProject.GameStates
             Add(player);
             Add(ghost);
             Add(tileList);
+
 
 
             //creates text that shows up when screen pauses

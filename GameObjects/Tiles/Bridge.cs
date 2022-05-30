@@ -20,7 +20,10 @@ namespace BaseProject.GameObjects.Tiles
         public override void Activate()
         {
             //when it activates the trap will dissapear
-            visible = false;
+            foreach (BridgeTile tile in Children)
+            {
+                tile.Visible = false;
+            }
             base.Activate();
         }
 
