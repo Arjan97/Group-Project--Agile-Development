@@ -233,8 +233,11 @@ namespace BaseProject.GameObjects
             }
 
             //checking if deathanimation is triggered
+            System.Diagnostics.Debug.WriteLine(DeathAnimation);
             if (DeathAnimation)
             {
+                System.Diagnostics.Debug.WriteLine(DeathAnimationTimer);
+
                 if (DeathAnimationTimer < 1)
                 {
                     blockMovement = true;
@@ -250,9 +253,8 @@ namespace BaseProject.GameObjects
                     newAnimation = "idle";
                     DeathAnimation = false;
                     blockMovement = false;
-                    
                     death();
-                    DeathAnimationTimer = -1;
+
                 }
 
                 DeathAnimationTimer++;
@@ -406,7 +408,7 @@ namespace BaseProject.GameObjects
         {
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
             //checking and handling collision with SpikeTile
-            if ((tile is SpikeTile || tile is SpikeRoofTile))
+            if ((tile is SpikeTile && DeathAnimationTimer < 180 || tile is SpikeRoofTile && DeathAnimationTimer < 180))
             {
 
                 DeathAnimation = true;
@@ -515,6 +517,7 @@ namespace BaseProject.GameObjects
             {
                 PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
                 play.tileList.nextLevelNr = play.tileList.currentLevel;
+                DeathAnimation = false;
 
                 play.ghost.Reset();
             }
