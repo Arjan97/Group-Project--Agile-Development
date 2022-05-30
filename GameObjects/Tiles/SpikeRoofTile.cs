@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,63 @@ namespace BaseProject.GameObjects.Tiles
     internal class SpikeRoofTile : TrapTile
     {
         public bool PlayerHit = false;
+
+        private float radians;
+        int timer;
+        int direction;
         public SpikeRoofTile(int x, int y) : base("img/tiles/spr_spikeroof", x, y) 
         {
-    }
+            timer = GameEnvironment.Random.Next(30, 360);
+            direction = GameEnvironment.Random.Next(-1,1);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            timer--;
+            HandleAnimation();
+            base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// fucntion that gives the rotation to the spike
+        /// </summary>
+        void HandleAnimation()
+        {
+            //when the trap is activated the rotation gets reset
+            if (((Trap)parent).Activated)
+            {
+                radians = 0;
+                return;
+            }
+            //timer to start rotating
+            if(timer <= 0)
+            {
+
+                if(timer <= -20)
+                {
+                    timer = GameEnvironment.Random.Next(30, 360);
+                    direction = GameEnvironment.Random.Next(-1, 1);
+                    radians = 0;
+                    return;
+                }
+
+                if(timer >= -15 && timer <= -5)
+                {
+                    radians += 0.05f * direction;
+                    return;
+                }
+
+                radians -= 0.05f* direction;
+            }
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (!visible || sprite == null)
+                return;
+
+            spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, Color.White, radians - MathHelper.ToRadians(0), Origin, scale, SpriteEffects.None, 0);
+        }
 
         public override void Activate()
         {

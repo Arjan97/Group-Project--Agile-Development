@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
-using System.Linq;
 
 namespace BaseProject.GameObjects
 {
     public class TileList : GameObjectList
     {
-        Vector2 levelSize;
-        string colorCode;
-        public int nextLevelNr = -1;
-        public int currentLevel;
+        Vector2 levelSize;//stores the size of a  level
+        public int nextLevelNr = -1;//value that when changed loads the level of the next value
+        public int currentLevel;//number of the current level
 
         public TileList() : base(-1)
         {
             id = "TileList";
         }
 
+        /// <summary>
+        /// function that makes the buttons disappear, used in camera mode
+        /// </summary>
         public void HideButtons()
         {
             foreach (GameObject tile in Children)
@@ -32,6 +31,10 @@ namespace BaseProject.GameObjects
                 }
             }
         }
+
+        /// <summary>
+        /// function that makes the buttons reappear, used in camera mode
+        /// </summary>
         public void ShowButtons()
         {
             foreach (GameObject tile in Children)
@@ -44,6 +47,10 @@ namespace BaseProject.GameObjects
             }
         }
 
+        /// <summary>
+        /// checks if moving tiles collide with eachother
+        /// </summary>
+        /// <param name="target">list of tiles that might be moving</param>
         private void CheckMovingTilesColission(GameObjectList target)
         {
             foreach (GameObject tile in target.Children)
@@ -61,8 +68,11 @@ namespace BaseProject.GameObjects
             }
 
         }
-
-        public void nextLevel(int levelNr)
+        /// <summary>
+        /// function that loads a level
+        /// </summary>
+        /// <param name="levelNr">the number of the level that needs to be loaded</param>
+        public void NextLevel(int levelNr)
         {
             children.Clear();
             LoadLevel(levelNr);
@@ -71,7 +81,10 @@ namespace BaseProject.GameObjects
 
         public int CurrentLevel { get { return currentLevel; } }
 
-
+        /// <summary>
+        /// function that loads a level in
+        /// </summary>
+        /// <param name="levelNr">the number/id of the level</param>
         public void LoadLevel(int levelNr)
         {
             //loads the level image
@@ -84,8 +97,8 @@ namespace BaseProject.GameObjects
             Level.GetData<Color>(colors);
 
             //variables used to connect switchobjects with eachoter
-            Switch lastSwitch = null;
-            int switchCounter = 0;
+            Switch lastSwitch = null;//keeps track on which switch was the last so it can be paired
+            int switchCounter = 0;//counter to keep track of how many switches there are. If the number is divisable by 2 the switch that is getting created needs to be added to the previous one
 
 
             //assings a tile for each pixel
@@ -96,7 +109,7 @@ namespace BaseProject.GameObjects
                     //convert color code to string
                     string color = colors[x + (y * Level.Width)].ToString();
                     string[] fuckzooi = color.Split(new Char[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
-                    colorCode = fuckzooi[1];
+                    string colorCode = fuckzooi[1];
                     colorCode += fuckzooi[3];
                     colorCode += fuckzooi[5];
                     
@@ -110,6 +123,7 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "888888":
+                            //check if it is a new bridge or needs to be added to an existing one
                             if (neighbour is BridgeTile)
                             {
                                 ((Bridge)((BridgeTile)neighbour).Parent).Add(new BridgeTile(x,y));
@@ -122,6 +136,7 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "2362836":
+                            //check if it is a new bridge or needs to be added to an existing one
                             if (neighbour is SpikeRoofTile)
                             {
                                 ((SpikeRoof)((SpikeRoofTile)neighbour).Parent).Add(new SpikeRoofTile(x, y));
@@ -133,6 +148,7 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "127510":
+                            //check if it is a new bridge or needs to be added to an existing one
                             if (neighbour is SpikeTile)
                             {
                                 ((Spike)((SpikeTile)neighbour).Parent).Add(new SpikeTile(x, y));
@@ -144,6 +160,7 @@ namespace BaseProject.GameObjects
                             break;
 
                         case "25512739":
+                            //check if it is a new bridge or needs to be added to an existing one
                             if (neighbour is SwitchTile)
                             {
                                 ((SwitchObject)((SwitchTile)neighbour).Parent).Add(new SwitchTile(x, y));
@@ -151,6 +168,8 @@ namespace BaseProject.GameObjects
                             else
                             {
                                 switchCounter++;
+
+                                //checks if the switch needs pairing
                                 if(switchCounter %2 != 0)
                                 {
                                     lastSwitch = new Switch(x,y);
@@ -171,7 +190,7 @@ namespace BaseProject.GameObjects
 
                 }
             }
-            //cycles to all the tiles to give buttons to traps
+            //cycles thru all the tiles to give buttons to traps
             foreach (GameObject obj in Children)
             {
                 if (obj is Trap)
@@ -188,6 +207,9 @@ namespace BaseProject.GameObjects
             levelSize = new Vector2(level.Width*Tile.tileSize, level.Height*Tile.tileSize);
         }
 
+        /// <summary>
+        /// removes all assigned keys from traps when a new level is loaded
+        /// </summary>
         void ForceUnassignKeys()
         {
             foreach (GameObject obj in Children)
@@ -207,11 +229,18 @@ namespace BaseProject.GameObjects
             }
         }
 
+        /// <summary>
+        /// searches the list for a specific tile
+        /// </summary>
+        /// <param name="x">X-coördinate of the tile</param>
+        /// <param name="y">Y-coördinate of the tile</param>
+        /// <returns>the requested tile OR null</returns>
         private Tile FindTile(int x, int y)
         {
             foreach (GameObject obj in children)
             {
-                if(obj is Switch)
+                //switches consist of multiple tiles which all have to be checkt independently
+                if (obj is Switch)
                 {
                     foreach (SwitchObject switchObject in ((Switch)obj).Children)
                     {
@@ -224,6 +253,7 @@ namespace BaseProject.GameObjects
                         }
                     }
                 }
+                //traps consist of multiple tiles which all have to be checkt independently
                 else if(obj is Trap)
                 {
                     foreach (Tile tile in ((Trap)obj).Children)
@@ -233,7 +263,8 @@ namespace BaseProject.GameObjects
                             return tile;
                         }
                     }
-                }else if (((Tile)obj).location == new Vector2(x,y))
+                }
+                else if (((Tile)obj).location == new Vector2(x,y))
                 {
                     return (Tile)obj;
                 }
@@ -243,11 +274,11 @@ namespace BaseProject.GameObjects
 
         public override void Update(GameTime gameTime)
         {
+            //when nextlevelNr is changed it means that a new level needs to be loaded
             if(nextLevelNr > -1)
             {
-                nextLevel(nextLevelNr);
+                NextLevel(nextLevelNr);
                 nextLevelNr = -1;
-                
             }
             CheckMovingTilesColission(this);
             base.Update(gameTime);
