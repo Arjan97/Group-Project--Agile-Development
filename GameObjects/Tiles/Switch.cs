@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -23,18 +24,24 @@ namespace BaseProject.GameObjects.Tiles
 
         public void Activate(string choice)
         {
+            
             activated = true;
 
             //searches chosen trap and activates it
             SwitchObject target = (SwitchObject)Find(choice);
             target.Arm();
+
             foreach (SwitchObject trap in children)
             {
                 trap.button.Visible = false;
             }
 
         }
-
+        public override void Update(GameTime gameTime)
+        {
+           
+            base.Update(gameTime);
+        }
         public override void HandleInput(InputHelper inputHelper)
         {
             
@@ -67,5 +74,6 @@ namespace BaseProject.GameObjects.Tiles
                 switchobject.AssignedKey = value;
             }
         }
+        
     }
 }
