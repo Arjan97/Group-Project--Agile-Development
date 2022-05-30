@@ -97,7 +97,7 @@ namespace BaseProject.GameObjects.Background
                 }
             }
         }
-
+        
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach (var sprite in _sprites)
