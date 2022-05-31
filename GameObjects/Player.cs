@@ -35,7 +35,7 @@ namespace BaseProject.GameObjects
         public int blockedframes; //int to track the amount of blocked frames
 
         //variables used for lives
-        public int maxLives; //int to update the max amount of lives a player can have
+        public int maxLives = 3; //int to update the max amount of lives a player can have
         public int lives = 3; //int used to track the players lives
         public bool died; //boolean used to track if the player is dead
         private GameObjectList livesIcons; //icons to display lives
@@ -509,6 +509,7 @@ namespace BaseProject.GameObjects
                 play.tileList.nextLevelNr = play.tileList.currentLevel;
 
                 play.ghost.Reset();
+                PlayAnimation("idle");
             }
         }
 
