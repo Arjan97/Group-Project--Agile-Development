@@ -201,9 +201,17 @@ namespace BaseProject.GameObjects
                 {
                     velocity.Y -= 17;
                 }
+                else if (jumpframes < 20)
+                {
+                    velocity.Y -= 10;
+                }
+                else if (jumpframes < 25)
+                {
+                    velocity.Y -= 6;
+                }
                 else
                 {
-                    // velocity.Y -= 6;
+                    velocity.Y -= 4;
                 }
 
                 newAnimation = "jump";
