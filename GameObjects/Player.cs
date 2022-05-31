@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using BaseProject.GameObjects.Tiles;
 using BaseProject.GameStates;
+using BaseProject.GameComponents;
+using BaseProject.GameObjects.Particles;
 
 namespace BaseProject.GameObjects
 {
@@ -67,6 +69,12 @@ namespace BaseProject.GameObjects
         public int AttackAnimationDuration = 34; //int used to set duration of attack animation
         public bool AttackAnimation; //boolean to activate attack animation
 
+        ParticleMachine particles = new ParticleMachine(ParticleType.MovementParticle);
+        Vector2 particleAccelaration = new Vector2(0, 0);
+        Vector2 particleVelocity = new Vector2(0, 0);
+        public int particleTimer;
+        public int particleTimerInterval = 3;
+
         public bool finished; //boolean used to check if the player has finished
         public bool onscreen;//boolean used to check if the player is still on screen
 
@@ -81,6 +89,8 @@ namespace BaseProject.GameObjects
             LoadAnimation("img/players/spr_player_attack@2", "attack", true, 0.2f);
             PlayAnimation("idle");
             SetOriginToBottomCenter();
+
+            particles.Parent = this;
 
             input = GameEnvironment.input;
 
@@ -111,6 +121,12 @@ namespace BaseProject.GameObjects
          * @params GameObject obj
          * @return void
          */
+
+        /// <summary>
+        /// Method used to Handle Colission between two objects
+        /// </summary>
+        /// <param name="obj">the gameObject it collides with</param>
+        /// <returns>void</returns>
         public override void HandleColission(GameObject obj)
         {
             if (obj is Spike)
@@ -142,10 +158,12 @@ namespace BaseProject.GameObjects
             PushObject = currentPlayingState.PlayerPush;
         }
 
-        /*
-         * Method to respawn the player
-         * @return void
-         */
+
+
+        /// <summary>
+        /// Method to respawn the player  
+        /// </summary>
+        /// <returns>void</returns>
         public void Respawn()
         {
             position.X = 1.5f * Tile.tileSize;
@@ -164,6 +182,7 @@ namespace BaseProject.GameObjects
         {
 
             float i = 1;
+            particleTimer++;
 
             //dying when falling of the map
             if (position.Y > GameEnvironment.Screen.Y)
@@ -233,8 +252,11 @@ namespace BaseProject.GameObjects
             }
 
             //checking if deathanimation is triggered
+            System.Diagnostics.Debug.WriteLine(DeathAnimation);
             if (DeathAnimation)
             {
+                System.Diagnostics.Debug.WriteLine(DeathAnimationTimer);
+
                 if (DeathAnimationTimer < 1)
                 {
                     blockMovement = true;
@@ -250,15 +272,15 @@ namespace BaseProject.GameObjects
                     newAnimation = "idle";
                     DeathAnimation = false;
                     blockMovement = false;
-                    
                     death();
-                    DeathAnimationTimer = -1;
+
                 }
 
                 DeathAnimationTimer++;
             }
 
             AnimationHandler();
+            particles.Update(gameTime);
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
             playerOnScreen();
@@ -276,6 +298,7 @@ namespace BaseProject.GameObjects
             {
                 livesIcons.Children[i].Draw(gameTime, spriteBatch);
             }
+            particles.Draw(gameTime, spriteBatch);
             base.Draw(gameTime, spriteBatch);
         }
 
@@ -317,10 +340,6 @@ namespace BaseProject.GameObjects
                     {
                         PushObject.Velocity = new Vector2(PushSpeed, 0);
                     }
-                }
-                else
-                {
-
                 }
 
             }
@@ -381,20 +400,41 @@ namespace BaseProject.GameObjects
                 newAnimation = "idle";
             }
 
+            if (inputHelper.IsKeyDown(input.Player(Buttons.left)) && particleTimer > particleTimerInterval && isGrounded || inputHelper.IsKeyDown(input.Player(Buttons.right)) && particleTimer > particleTimerInterval && isGrounded)
+            {
+                particleTimer = 0;
+                particleAccelaration.Y = GameEnvironment.Random.Next(0, 10);
+                particleAccelaration.X = GameEnvironment.Random.Next(20, 30);
+                particleVelocity = velocity;
+                particleVelocity.Y = 0;
+                particleVelocity.X = (particleVelocity.X /2) * -1;
+                particleAccelaration.Y *= -1;
+                if (velocity.X > 0)
+                {
+                    particleAccelaration.X *= -1;
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    //System.Diagnostics.Debug.WriteLine("particle acc: " + particleAccelaration.X);
+                    particles.SpawnParticles(Vector2.Zero , particleVelocity, particleAccelaration, 20, "img/particle/MovementParticle");
+                }
+            }
+
                     if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
                     {
                         isFacingLeft = false;
                     }
 
             //player jumping
-            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) /* && isGrounded */ || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
+            if (inputHelper.IsKeyDown(input.Player(Buttons.up))  && isGrounded  || inputHelper.IsKeyDown(input.Player(Buttons.B))   && isGrounded)
             {
                 isColliding = false;
                 keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
             }
-            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) || !inputHelper.IsKeyDown(input.Player(Buttons.B)))
+            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) && !inputHelper.IsKeyDown(input.Player(Buttons.B)))
             {
                 jumpKeyPressed = false;
             }
@@ -411,7 +451,7 @@ namespace BaseProject.GameObjects
         {
             Vector2 intersection = Collision.CalculateIntersectionDepth(BoundingBox, tile.BoundingBox);
             //checking and handling collision with SpikeTile
-            if ((tile is SpikeTile || tile is SpikeRoofTile))
+            if ((tile is SpikeTile && DeathAnimationTimer < 180 || tile is SpikeRoofTile && DeathAnimationTimer < 180))
             {
 
                 DeathAnimation = true;
@@ -520,6 +560,7 @@ namespace BaseProject.GameObjects
             {
                 PlayingState play = (PlayingState)GameEnvironment.GameStateManager.GetGameState("playingState");
                 play.tileList.nextLevelNr = play.tileList.currentLevel;
+                DeathAnimation = false;
 
                 play.ghost.Reset();
             }
@@ -535,6 +576,15 @@ namespace BaseProject.GameObjects
             Reset();
             play.ghost.Reset();
             //died = true;
+            PlayerWinState winstate = (PlayerWinState)GameEnvironment.GameStateManager.GetGameState("playerWinState");
+            if (!input.IsPlayer1Ghost)
+            {
+                winstate.text = "player 1 wins!";
+            }
+            else
+            {
+                winstate.text = "player 2 wins!";
+            }
             GameEnvironment.GameStateManager.SwitchTo("playerWinState");
 
         }

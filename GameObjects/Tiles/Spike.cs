@@ -5,17 +5,19 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Spike : Trap
     {
-        int timer = 0;
-        int upTime = 800;
+        int timer = 0;//the time how long a spike is out
+        int upTime = 800;//how long a spike is visible
+
         public Spike(int x, int y) : base(x, y)
         {
                 Add(new SpikeTile(x, y));
         }
 
+
         public override void CreateButton()
         {
             base.CreateButton();
-            button.Position += new Vector2(0,tileSize/2);
+            button.Position += new Vector2(0,tileSize/2);//moves button to the ground
         }
 
         public override void Update(GameTime gameTime)
@@ -47,6 +49,7 @@ namespace BaseProject.GameObjects.Tiles
             //displays the indicator for each spikeTile
             foreach (SpikeTile SpikeTile in Children)
             {
+                //draws an indication where a spike can appear
                 SpikeTile.indicator.Draw(gameTime, spriteBatch);
             }
             base.Draw(gameTime, spriteBatch);

@@ -10,6 +10,7 @@ namespace BaseProject
     {
         public const int Depth_Player = 0; // for the player
         public static int maxLevels = 3;
+        public bool endGame = false;
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -17,10 +18,10 @@ namespace BaseProject
             screen = new Point(1280, 720);
             ApplyResolutionSettings();
             gameStateManager.AddGameState("startScreen", new StartScreen());
-            gameStateManager.AddGameState("mainMenuState", new MainMenuState());
+            gameStateManager.AddGameState("mainMenuState", new MainMenuState(this));
             gameStateManager.AddGameState("levelSelectState", new LevelSelectState());
             GameStateManager.AddGameState("playingState", new PlayingState());
-            GameStateManager.AddGameState("gameOverState", new GameOverState());
+            GameStateManager.AddGameState("gameOverState", new GhostWinState());
             GameStateManager.AddGameState("playerWinState", new PlayerWinState());
             GameStateManager.SwitchTo("startScreen");
         }
