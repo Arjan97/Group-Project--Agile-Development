@@ -422,14 +422,14 @@ namespace BaseProject.GameObjects
             }
 
             //player jumping
-            if (inputHelper.IsKeyDown(input.Player(Buttons.up)) /* && isGrounded */ || inputHelper.IsKeyDown(input.Player(Buttons.B))  /* && isGrounded */)
+            if (inputHelper.IsKeyDown(input.Player(Buttons.up))  && isGrounded  || inputHelper.IsKeyDown(input.Player(Buttons.B))   && isGrounded)
             {
                 isColliding = false;
                 keyPressed = true;
                 isJumping = true;
                 jumpKeyPressed = true;
             }
-            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) || !inputHelper.IsKeyDown(input.Player(Buttons.B)))
+            else if (!inputHelper.IsKeyDown(input.Player(Buttons.up)) && !inputHelper.IsKeyDown(input.Player(Buttons.B)))
             {
                 jumpKeyPressed = false;
             }
