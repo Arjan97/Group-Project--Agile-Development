@@ -27,6 +27,18 @@
 /processorParam:TextureFormat=Compressed
 /build:font/Arial40.spritefont
 
+#begin img/backgrounds/gameBackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/backgrounds/gameBackground.png
+
 #begin img/levels/icons/spr_iconLevel0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -470,4 +482,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/tiles/spr_switchbrickson.png
+
+#begin sounds/gamesong.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sounds/gamesong.ogg
 

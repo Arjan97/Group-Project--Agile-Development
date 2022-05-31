@@ -330,21 +330,26 @@ namespace BaseProject.GameObjects
                 isDashing = true;
                 dashDuration++;
 
-                        if (dashDuration <= 10 && !isFacingLeft)
+                        if (dashDuration <= 10)
                         {
                             velocity.X += dashPower;
 
                         }
-                        else if (dashDuration <= 10 && isFacingLeft)
-                        {
-                            velocity.X += -dashPower;
-                        }
                     }
-                    //Checks if the player is dashing, then a cooldown is issued
-                    if (isDashing)
+            if (inputHelper.IsKeyDown(input.Player(Buttons.L)))
+            {
+                isDashing = true;
+                dashDuration++;
+                if (dashDuration <= 10)
+                        {
+                    velocity.X -= dashPower;
+                }
+            }
+                //Checks if the player is dashing, then a cooldown is issued
+                if (isDashing)
                     {
                         timer++;
-                        if (timer >= 200)
+                        if (timer >= 2000)
                         {
                             dashDuration = 0;
                             timer = 0;
