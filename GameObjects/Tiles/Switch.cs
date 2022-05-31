@@ -4,15 +4,17 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BaseProject.GameObjects.Tiles;
 
 namespace BaseProject.GameObjects.Tiles
 {
+    
     internal class Switch : Trap
     {
+     
         public Switch(int x, int y) : base(x, y)
         {
             Add(new SwitchObject(x, y, "1"));
-            
         }
 
         public override void CreateButton()
@@ -24,16 +26,22 @@ namespace BaseProject.GameObjects.Tiles
 
         public void Activate(string choice)
         {
-            
             activated = true;
-
+           
             //searches chosen trap and activates it
             SwitchObject target = (SwitchObject)Find(choice);
             target.Arm();
+           
 
             foreach (SwitchObject trap in children)
             {
                 trap.button.Visible = false;
+
+                foreach (SwitchTile switchActivation in trap.Children)
+                {
+                    switchActivation.Sprite.SheetIndex = 1;
+                    
+                }
             }
 
         }
@@ -47,6 +55,8 @@ namespace BaseProject.GameObjects.Tiles
             
             base.HandleInput(inputHelper);
         }
+       
+
 
 
         public override Keys AssignedKey { 

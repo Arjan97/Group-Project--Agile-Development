@@ -447,7 +447,7 @@
 /processorParam:TextureFormat=Color
 /build:img/tiles/spr_spikeroof.png
 
-#begin img/tiles/spr_switchbricks.png
+#begin img/tiles/spr_switchbricks@3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -457,7 +457,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:img/tiles/spr_switchbricks.png
+/build:img/tiles/spr_switchbricks@3.png
 
 #begin img/tiles/spr_switchbrickson.png
 /importer:TextureImporter

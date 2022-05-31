@@ -23,11 +23,15 @@ namespace BaseProject.GameObjects.Tiles
 
         public override void Activate()
         {
+            foreach (SwitchTile trapSwitch in children)
+            {
+                trapSwitch.Sprite.SheetIndex = 2;
+            }
             Switch switchtrap = (Switch)parent;
             switchtrap.Activate(id);
             activated = true;
         }
-        
+      
 
         public void Arm() { armed = true; }
 
