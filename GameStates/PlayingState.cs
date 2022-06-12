@@ -1,3 +1,4 @@
+using BaseProject.GameComponents;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 
@@ -5,7 +6,6 @@ namespace BaseProject.GameStates
 {
     public class PlayingState : GameObjectList
     {
-
         //different objects in the playingstate
         public Player player = new Player();//the runner player
         public TileList tileList = new TileList();//a list of all the tiles in the level
@@ -15,10 +15,14 @@ namespace BaseProject.GameStates
         //bools to keep track on special gamestates
         bool photoMode = false;//check if photomode is active
         bool paused = false;//check if the player has paused the game
+        bool showingLevel = true;
 
         bool headingRight = true;//bool used for the camera
 
         InputHandler input;//handles the input of different keys
+
+        public int cameraStartPoint = -3700;
+        private int cameraSpeed = 1;
 
         public PlayingState()
         {
@@ -26,6 +30,7 @@ namespace BaseProject.GameStates
             Add(player);
             Add(ghost);
             Add(tileList);
+
 
 
             //creates text that shows up when screen pauses
@@ -49,6 +54,9 @@ namespace BaseProject.GameStates
             //initializes the inputhandler
             input = GameEnvironment.input;
             input.AssignKeys(true);
+
+            position.X = cameraStartPoint;
+            headingRight = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -94,16 +102,40 @@ namespace BaseProject.GameStates
         /// </summary>
         public void HandleCamera()
         {
-
-            if(player.died == true)
+            if (player.died == true)
             {
                 player.Respawn();
                 position.X = 30;
                 ghost.Position = GameEnvironment.Screen.ToVector2()/2;
                 player.died = false;
             }
+
+            if (player.finished)
+            {
+                player.Respawn();
+                ghost.Position = GameEnvironment.Screen.ToVector2() / 2;
+                player.finished = false;
+                headingRight = false;
+                showingLevel = true;
+            }
+
+
             //check if player turns around
-            if((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
+            if(player.onscreen)
+            {
+                cameraSpeed = 1;
+                if (showingLevel)
+                {
+                    headingRight = true;
+                    showingLevel = false;
+                    position.X = 0;
+                }
+            } else
+            {
+                cameraSpeed = 4;
+            }
+
+            if ((headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 1 / 8 && player.isFacingLeft) || (!headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 7 / 8))
             {
                 headingRight = !headingRight;
             }
@@ -111,14 +143,15 @@ namespace BaseProject.GameStates
             //if player moves to the right and passes 3/8 of screen, move camera, unless player is at the edge of the screen
             if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X < tileList.LevelSize.X)
             {
-                position.X -= 5f;
+                position.X -= 5f * cameraSpeed;
             }
             //if player moves to the left and passes 5/8 of screen, move camera, unless player is at the beginning of the screen
             else if (!headingRight && player.GlobalPosition.X < GameEnvironment.Screen.X * 5 / 8 && position.X <= 0)
             {
-                position.X += 5f;
+                position.X += 5f * cameraSpeed;
             }
-            ghost.StayOnScreen();
+
+            ghost.StayOnScreen(position, player.onscreen);
         }
 
         public override void HandleInput(InputHelper inputHelper)

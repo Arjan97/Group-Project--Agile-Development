@@ -11,10 +11,11 @@ namespace BaseProject.GameObjects.Tiles
                 Add(new SpikeTile(x, y));
         }
 
+
         public override void CreateButton()
         {
             base.CreateButton();
-            button.Position += new Vector2(0,tileSize/2);
+            button.Position += new Vector2(0,tileSize/2);//moves button to the ground
         }
 
         public override void Update(GameTime gameTime)
@@ -35,6 +36,7 @@ namespace BaseProject.GameObjects.Tiles
             //displays the indicator for each spikeTile
             foreach (SpikeTile SpikeTile in Children)
             {
+                //draws an indication where a spike can appear
                 SpikeTile.indicator.Draw(gameTime, spriteBatch);
             }
             base.Draw(gameTime, spriteBatch);

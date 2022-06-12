@@ -1,10 +1,11 @@
-﻿using BaseProject.GameObjects;
+﻿using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class SpriteGameObject : GameObject
 {
-    protected Color shade = Color.White;
+    private Color shade = Color.White;
     protected SpriteSheet sprite;
     protected Vector2 origin;
     protected Vector2 scale = new Vector2(1f, 1f);
@@ -27,11 +28,12 @@ public class SpriteGameObject : GameObject
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+
         if (!visible || sprite == null)
         {
             return;
         }
-        sprite.Draw(spriteBatch, GlobalPosition, origin, scale);
+        sprite.Draw(spriteBatch, GlobalPosition, origin, scale, shade);
         //DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
 
     }

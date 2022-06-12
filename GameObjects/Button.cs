@@ -1,7 +1,8 @@
 ﻿using BaseProject.GameObjects.Tiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+using Input = Microsoft.Xna.Framework.Input;
 using BaseProject.GameStates;
+using BaseProject.GameComponents;
 
 namespace BaseProject.GameObjects
 {
@@ -12,7 +13,7 @@ namespace BaseProject.GameObjects
 
         //variables used for input
         InputHandler input; //InputHandler that handles the different players their input
-        private Keys assignedKey = Keys.None;//key which the button listens to
+        private Input.Keys assignedKey = Input.Keys.None;//key which the button listens to
 
         public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 0, id)
         {
@@ -42,7 +43,7 @@ namespace BaseProject.GameObjects
         /// </summary>
         /// <param name="newKey">new key the button has to listen to</param>
         /// <returns>void</returns>
-        public void AssignKey(Keys newKey)
+        public void AssignKey(Input.Keys newKey)
         {
             visible = true;
             assignedKey = newKey;
@@ -71,7 +72,7 @@ namespace BaseProject.GameObjects
         }
 
         /// <returns>the assigned key</returns>
-        public Keys Key
+        public Input.Keys Key
         {
             get => assignedKey;
         }
@@ -95,7 +96,7 @@ namespace BaseProject.GameObjects
                     parentTrap.Activate();
 
                     visible = false;//hides the button
-                    assignedKey = Keys.None;//gives the key that's assigned free to use for other traps
+                    assignedKey = Input.Keys.None;//gives the key that's assigned free to use for other traps
                 }
                 base.HandleInput(inputHelper);
             }

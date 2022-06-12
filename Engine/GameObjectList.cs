@@ -76,6 +76,7 @@ public class GameObjectList : GameObject
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+
         if (!visible)
         {
             return;

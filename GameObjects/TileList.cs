@@ -76,7 +76,6 @@ namespace BaseProject.GameObjects
         {
             children.Clear();
             LoadLevel(levelNr);
-            currentLevel = levelNr;
         }
 
         public int CurrentLevel { get { return currentLevel; } }
@@ -87,6 +86,12 @@ namespace BaseProject.GameObjects
         /// <param name="levelNr">the number/id of the level</param>
         public void LoadLevel(int levelNr)
         {
+            if(levelNr >= Game1.maxLevels)
+            {
+                levelNr = 0;
+                System.Diagnostics.Debug.WriteLine("hallo");
+            }
+            currentLevel = levelNr;
             //loads the level image
             string levelName = "img/levels/spr_level" + levelNr;
             SpriteSheet level = new SpriteSheet(levelName);
