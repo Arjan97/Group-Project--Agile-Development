@@ -42,7 +42,7 @@ namespace BaseProject.GameObjects
         public bool died; //boolean used to track if the player is dead
         private GameObjectList livesIcons; //icons to display lives
 
-        private float timer; //Angelina? wat doet deze timer?
+        private float timer; //Timer voor the dash
 
         PlayingState currentPlayingState;//current playinstate
 
@@ -187,7 +187,7 @@ namespace BaseProject.GameObjects
             //dying when falling of the map
             if (position.Y > GameEnvironment.Screen.Y)
             {
-                death();
+               // death();
             }
 
             //checking different stages of the jump

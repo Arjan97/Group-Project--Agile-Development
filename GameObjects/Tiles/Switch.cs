@@ -39,8 +39,10 @@ namespace BaseProject.GameObjects.Tiles
             //searches chosen trap and activates it
             SwitchObject target = (SwitchObject)Find(choice);
             target.Arm();
-           
 
+            /// <summary>
+            /// when the switch activates it will change colours so the player is notified of the change
+            /// </summary>  
             foreach (SwitchObject trap in children)
             {
                 trap.button.Visible = false;

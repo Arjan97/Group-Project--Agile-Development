@@ -1,14 +1,19 @@
 using BaseProject.GameComponents;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 namespace BaseProject.GameStates
 {
+    
     public class PlayingState : GameObjectList
     {
+        SpriteSortMode sortMode;
         //different objects in the playingstate
+        public Background background = new Background();//the background
         public Player player = new Player();//the runner player
-        public TileList tileList = new TileList();//a list of all the tiles in the level
+        public TileList tileList = new TileList();//a list of all the tiles in the leveL
         public Ghost ghost = new Ghost();//the ghost player
         public SpriteGameObject PlayerPush;//the player attack projectile
 
@@ -27,6 +32,8 @@ namespace BaseProject.GameStates
         public PlayingState()
         {
             //adds objects to the objectlist
+            sortMode = SpriteSortMode.Immediate;
+            Add(background);
             Add(player);
             Add(ghost);
             Add(tileList);
@@ -153,7 +160,7 @@ namespace BaseProject.GameStates
 
             ghost.StayOnScreen(position, player.onscreen);
         }
-
+        
         public override void HandleInput(InputHelper inputHelper)
         {
 

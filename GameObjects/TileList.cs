@@ -6,8 +6,10 @@ using BaseProject.GameObjects.Tiles;
 
 namespace BaseProject.GameObjects
 {
+    
     public class TileList : GameObjectList
     {
+        
         Vector2 levelSize;//stores the size of a  level
         public int nextLevelNr = -1;//value that when changed loads the level of the next value
         public int currentLevel;//number of the current level
@@ -86,6 +88,7 @@ namespace BaseProject.GameObjects
         /// <param name="levelNr">the number/id of the level</param>
         public void LoadLevel(int levelNr)
         {
+            
             if(levelNr >= Game1.maxLevels)
             {
                 levelNr = 0;
@@ -123,7 +126,8 @@ namespace BaseProject.GameObjects
                     switch (colorCode)
                     {
                         case "195195195":
-
+                            
+    
                             Add(new GroundTile(x, y));
                             break;
 
