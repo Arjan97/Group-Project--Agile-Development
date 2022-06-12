@@ -252,7 +252,6 @@ namespace BaseProject.GameObjects
             }
 
             //checking if deathanimation is triggered
-            System.Diagnostics.Debug.WriteLine(DeathAnimation);
             if (DeathAnimation)
             {
                 System.Diagnostics.Debug.WriteLine(DeathAnimationTimer);
