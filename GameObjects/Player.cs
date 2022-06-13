@@ -203,7 +203,7 @@ namespace BaseProject.GameObjects
                 }
                 else
                 {
-                    // velocity.Y -= 6;
+                     velocity.Y -= 6;
                 }
 
                 newAnimation = "jump";
