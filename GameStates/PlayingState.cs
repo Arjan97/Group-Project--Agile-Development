@@ -63,7 +63,10 @@ namespace BaseProject.GameStates
             //Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_2"), player, 30f));
             //Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_1"), player, 30f));
             //Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_3"), player, 30f));
-            Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_5"), player, 60f));
+            Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_5"), player, 60f)
+            {
+                Layer = -5
+            }) ;
             // Add(new ScrollingBackground(GameEnvironment.AssetManager.GetSprite("img/backgrounds/background_4"), player, 10f));
         }
 

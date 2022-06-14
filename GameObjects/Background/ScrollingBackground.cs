@@ -10,37 +10,24 @@ namespace BaseProject.GameObjects.Background
 {
     public class ScrollingBackground : GameObjectList
     {
-        private bool _constantSpeed;
+        private bool _constantSpeed; //bool for letting the layer move even when player does not
 
-        // private float _layer;
+        private float _scrollingSpeed; //speed of the moving images 
 
-        private float _scrollingSpeed;
+        private List<Background> _sprites; //list for the sprites
 
-        private List<Background> _sprites;
+        private readonly Player _player; //usage for player location
 
-        private readonly Player _player;
+        private float _speed; //speed of the moving images
 
-        private float _speed;
-
-        /* public float Layer
-        {
-            get { return _layer; }
-            set
-            {
-                _layer = value;
-
-                foreach (var sprite in _sprites)
-                    sprite.Layer = _layer;
-            }
-        } */
-
+        //public for creating new list
         public ScrollingBackground(Texture2D texture, Player player, float scrollingSpeed, bool constantSpeed = false)
           : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, constantSpeed)
         {
-            Layer = -5;
+
         }
 
-
+        //public for usage outside class and placing the images
         public ScrollingBackground(List<Texture2D> textures, Player player, float scrollingSpeed, bool constantSpeed = false)
         {
             _player = player;
@@ -67,6 +54,7 @@ namespace BaseProject.GameObjects.Background
             CheckPosition();
         }
 
+        //speed of the scrolling images
         private void ApplySpeed(GameTime gameTime)
         {
             _speed = (float)(_scrollingSpeed * gameTime.ElapsedGameTime.TotalSeconds);
@@ -80,6 +68,7 @@ namespace BaseProject.GameObjects.Background
             }
         }
 
+        //checks position for the images
         private void CheckPosition()
         {
             for (int i = 0; i < _sprites.Count; i++)
