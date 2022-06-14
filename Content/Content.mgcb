@@ -27,6 +27,18 @@
 /processorParam:TextureFormat=Compressed
 /build:font/Arial40.spritefont
 
+#begin img/backgrounds/background_5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/backgrounds/background_5.png
+
 #begin img/backgrounds/gameBackground.png
 /importer:TextureImporter
 /processor:TextureProcessor
