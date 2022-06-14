@@ -8,7 +8,7 @@ namespace BaseProject.GameObjects
 {
     public class Background : SpriteGameObject
     {
-        public Background() : base("img/levels/Background")
+        public Background() : base("img/levels/Background",-4)
         {
             
             position.X = GameEnvironment.Screen.X * 2 - 290;

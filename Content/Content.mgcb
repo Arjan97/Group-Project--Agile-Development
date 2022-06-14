@@ -13,20 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin font/Arial12.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:font/Arial12.spritefont
-
-#begin font/Arial40.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:font/Arial40.spritefont
-
 #begin img/levels/Background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -518,4 +504,25 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/tiles/spr_switchbrickson.png
+
+#begin textfont/Arial12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:textfont/Arial12.spritefont
+
+#begin textfont/Arial40.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:textfont/Arial40.spritefont
+
+#begin textfont/File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:textfont/File.spritefont
 

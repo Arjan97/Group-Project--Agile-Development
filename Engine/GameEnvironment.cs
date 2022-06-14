@@ -149,7 +149,7 @@ public class GameEnvironment : Game
     {
         GraphicsDevice.Clear(Color.Black);
         //spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, spriteScale);
-        spriteBatch.Begin(SpriteSortMode.Texture, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));
         gameStateManager.Draw(gameTime, spriteBatch);
         spriteBatch.End();
     }

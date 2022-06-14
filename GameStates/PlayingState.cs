@@ -9,9 +9,9 @@ namespace BaseProject.GameStates
     
     public class PlayingState : GameObjectList
     {
-        SpriteSortMode sortMode;
+
         //different objects in the playingstate
-        public Background background = new Background();//the background
+       public Background background = new Background();//the background
         public Player player = new Player();//the runner player
         public TileList tileList = new TileList();//a list of all the tiles in the leveL
         public Ghost ghost = new Ghost();//the ghost player
@@ -32,7 +32,7 @@ namespace BaseProject.GameStates
         public PlayingState()
         {
             //adds objects to the objectlist
-            sortMode = SpriteSortMode.Immediate;
+            
             Add(background);
             Add(player);
             Add(ghost);

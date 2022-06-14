@@ -11,7 +11,7 @@ namespace BaseProject.GameObjects.Tiles
             visible = false;
 
             //creating indication under the spikes 
-            indicator = new SpriteGameObject("img/tiles/spr_spikeIndication"); 
+            indicator = new SpriteGameObject("img/tiles/spr_spikeIndication",3); 
             indicator.Position = new Vector2(0, tileSize / 2+4); 
             indicator.Parent = this;
         }
