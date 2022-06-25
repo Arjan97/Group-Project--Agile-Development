@@ -7,6 +7,7 @@ namespace BaseProject.GameStates
     public class PlayingState : GameObjectList
     {
         //different objects in the playingstate
+        public Background background = new Background();// background
         public Player player = new Player();//the runner player
         public TileList tileList = new TileList();//a list of all the tiles in the level
         public Ghost ghost = new Ghost();//the ghost player
@@ -30,6 +31,7 @@ namespace BaseProject.GameStates
             Add(player);
             Add(ghost);
             Add(tileList);
+            Add(background);
 
 
 

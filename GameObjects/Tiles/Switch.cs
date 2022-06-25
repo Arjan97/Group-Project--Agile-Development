@@ -37,6 +37,11 @@ namespace BaseProject.GameObjects.Tiles
 
             foreach (SwitchObject trap in children)
             {
+                foreach (SwitchTile switchActivation in trap.Children)
+                {
+                    switchActivation.Sprite.SheetIndex = 1;
+
+                }
                 trap.button.Visible = false;
             }
 
