@@ -44,6 +44,7 @@ namespace BaseProject.GameObjects.Tiles
                 }
                 trap.button.Visible = false;
             }
+            
 
         }
 
