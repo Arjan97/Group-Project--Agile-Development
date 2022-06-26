@@ -143,8 +143,8 @@ namespace BaseProject.GameStates
             }
 
             //if player moves to the right and passes 3/8 of screen, move camera, unless player is at the edge of the screen
-            if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X < tileList.LevelSize.X)
-            {
+            if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X >= tileList.LevelSize.X - 6500)
+            { 
                 position.X -= 5f * cameraSpeed;
             }
             //if player moves to the left and passes 5/8 of screen, move camera, unless player is at the beginning of the screen
