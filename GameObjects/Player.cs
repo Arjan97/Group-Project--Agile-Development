@@ -24,6 +24,7 @@ namespace BaseProject.GameObjects
         public float jumpSpeed; //float used to set jumping speed
         public float speed; //float used to set movement speed
         public int dashPower; //int used for the power of the dash
+        int dashTime = 2000;
         private Cooldown dashCooldown; //icon for the dash cooldown timer
         public int jumpframes; //int to track the amount of frames the player has been jumping
         public Vector2 pVelocity; //player velocity
@@ -84,7 +85,7 @@ namespace BaseProject.GameObjects
         {
 
             attackCooldown = new Cooldown("img/icon/spr_attack", parent, new Vector2(200, 80));
-            dashCooldown = new Cooldown("img/icon/spr_push", parent, new Vector2(260,80));
+            dashCooldown = new Cooldown("img/icon/spr_dash", parent, new Vector2(260,80));
             //loading in the animations
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
             LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
@@ -275,8 +276,18 @@ namespace BaseProject.GameObjects
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
             playerOnScreen();
+            UpdateCooldownUI(gameTime);
         }
 
+
+        void UpdateCooldownUI(GameTime gameTime)
+        {
+            int percentageDash = (int)(timer *100 / dashTime);
+            int percentageAttack = (int)(PushCooldownTimer*100 / PushCoolDownTime);
+
+            dashCooldown.Update(percentageDash, gameTime);
+            attackCooldown.Update(percentageAttack, gameTime);
+        }
         /*
          * Method to draw the player
          * @params GameTime gameTime
@@ -361,7 +372,7 @@ namespace BaseProject.GameObjects
                 if (isDashing)
                     {
                         timer++;
-                        if (timer >= 2000)
+                        if (timer >= dashTime)
                         {
                             dashDuration = 0;
                             timer = 0;

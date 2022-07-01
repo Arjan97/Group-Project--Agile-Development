@@ -12,6 +12,13 @@ namespace BaseProject.GameObjects
 
         public void Update(int percentage, GameTime gameTime)
         {
+                System.Diagnostics.Debug.WriteLine(percentage);
+            if(percentage == 0)
+            {
+                percentage = 100;
+            }
+            Shade = new Color(255 * percentage /100, 255 * percentage / 100, 255 * percentage / 100);
+            
             base.Update(gameTime);
         }
     }
