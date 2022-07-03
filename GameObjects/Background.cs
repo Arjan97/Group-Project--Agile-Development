@@ -15,6 +15,10 @@ namespace BaseProject.GameObjects
             position.Y = GameEnvironment.Screen.Y / 2;
         }
         
+        public void loadbackground(int level)
+        {
+
+        }
 
     }
 }
