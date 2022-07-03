@@ -24,6 +24,8 @@ namespace BaseProject.GameObjects
         public float jumpSpeed; //float used to set jumping speed
         public float speed; //float used to set movement speed
         public int dashPower; //int used for the power of the dash
+        int dashTime = 2000;
+        private Cooldown dashCooldown; //icon for the dash cooldown timer
         public int jumpframes; //int to track the amount of frames the player has been jumping
         public Vector2 pVelocity; //player velocity
 
@@ -54,6 +56,7 @@ namespace BaseProject.GameObjects
         public int PushTime = 65;//int used to set limit to the duration of the Push
         static float PushSpeed = 450f; //float to set the speed of the push
         public SpriteGameObject PushObject;//sprite game object of the push
+        private Cooldown attackCooldown; //sprite object that displays the cooldown
 
         //variables used for the animations
         public string currentAnimation = "idle"; //string used for current animation
@@ -80,6 +83,9 @@ namespace BaseProject.GameObjects
 
         public Player() : base(Game1.Depth_Player)
         {
+
+            attackCooldown = new Cooldown("img/icon/spr_attack", parent, new Vector2(200, 80));
+            dashCooldown = new Cooldown("img/icon/spr_dash", parent, new Vector2(260,80));
             //loading in the animations
             LoadAnimation("img/players/spr_player_idle@8", "idle", true, 0.1f);
             LoadAnimation("img/players/spr_player_run@4", "run", true, 0.1f);
@@ -104,7 +110,7 @@ namespace BaseProject.GameObjects
             jumpframes = 0;
             timer = 0;
 
-            //Player dash ability 
+            //player dash ability 
             isDashing = false;
             dashDuration = 0;
             dashPower = 15;
@@ -122,19 +128,6 @@ namespace BaseProject.GameObjects
          * @return void
          */
 
-        /// <summary>
-        /// Method used to Handle Colission between two objects
-        /// </summary>
-        /// <param name="obj">the gameObject it collides with</param>
-        /// <returns>void</returns>
-        public override void HandleColission(GameObject obj)
-        {
-            if (obj is Spike)
-            {
-
-            }
-            base.HandleColission(obj);
-        }
 
         /*
          * Method used to Reset the player
@@ -204,7 +197,7 @@ namespace BaseProject.GameObjects
                 }
                 else
                 {
-                    velocity.Y -= 6;
+                     velocity.Y -= 6;
                 }
 
                 newAnimation = "jump";
@@ -284,8 +277,18 @@ namespace BaseProject.GameObjects
             base.Update(gameTime);
             Velocity *= Vector2.Zero;
             playerOnScreen();
+            UpdateCooldownUI(gameTime);
         }
 
+
+        void UpdateCooldownUI(GameTime gameTime)
+        {
+            int percentageDash = (int)(timer *100 / dashTime);
+            int percentageAttack = (int)(PushCooldownTimer*100 / PushCoolDownTime);
+
+            dashCooldown.Update(percentageDash, gameTime);
+            attackCooldown.Update(percentageAttack, gameTime);
+        }
         /*
          * Method to draw the player
          * @params GameTime gameTime
@@ -298,6 +301,8 @@ namespace BaseProject.GameObjects
             {
                 livesIcons.Children[i].Draw(gameTime, spriteBatch);
             }
+            dashCooldown.Draw(gameTime, spriteBatch);
+            attackCooldown.Draw(gameTime, spriteBatch);
             particles.Draw(gameTime, spriteBatch);
             base.Draw(gameTime, spriteBatch);
         }
@@ -349,30 +354,35 @@ namespace BaseProject.GameObjects
                 isDashing = true;
                 dashDuration++;
 
-                if (dashDuration <= 10 && !isFacingLeft)
-                {
-                    velocity.X += dashPower;
+                        if (dashDuration <= 10)
+                        {
+                            velocity.X += dashPower;
 
-                }
-                else if (dashDuration <= 10 && isFacingLeft)
-                {
-                    velocity.X += -dashPower;
-                }
-            }
-            //Checks if the player is dashing, then a cooldown is issued
-            if (isDashing)
+                        }
+                    }
+            if (inputHelper.IsKeyDown(input.Player(Buttons.L)))
             {
-                timer++;
-                if (timer >= 200)
-                {
-                    dashDuration = 0;
-                    timer = 0;
-                    isDashing = false;
+                isDashing = true;
+                dashDuration++;
+                if (dashDuration <= 10)
+                        {
+                    velocity.X -= dashPower;
                 }
             }
+                //Checks if the player is dashing, then a cooldown is issued
+                if (isDashing)
+                    {
+                        timer++;
+                        if (timer >= dashTime)
+                        {
+                            dashDuration = 0;
+                            timer = 0;
+                            isDashing = false;
+                        }
+                    }
 
 
-            base.HandleInput(inputHelper);
+                    base.HandleInput(inputHelper);
 
             //player moving left
             if (inputHelper.IsKeyDown(input.Player(Buttons.left)))
@@ -416,10 +426,10 @@ namespace BaseProject.GameObjects
                 }
             }
 
-            if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
-            {
-                isFacingLeft = false;
-            }
+                    if (!inputHelper.IsKeyDown(input.Player(Buttons.left)))
+                    {
+                        isFacingLeft = false;
+                    }
 
             //player jumping
             if (inputHelper.IsKeyDown(input.Player(Buttons.up))  && isGrounded  || inputHelper.IsKeyDown(input.Player(Buttons.B))   && isGrounded)
@@ -669,3 +679,5 @@ namespace BaseProject.GameObjects
 
     }
 }
+
+
