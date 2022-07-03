@@ -143,6 +143,7 @@ namespace BaseProject.GameObjects
         public override void Reset()
         {
             //resetting lives
+            DeathAnimation = false;
             lives = maxLives;
             Respawn();
             base.Reset();
@@ -187,7 +188,7 @@ namespace BaseProject.GameObjects
             //dying when falling of the map
             if (position.Y > GameEnvironment.Screen.Y)
             {
-               // death();
+                death();
             }
 
             //checking different stages of the jump
@@ -459,6 +460,7 @@ namespace BaseProject.GameObjects
                 {
 
                     DeathAnimation = true;
+                    switchTile.armed = false;
                 }
             }
 
