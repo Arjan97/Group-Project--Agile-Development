@@ -15,7 +15,7 @@ namespace BaseProject.GameObjects
         InputHandler input; //InputHandler that handles the different players their input
         private Input.Keys assignedKey = Input.Keys.None;//key which the button listens to
 
-        public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 2, id)
+        public Button(Vector2 position, Trap trap, string id = "button") : base("img/buttons@2x2", 5, id)
         {
             parent = trap;
             Initialize(position);

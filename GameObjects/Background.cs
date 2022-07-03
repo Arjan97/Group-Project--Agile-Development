@@ -12,18 +12,20 @@ namespace BaseProject.GameObjects
         {
             
             position.X = GameEnvironment.Screen.X * 2 - 290;
-            position.Y = GameEnvironment.Screen.Y / 2;
+            position.Y = GameEnvironment.Screen.Y / 2+30;
         }
         
         public void loadbackground(int levelNr)
         {
             if(levelNr == 0)
             {
-                sprite.SheetIndex = 0;
+                sprite.SheetIndex = 1;
+             
+               
             }
             if(levelNr !=0)
             {
-                sprite.SheetIndex = 1;
+                sprite.SheetIndex = 0;
             }
         }
 

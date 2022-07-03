@@ -9,6 +9,7 @@ namespace BaseProject.GameObjects.Tiles
         public Spike(int x, int y) : base(x, y)
         {
             Add(new SpikeTile(x, y));
+            layer = 1;
         }
 
 

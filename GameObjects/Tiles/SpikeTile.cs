@@ -9,9 +9,9 @@ namespace BaseProject.GameObjects.Tiles
         public SpriteGameObject indicator;
         public SpikeTile(int x, int y) : base("img/tiles/spr_spikebottom", x, y){
             visible = false;
-
+            layer = 5;
             //creating indication under the spikes 
-            indicator = new SpriteGameObject("img/tiles/spr_spikeIndication",3); 
+            indicator = new SpriteGameObject("img/tiles/spr_spikeIndication",6); 
             indicator.Position = new Vector2(0, tileSize / 2+4); 
             indicator.Parent = this;
         }
