@@ -11,7 +11,9 @@ namespace BaseProject.GameStates
             Point screen = GameEnvironment.Screen;
 
             options[0, 0] = new optionButton(screen.X / 2, screen.Y * 0.5f, "next level");
-;
+            player = new SpriteGameObject("img/players/spr_player_victory");
+            ghost = new SpriteGameObject("img/players/spr_ghost_dead");
+            SetSpritesPos();
         }
 
         protected override void GoForward(Point choise)

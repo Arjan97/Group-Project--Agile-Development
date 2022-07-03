@@ -15,7 +15,7 @@ namespace BaseProject.GameStates
         protected optionButton[,] options;//a double array that stores all the options
         SpriteGameObject arrow;//sprite of the arrow selector
 
-
+        protected SpriteGameObject backGround;
         protected InputHandler input = GameEnvironment.input;//inputhandler that handles the movement thru menus
 
         /// <summary>
@@ -25,6 +25,10 @@ namespace BaseProject.GameStates
         /// <param name="y">number of rows</param>
         public Menu(int x, int y)
         {
+            backGround = new SpriteGameObject("img/levels/Background@2");
+            backGround.Position = new Vector2(GameEnvironment.Screen.X * 2 - 290, GameEnvironment.Screen.Y / 2 + 30);
+            Add(backGround);
+
             if (!(x > 0 && y > 0)) return;//check if the menu has options to cycle thru
 
                 maxOptions = new Point(x - 1, y - 1);
@@ -72,11 +76,12 @@ namespace BaseProject.GameStates
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            base.Draw(gameTime, spriteBatch);
             for (int x = 0; x <=maxOptions.X; x++)
             {
                 for (int y = 0; y <=maxOptions.Y; y++) { if (options[x, y] != null)  options[x, y].Draw(gameTime, spriteBatch);  }
             }
-            base.Draw(gameTime, spriteBatch);
+            arrow.Draw(gameTime,spriteBatch);
         }
 
         /// <summary>
