@@ -32,7 +32,7 @@ namespace BaseProject.GameStates
         public PlayingState()
         {
             //adds objects to the objectlist
-            
+
             Add(background);
             Add(player);
             Add(ghost);
@@ -88,6 +88,7 @@ namespace BaseProject.GameStates
         {
             player.getCurrentPlayingState();
             tileList.LoadLevel(level);
+            background.loadbackground(level);
         }
 
         /// <summary>

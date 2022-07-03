@@ -13,7 +13,28 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin img/levels/Background.png
+#begin font/Arial12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font/Arial12.spritefont
+
+#begin font/Arial40.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font/Arial40.spritefont
+
+#begin font/File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font/File.spritefont
+
+#begin img/levels/Background@2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +44,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:img/levels/Background.png
+/build:img/levels/Background@2.png
 
 #begin img/levels/icons/spr_iconLevel0.png
 /importer:TextureImporter
@@ -60,6 +81,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/levels/icons/spr_iconLevel2.png
+
+#begin img/levels/icons/spr_iconLevel3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/levels/icons/spr_iconLevel3.png
 
 #begin img/levels/spr_level)-1.png
 /importer:TextureImporter
@@ -120,6 +153,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/levels/spr_level2.png
+
+#begin img/levels/spr_level3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/levels/spr_level3.png
 
 #begin img/menu/spr_optionBackground.png
 /importer:TextureImporter
@@ -504,25 +549,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:img/tiles/spr_switchbrickson.png
-
-#begin textfont/Arial12.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:textfont/Arial12.spritefont
-
-#begin textfont/Arial40.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:textfont/Arial40.spritefont
-
-#begin textfont/File.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:textfont/File.spritefont
 
