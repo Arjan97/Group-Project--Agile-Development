@@ -200,8 +200,11 @@ namespace BaseProject.GameStates
         /// </summary>
         void HandlePause()
         {
+            TextGameObject pause = (TextGameObject)Find("pauseText");
             paused = !paused;
-            Find("pauseText").Visible = paused;
+            pause.Position = new Vector2(GameEnvironment.Screen.X / 2 - pause.Text.Length * 20, GameEnvironment.Screen.Y / 2) - position;
+            System.Diagnostics.Debug.WriteLine(pause.Position);
+            pause.Visible = paused;
         }
     } 
 }
