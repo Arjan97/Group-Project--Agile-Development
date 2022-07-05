@@ -15,7 +15,7 @@ namespace BaseProject.GameObjects
         static int speed = 500;//int that sets the ghost its speed
 
         //variables used for the push ability
-        static int PushTime = 50;//int used to set the time the push is active
+        static int PushTime = 100;//int used to set the time the push is active
         int PushTimer;//timer that is used to time the push active time
         static float PushSpeed = 300f;//float that sets the pushObjects speed
 
