@@ -1,13 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using BaseProject.GameObjects.Tiles;
 
 namespace BaseProject.GameObjects.Tiles
 {
+    
     internal class Switch : Trap
     {
+     
         public Switch(int x, int y) : base(x, y)
         {
-            Add(new SwitchObject(x, y, "1"));   
+            Add(new SwitchObject(x, y, "1"));
         }
 
 
@@ -28,24 +34,36 @@ namespace BaseProject.GameObjects.Tiles
         /// <param name="choice">the id of the trap that needs to be armed</param>
         public void Activate(string choice)
         {
-            
             activated = true;
-
+           
             //searches chosen trap and activates it
             SwitchObject target = (SwitchObject)Find(choice);
             target.Arm();
 
+            /// <summary>
+            /// when the switch activates it will change colours so the player is notified of the change
+            /// </summary>  
             foreach (SwitchObject trap in children)
             {
                 trap.button.Visible = false;
+
+                foreach (SwitchTile switchActivation in trap.Children)
+                {
+                    switchActivation.Sprite.SheetIndex = 1;
+                    
+                }
             }
 
         }
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            
+            base.HandleInput(inputHelper);
+        }
+       
 
 
-        /// <summary>
-        /// returns or assigns the key of the first switchtrap
-        /// </summary>
+
         public override Keys AssignedKey { 
             get {
                 SwitchObject switchobject = (SwitchObject)Find("1");

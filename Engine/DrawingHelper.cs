@@ -10,7 +10,7 @@ public class DrawingHelper
         pixel = new Texture2D(graphics, 1, 1);
         pixel.SetData(new[] { Color.White });
     }
-
+    
     public static void DrawRectangle(Rectangle r, SpriteBatch spriteBatch, Color col)
     {
         int bw = 2; // Border width

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Input = Microsoft.Xna.Framework.Input;
 using BaseProject.GameObjects.Tiles;
 using BaseProject.GameComponents;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject.GameObjects
 {
@@ -14,7 +15,7 @@ namespace BaseProject.GameObjects
         static int speed = 500;//int that sets the ghost its speed
 
         //variables used for the push ability
-        static int PushTime = 50;//int used to set the time the push is active
+        static int PushTime = 100;//int used to set the time the push is active
         int PushTimer;//timer that is used to time the push active time
         static float PushSpeed = 300f;//float that sets the pushObjects speed
 
@@ -22,6 +23,7 @@ namespace BaseProject.GameObjects
         static int CooldownTime = 300;//int used to set the time between pushes
         int CooldownTimer;//timer that is used to disable the push for a certain time
         bool onCooldown = false;//bool that says if the ghost is on cooldown
+        Cooldown pushCooldown;
 
         //variables that are used for the input to activate the traps
         static int maxButtons = 4;//number of the amount of traps a ghost can activate at once
@@ -37,7 +39,7 @@ namespace BaseProject.GameObjects
         {
             input = GameEnvironment.input;
 
-
+            pushCooldown = new Cooldown("img/icon/spr_push", parent, new Vector2(GameEnvironment.Screen.X - 100, 80));
             id = "Ghost";
 
             scale = new Vector2(1.5f, 1.5f);
@@ -63,11 +65,19 @@ namespace BaseProject.GameObjects
                 }
                 
             }
+
+            pushCooldown.Update((CooldownTimer*100/CooldownTime), gameTime);
             //adds a small bounce effect for the ghost
             float bounce = (float)Math.Sin(gameTime.TotalGameTime.Ticks /  10000);
             position.Y += bounce;
 
             base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            pushCooldown.Draw(gameTime, spriteBatch);
+            base.Draw(gameTime, spriteBatch);
         }
 
         /// <summary>

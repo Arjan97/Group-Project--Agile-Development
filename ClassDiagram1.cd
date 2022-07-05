@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BaseProject.Game1" Collapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAACAAAAABAAQAAAAAQ=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.Program" Collapsed="true">
+    <Position X="19.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameComponents.InputHandler" Collapsed="true">
+    <Position X="19.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAEQQAAAAKAAAAAAAAEQQAAACA=</HashCode>
+      <FileName>GameComponents\InputHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Particles.ParticleMachine" Collapsed="true">
+    <Position X="14.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEAAAAAAAAAAAAAAAAAAAAgAAAAAAAAgAAAA=</HashCode>
+      <FileName>GameComponents\ParticleMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Particles.MovementParticle" Collapsed="true">
+    <Position X="7.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>GameObjects\Particles\MovementParticle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Particles.Particle" Collapsed="true">
+    <Position X="6.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAQAAAAAAAAAAAAAAAAAQAQAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Particles\Particle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Particles.WhirlParticle" Collapsed="true">
+    <Position X="5.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Particles\WhirlParticle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.menuObjects.LevelOptionButton" Collapsed="true">
+    <Position X="10.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAIAQAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\menuObjects\LevelOptionButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.menuObjects.optionButton" Collapsed="true">
+    <Position X="10.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\menuObjects\optionButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.Bridge" Collapsed="true">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAABAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\Bridge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.BridgeTile" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgBAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\BridgeTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.FinishTile" Collapsed="true">
+    <Position X="12" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\FinishTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.GroundTile" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\GroundTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.Spike" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAQAAAAIAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\Spike.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.SpikeRoof" Collapsed="true">
+    <Position X="2.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\SpikeRoof.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.SpikeRoofTile" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAACAAAAAIgBAAAgAAEAQAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>GameObjects\Tiles\SpikeRoofTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.SpikeTile" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>GameObjects\Tiles\SpikeTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.Switch" Collapsed="true">
+    <Position X="7.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgBACAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\Switch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.SwitchObject" Collapsed="true">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAABAABAAQAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\SwitchObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.SwitchTile" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\SwitchTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.Trap" Collapsed="true">
+    <Position X="5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAADAAQAAAoBAAAAAQAAAAAAAQAAAAAABAAAAQAA=</HashCode>
+      <FileName>GameObjects\Tiles\Trap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tiles.TrapTile" Collapsed="true">
+    <Position X="6.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\TrapTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Tile" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAQAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Tiles\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Button" Collapsed="true">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAUQAAAIAAAAAAAAAABAAAAQAAAEEAAA=</HashCode>
+      <FileName>GameObjects\Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Ghost" Collapsed="true">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAACEMEAABAAAAAAAIAAAAAYAgxACCAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Ghost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.Player" Collapsed="true">
+    <Position X="16.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgRAEgK0JAUABwBMEBggECAEFAICAxQIgEkAJDEACoA=</HashCode>
+      <FileName>GameObjects\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameObjects.TileList" Collapsed="true">
+    <Position X="16.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABEAAAQBAgIAAAIAgIEAAAMAAAABAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\TileList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.Menu" Collapsed="true">
+    <Position X="3.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQgABCAAACAAgAAAAAAQACAAAAAABEAQQAAAAAIAAA=</HashCode>
+      <FileName>GameObjects\Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.GameOverState" Collapsed="true">
+    <Position X="1.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAACAAAAIA=</HashCode>
+      <FileName>GameStates\GameOverState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.GhostWinState" Collapsed="true">
+    <Position X="0.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameStates\GhostWinState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.LevelSelectState" Collapsed="true">
+    <Position X="5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAQAAAAAABAEEAAAAAAgAAABA=</HashCode>
+      <FileName>GameStates\LevelSelectState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.MainMenuState" Collapsed="true">
+    <Position X="7.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAEIAAAAAAAAAAA=</HashCode>
+      <FileName>GameStates\MainMenuState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.PlayerWinState" Collapsed="true">
+    <Position X="2.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAQAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>GameStates\PlayerWinState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.PlayingState" Collapsed="true">
+    <Position X="18" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAAAAFAAAAIQAAAAEAAEAEBQBQAAggAAAIAA=</HashCode>
+      <FileName>GameStates\PlayingState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseProject.GameStates.StartScreen" Collapsed="true">
+    <Position X="14.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameStates\StartScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="BaseProject.GameComponents.Buttons" Collapsed="true">
+    <Position X="14.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAgAAAAAAAAAAAIAABAAAAAIgUA4QA=</HashCode>
+      <FileName>GameComponents\InputHandler.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BaseProject.GameObjects.Particles.ParticleType" Collapsed="true">
+    <Position X="16.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAgAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameComponents\ParticleMachine.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

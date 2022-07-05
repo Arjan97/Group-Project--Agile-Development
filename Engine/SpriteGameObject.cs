@@ -10,7 +10,8 @@ public class SpriteGameObject : GameObject
     protected Vector2 origin;
     protected Vector2 scale = new Vector2(1f, 1f);
     public bool PerPixelCollisionDetection = true;
-
+    
+    
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
         : base(layer, id)
     {
@@ -28,16 +29,15 @@ public class SpriteGameObject : GameObject
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-
+        
         if (!visible || sprite == null)
         {
             return;
         }
         sprite.Draw(spriteBatch, GlobalPosition, origin, scale, shade);
         //DrawingHelper.DrawRectangle(BoundingBox, spriteBatch, Color.Red);
-
+        
     }
-
     public SpriteSheet Sprite
     {
         get { return sprite; }

@@ -5,12 +5,11 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class Spike : Trap
     {
-        int timer = 0;//the time how long a spike is out
-        int upTime = 800;//how long a spike is visible
-
+      
         public Spike(int x, int y) : base(x, y)
         {
-                Add(new SpikeTile(x, y));
+            Add(new SpikeTile(x, y));
+            layer = 1;
         }
 
 
@@ -28,22 +27,11 @@ namespace BaseProject.GameObjects.Tiles
             {
                 SpikeTile.indicator.Update(gameTime);
             }
-
-            //timer for the groundtie spikes
-            if (visible)
-            {
-                if (timer > upTime)
-                {
-                    visible = false;
-                    foreach (SpikeTile SpikeTile in Children)
-                    {
-                        SpikeTile.Visible = false;
-                    }
-                }
-                timer++;
-            }
+           
+            
             base.Update(gameTime);
         }
+      
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //displays the indicator for each spikeTile

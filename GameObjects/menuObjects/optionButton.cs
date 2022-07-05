@@ -7,7 +7,7 @@ namespace BaseProject.GameObjects.menuObjects
     internal class optionButton : SpriteGameObject
     {
        protected TextGameObject label;//textgameobject of the label on the object
-        public optionButton(float x, float y, String labelTxt, float scaleX = 1,  float scaleY = 0.5f) : base("img/menu/spr_optionBackground")
+        public optionButton(float x, float y, string labelTxt, float scaleX = 1,  float scaleY = 0.5f) : base("img/menu/spr_optionBackground")
         {
             position = new Vector2(x, y);
             scale = new Vector2(scaleX, scaleY);

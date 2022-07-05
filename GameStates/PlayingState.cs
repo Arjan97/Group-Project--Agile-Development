@@ -1,14 +1,19 @@
 using BaseProject.GameComponents;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 namespace BaseProject.GameStates
 {
+    
     public class PlayingState : GameObjectList
     {
+
         //different objects in the playingstate
+       public Background background = new Background();//the background
         public Player player = new Player();//the runner player
-        public TileList tileList = new TileList();//a list of all the tiles in the level
+        public TileList tileList = new TileList();//a list of all the tiles in the leveL
         public Ghost ghost = new Ghost();//the ghost player
         public SpriteGameObject PlayerPush;//the player attack projectile
 
@@ -27,6 +32,8 @@ namespace BaseProject.GameStates
         public PlayingState()
         {
             //adds objects to the objectlist
+
+            Add(background);
             Add(player);
             Add(ghost);
             Add(tileList);
@@ -81,6 +88,7 @@ namespace BaseProject.GameStates
         {
             player.getCurrentPlayingState();
             tileList.LoadLevel(level);
+            background.loadbackground(level);
         }
 
         /// <summary>
@@ -141,7 +149,7 @@ namespace BaseProject.GameStates
             }
 
             //if player moves to the right and passes 3/8 of screen, move camera, unless player is at the edge of the screen
-            if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X < tileList.LevelSize.X)
+            if (headingRight && player.GlobalPosition.X > GameEnvironment.Screen.X * 3 / 8 && position.X + GameEnvironment.Screen.X > tileList.LevelSize.X-6500)
             {
                 position.X -= 5f * cameraSpeed;
             }
@@ -153,7 +161,7 @@ namespace BaseProject.GameStates
 
             ghost.StayOnScreen(position, player.onscreen);
         }
-
+        
         public override void HandleInput(InputHelper inputHelper)
         {
 
@@ -192,8 +200,11 @@ namespace BaseProject.GameStates
         /// </summary>
         void HandlePause()
         {
+            TextGameObject pause = (TextGameObject)Find("pauseText");
             paused = !paused;
-            Find("pauseText").Visible = paused;
+            pause.Position = new Vector2(GameEnvironment.Screen.X / 2 - pause.Text.Length * 20, GameEnvironment.Screen.Y / 2) - position;
+            System.Diagnostics.Debug.WriteLine(pause.Position);
+            pause.Visible = paused;
         }
     } 
 }

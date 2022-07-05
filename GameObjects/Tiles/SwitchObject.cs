@@ -4,7 +4,7 @@ namespace BaseProject.GameObjects.Tiles
 {
     internal class SwitchObject : Trap
     {
-        bool armed = false;//bool that checks if the trap is deadly/active
+        public bool armed = false;//bool that checks if the trap is deadly/active
 
         public SwitchObject(int x, int y, string id) : base(x, y)
         {
@@ -17,6 +17,10 @@ namespace BaseProject.GameObjects.Tiles
         /// </summary>
         public override void Activate()
         {
+            foreach (SwitchTile trapSwitch in children)
+            {
+                trapSwitch.Sprite.SheetIndex = 2;
+            }
             Switch switchtrap = (Switch)parent;
             switchtrap.Activate(id);
             activated = true;
